@@ -1,0 +1,27 @@
+language: node_js
+sudo: required
+install: yarn
+node_js:
+  - "11"
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH="$HOME/.yarn/bin:$PATH"
+  - npm i -g eslint
+jobs:
+  include:
+    - stage: test
+      script: yarn lint
+after_success:
+  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+  - sudo chmod +x send.sh
+  - ./send.sh success $WEBHOOK_URL
+after_failure:
+  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+  - sudo chmod +x send.sh
+  - ./send.sh failure $WEBHOOK_URL
+cache:
+  yarn: true
+  directories:
+    - node_modules
+notifications:
+  email: false

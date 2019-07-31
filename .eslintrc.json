@@ -1,0 +1,45 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+            "forOf": true,
+            "spread": true,
+            "modules": true,
+            "classes": true,
+            "generators": true,
+            "restParams": true,
+            "regexUFlag": true,
+            "regexYFlag": true,
+            "globalReturn": true,
+            "destructuring": true,
+            "impliedStrict": true,
+            "blockBindings": true,
+            "defaultParams": true,
+            "octalLiterals": true,
+            "arrowFunctions": true,
+            "binaryLiterals": true,
+            "templateStrings": true,
+            "superInFunctions": true,
+            "unicodeCodePointEscapes": true,
+            "objectLiteralShorthandMethods": true,
+            "objectLiteralComputedProperties": true,
+            "objectLiteralDuplicateProperties": true,
+            "objectLiteralShorthandProperties": true
+        }
+    },
+    "plugins": [],
+    "rules": {
+        "semi": "error",
+        "indent": [0, 4],
+        "require-await": "error",
+        "no-duplicate-imports": "error",
+        "no-dupe-class-members": "error"
+    },
+    "globals": {
+        "_config": false,
+        "console": true
+    }
+}
