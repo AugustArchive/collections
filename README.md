@@ -1,4 +1,4 @@
-# @augu/immutable [![Travis]()]() [![npm version](https://badge.fury.io/js/%40augu%2Fimmutable.svg)](https://badge.fury.io/js/%40augu%2Fimmutable) [![LICENSE](https://img.shields.io/github/stars/YamashiroBot/bot)](https://github.com/auguwu/immutable/blob/master/LICENSE)
+# @augu/immutable [![npm version](https://badge.fury.io/js/%40augu%2Fimmutable.svg)](https://badge.fury.io/js/%40augu%2Fimmutable) [![Stars](https://img.shields.io/github/stars/auguwu/immutable)](https://github.com/auguwu/immutable)
 
 > Immutable library made in TypeScript
 >
