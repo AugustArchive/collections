@@ -9,7 +9,7 @@
         "url": "https://github.com/auguwu/immutable"
     },
     "devDependencies": {
-        "@types/node": "11.13.10",
+        "@types/node": "11.13.19",
         "@typescript-eslint/parser": "1.13.0",
         "typescript": "3.5.1"
     },
