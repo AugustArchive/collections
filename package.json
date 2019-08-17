@@ -10,7 +10,7 @@
     },
     "devDependencies": {
         "@types/node": "11.13.19",
-        "@typescript-eslint/parser": "1.13.0",
+        "@typescript-eslint/parser": "2.0.0",
         "typescript": "3.5.3"
     },
     "scripts": {
