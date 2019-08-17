@@ -15,13 +15,17 @@ declare module '@augu/immutable' {
         constructor(base?: ExtensiveName<T>);
 
         private name: string;
+        public empty: boolean;
         public toArray(): T[];
         public find(fun: (i: T) => boolean): T | undefined;
         public filter(fun: (i: T) => boolean): T[];
         public map<S>(fun: (i: T) => S): S[];
-        public random(): T;
+        public random(): T | undefined;
         public partition(fun: (i: T) => boolean): [this, this];
-        public merge(x: Collection<T>): Collection<T>;
+        public merge(x: Collection<T>): this;
+        public every(fun: (i: T) => boolean): boolean;
+        public some(fun: (i: T) => boolean): boolean;
+        public static from<V>(obj: V[] | Record<string | number | symbol, V>): Collection<V>;
         public toString(): string;
     }
 }
