@@ -5,6 +5,7 @@
     "types": "index.d.ts",
     "files": ["dist/", "index.d.ts"],
     "main": "dist/index.js",
+    "homepage": "https://auguwu.github.io/immutable",
     "repository": {
         "url": "https://github.com/auguwu/immutable"
     },
