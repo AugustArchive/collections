@@ -1,5 +1,3 @@
-import { ExtensiveName } from '..';
-
 // credit: https://github.com/KurozeroPB/Collection/blob/master/src/utils.ts#L1
 function isObjectLiteral<S>(obj: Record<string | number | symbol, S>) {
     let test = obj;
@@ -19,17 +17,30 @@ export default class Collection<T> extends Map<string | number, T> {
      * Creates a new instance of the `Collection` instance
      * @param base Optional object of an "name"
      */
-    constructor(base?: ExtensiveName<T>) {
+    constructor(name?: string) {
         super();
 
-        this.name = base? base.name: "unknown";
+        this.name = name? name: "unknown";
     }
 
     /**
      * Makes all values into an array
      */
     toArray() {
-        return [...this.values()];
+        const result: T[] = [];
+        for (const values of this.values()) result.push(values);
+
+        return result;
+    }
+
+    /**
+     * Makes all keys and values into an object
+     */
+    toObject() {
+        const result: Record<string | number, T> = {};
+        for (const [key, value] of this) result[key] = value;
+
+        return result;
     }
 
     /**
@@ -117,6 +128,16 @@ export default class Collection<T> extends Map<string | number, T> {
         }
 
         return true;
+    }
+
+    /**
+     * Used from the predicate function, to reduce values into a number
+     * @param fun The predicate function
+     * @param acculamtor Optional acculamtor to add up to
+     */
+    reduce(fun: (acculamtor: number, value: T) => number, acculamtor: number = 0) {
+        const array = this.toArray();
+        return array.reduce(fun, acculamtor);
     }
     
     /**

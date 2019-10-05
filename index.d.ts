@@ -1,22 +1,12 @@
 declare module '@augu/immutable' {
     export const version: string;
-    export interface ExtensiveName<T> {
-        name: string;
-    }
-    export class List<T> extends Set<T> {
-        constructor(base?: ExtensiveName<T>);
-
-        private name: string;
-        public set(a: T): any;
-        public merge(x: List<T>): this;
-        public toString(): string;
-    }
     export class Collection<T> extends Map<string | number, T> {
-        constructor(base?: ExtensiveName<T>);
+        constructor(name?: string);
 
         private name: string;
         public empty: boolean;
         public toArray(): T[];
+        public toObject(): Record<string | number, T>;
         public find(fun: (i: T) => boolean): T | undefined;
         public filter(fun: (i: T) => boolean): T[];
         public map<S>(fun: (i: T) => S): S[];
