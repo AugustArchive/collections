@@ -1,5 +1,5 @@
 // credit: https://github.com/KurozeroPB/Collection/blob/master/src/utils.ts#L1
-function isObjectLiteral<S>(obj: Record<string | number | symbol, S>) {
+const isObjectLiteral = <S>(obj: Record<string | number | symbol, S>) => {
     let test = obj;
     return (typeof obj !== 'object' || obj === null? false: ((() => {
         while (!false) {
