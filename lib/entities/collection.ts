@@ -144,7 +144,7 @@ export default class Collection<T> extends Map<string | number, T> {
      * Checks if the collection is empty
      */
     get empty() {
-        return this.size === 0;
+        return !this.size || this.size === 0;
     }
 
     /**
