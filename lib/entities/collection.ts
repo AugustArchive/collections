@@ -10,7 +10,7 @@ const isObjectLiteral = <S>(obj: Record<string | number | symbol, S>) => {
     })()));
 }
 
-export default class Collection<T> extends Map<string | number, T> {
+export default class Collection<K, T> extends Map<K, T> {
     private name: string;
     
     /**
@@ -41,6 +41,13 @@ export default class Collection<T> extends Map<string | number, T> {
         for (const [key, value] of this) result[key] = value;
 
         return result;
+    }
+    
+    get keys() {
+        const res: K[] = [];
+        for (const key of this.keys()) res.push(key);
+        
+        return res;
     }
 
     /**
