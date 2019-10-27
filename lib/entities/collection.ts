@@ -10,7 +10,7 @@ const isObjectLiteral = <S>(obj: Record<string | number | symbol, S>) => {
     })()));
 }
 
-export default class Collection<K, T> extends Map<K, T> {
+export default class Collection<T> extends Map<string | number, T> {
     private name: string;
     
     /**
@@ -41,13 +41,6 @@ export default class Collection<K, T> extends Map<K, T> {
         for (const [key, value] of this) result[key] = value;
 
         return result;
-    }
-    
-    get keys() {
-        const res: K[] = [];
-        for (const key of this.keys()) res.push(key);
-        
-        return res;
     }
 
     /**
@@ -142,11 +135,31 @@ export default class Collection<K, T> extends Map<K, T> {
      * @param fun The predicate function
      * @param acculamtor Optional acculamtor to add up to
      */
-    reduce(fun: (acculamtor: number, value: T) => number, acculamtor: number = 0) {
-        const array = this.toArray();
-        return array.reduce(fun, acculamtor);
+    reduce(fun: (prev: number, curr: T) => number, initial: number = 0) {
+        const iter = this.values();
+        let val;
+        let res = (initial === undefined)? iter.next().value: initial;
+        while((val = iter.next().value) !== undefined) res = fun(res, val);
+
+        return res;
     }
     
+    /**
+     * Returns a JSONified array of the collection
+     */
+    toJSONArray() {
+        const array = this.toArray();
+        return JSON.stringify(array);
+    }
+
+    /**
+     * Returns a JSONified version of the collection
+     */
+    toJSON() {
+        const obj = this.toObject();
+        return JSON.stringify(obj);
+    }
+
     /**
      * Checks if the collection is empty
      */

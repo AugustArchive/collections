@@ -15,6 +15,9 @@ declare module '@augu/immutable' {
         public merge(x: Collection<T>): this;
         public every(fun: (i: T) => boolean): boolean;
         public some(fun: (i: T) => boolean): boolean;
+        public reduce(fun: (prev: number, curr: T) => number, acc?: number): any;
+        public toJSONArray(): string;
+        public toJSON(): string;
         public static from<V>(obj: V[] | Record<string | number | symbol, V>): Collection<V>;
         public toString(): string;
     }
