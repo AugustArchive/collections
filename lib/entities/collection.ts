@@ -136,12 +136,7 @@ export default class Collection<T> extends Map<string | number, T> {
      * @param acculamtor Optional acculamtor to add up to
      */
     reduce(fun: (prev: number, curr: T) => number, initial: number = 0) {
-        const iter = this.values();
-        let val;
-        let res = (initial === undefined)? iter.next().value: initial;
-        while((val = iter.next().value) !== undefined) res = fun(res, val);
-
-        return res;
+        return (this.toArray()).reduce(fun, initial);
     }
     
     /**
@@ -149,7 +144,7 @@ export default class Collection<T> extends Map<string | number, T> {
      */
     toJSONArray() {
         const array = this.toArray();
-        return JSON.stringify(array);
+        return JSON.parse(JSON.stringify(array));
     }
 
     /**
@@ -157,7 +152,7 @@ export default class Collection<T> extends Map<string | number, T> {
      */
     toJSON() {
         const obj = this.toObject();
-        return JSON.stringify(obj);
+        return JSON.parse(JSON.stringify(obj));
     }
 
     /**
