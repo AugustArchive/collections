@@ -12,7 +12,7 @@
     "devDependencies": {
         "@types/node": "12.7.2",
         "typedoc": "0.15.0",
-        "typescript": "3.5.3"
+        "typescript": "3.7.2"
     },
     "scripts": {
         "build": "rm -fr dist && tsc",
