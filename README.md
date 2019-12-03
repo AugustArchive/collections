@@ -5,65 +5,6 @@
 >
 > [Documentation](https://auguwu.github.io/immutable) **|** [NPM](https://npmjs.com/package/@augu/immutable) **|** [GitHub](https://github.com/auguwu/immutable)
 
-## Documentation (replaced soon:tm:)
-### Collection<T>
-> Synthethic extenstion to the Map instance with various functions
-
-```ts
-// TypeScript
-import { Collection } from '@augu/immutable';
-const coll = new Collection<number>({ name: 'sluts' });
-
-coll.get('Brenda'); // 'Brenda' is not in the collection
-coll.set('Brenda', coll.size); // Collection [Map] { 'Brenda': 1 }
-coll.filter(slut => slut === 1); // ['Brenda']
-coll.set('Patty', coll.size); // Collection [Map] { 'Brenda': 1, 'Patty': 2 }
-coll.partition((u) => u === 1); // [Collection [Map] { 'Brenda': 1' }, Collection [Map] { 'Patty': 2 } ]
-coll.delete('Patty'); // true 
-coll.delete('Brenda'); // true
-```
-
-```js
-// JavaScript
-const { Collection } = require('@augu/immutable');
-const coll = new Collection({ name: 'sluts' });
-
-coll.get('Brenda'); // 'Brenda' is not in the collection
-coll.set('Brenda', coll.size); // Collection [Map] { 'Brenda': 1 }
-coll.filter(slut => slut === 1); // ['Brenda']
-coll.set('Patty', coll.size); // Collection [Map] { 'Brenda': 1, 'Patty': 2 }
-coll.partition((u) => u === 1); // [Collection [Map] { 'Brenda': 1' }, Collection [Map] { 'Patty': 2 } ]
-coll.delete('Patty'); // true 
-coll.delete('Brenda'); // true
-```
-
-### List<T>
-> Synthetic extension to the Set instance with various functions
-
-```ts
-// TypeScript
-import { List } from '@augu/immutable';
-const list = new List<string>({ name: 'sluts' });
-
-list.add('Brenda'); // List [Set] { 'Brenda' }
-list.add('Patty'); // List [Set] { 'Brenda', 'Patty' }
-list.merge(list); // Merged
-list.delete('Brenda'); // true
-list.delete('Patty'); // true
-```
-
-```js
-// JavaScript
-const { List } = require('@augu/immutable');
-const list = new List({ name: 'sluts' });
-
-list.add('Brenda'); // List [Set] { 'Brenda' }
-list.add('Patty'); // List [Set] { 'Brenda', 'Patty' }
-list.merge(list); // Merged
-list.delete('Brenda'); // true
-list.delete('Patty'); // true
-```
-
 ## LICENSE
 > [immutable](https://github.com/auguwu/immutable) was made by auguwu and released under the MIT license
 
