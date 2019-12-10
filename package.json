@@ -10,9 +10,9 @@
         "url": "https://github.com/auguwu/immutable"
     },
     "devDependencies": {
-        "@types/node": "12.12.14",
-        "typedoc": "0.15.4",
-        "typescript": "3.7.2"
+        "@types/node": "12.12.17",
+        "typedoc": "0.15.3",
+        "typescript": "3.7.3"
     },
     "scripts": {
         "build": "rm -fr dist && tsc",
