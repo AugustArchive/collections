@@ -10,17 +10,17 @@ const isObjectLiteral = <S>(obj: Record<string | number | symbol, S>) => {
     })()));
 }
 
+const checkIfItHastoJson = <T>(entity: T) => entity.toJSON? entity.toJSON(): null;
+
 export default class Collection<T> extends Map<string | number, T> {
-    private name: string;
-    
     /**
      * Creates a new instance of the `Collection` instance
      * @param base Optional object of an "name"
      */
-    constructor(name?: string) {
+    constructor(values?: T[] | Record<string | number | symbol, T>) {
         super();
 
-        this.name = name? name: "unknown";
+        if (values) this._add(values!);
     }
 
     /**
@@ -28,7 +28,10 @@ export default class Collection<T> extends Map<string | number, T> {
      */
     toArray() {
         const result: T[] = [];
-        for (const values of this.values()) result.push(values);
+        for (const value of this.values()) {
+            if (checkIfItHastoJson(value) !== null) result.push(value.toJSON());
+            result.push(value);
+        }
 
         return result;
     }
@@ -38,7 +41,10 @@ export default class Collection<T> extends Map<string | number, T> {
      */
     toObject() {
         const result: Record<string | number, T> = {};
-        for (const [key, value] of this) result[key] = value;
+        for (const [key, value] of this) {
+            if (checkIfItHastoJson(value) !== null) result[key] = value.toJSON();
+            result[key] = value;
+        }
 
         return result;
     }
@@ -138,14 +144,6 @@ export default class Collection<T> extends Map<string | number, T> {
     reduce(fun: (prev: number, curr: T) => number, initial: number = 0) {
         return (this.toArray()).reduce(fun, initial);
     }
-    
-    /**
-     * Returns a JSONified array of the collection
-     */
-    toJSONArray() {
-        const array = this.toArray();
-        return JSON.parse(JSON.stringify(array));
-    }
 
     /**
      * Returns a JSONified version of the collection
@@ -175,12 +173,5 @@ export default class Collection<T> extends Map<string | number, T> {
         }
 
         return i;
-    }
-
-    /**
-     * Ignore this
-     */
-    toString() {
-        return `Collection<${this.name}>`;
     }
 }
