@@ -1,11 +1,11 @@
 {
     "compilerOptions": {
-        "target": "esnext",
-        "module": "commonjs",
-        "lib": ["es2015", "es2016", "esnext"],
+        "target": "ESNext",
+        "module": "CommonJS",
+        "lib": ["ES2015", "ES2016", "ES2017", "ES2018", "ESNext"],
         "declaration": false,
-        "outDir": "./dist",
-        "rootDir": "./lib",
+        "outDir": "./build",
+        "rootDir": "./src",
         "strict": true,
         "noImplicitAny": false,
         "moduleResolution": "node",

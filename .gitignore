@@ -1,4 +1,5 @@
 node_modules/
-dist/
-*.lock
-*.log
+build/
+
+package-lock.lock
+yarn.lock
