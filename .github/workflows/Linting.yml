@@ -14,4 +14,5 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm i -g eslint
+      - run: npm i
       - run: eslint src --ext .ts --fix
