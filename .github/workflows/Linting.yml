@@ -13,5 +13,5 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm i -g eslint typedoc
-      - run: npm run lint
+      - run: npm i -g eslint
+      - run: eslint src --ext .ts --fix
