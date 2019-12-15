@@ -1,0 +1,17 @@
+name: ESLint
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # Only build from Node v8+
+        node-version: [8.x, 10.x, 11.x, 12.x]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js v${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm i -g eslint typedoc
+      - run: npm run lint

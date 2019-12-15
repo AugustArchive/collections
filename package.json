@@ -18,7 +18,9 @@
         "typescript": "3.7.3"
     },
     "scripts": {
-        "build": "rm -fr dist && tsc",
+        "prepublish": "yarn docs",
+        "build": "yarn lint && rm -fr dist && tsc",
+        "lint": "eslint src --ext .ts --fix",
         "docs": "rm -fr docs && typedoc --mode modules --out docs"
     }
 }
