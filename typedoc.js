@@ -1,5 +1,5 @@
 module.exports = {
-    src: ['./lib'],
+    src: ['./src'],
     includeDeclarations: false,
     tsconfig: 'tsconfig.json',
     excludePrivate: true,

@@ -3,7 +3,10 @@
     "description": "📝 Immutable library in TypeScript",
     "version": "0.1.0",
     "types": "index.d.ts",
-    "files": ["build/", "index.d.ts"],
+    "files": [
+        "build/",
+        "index.d.ts"
+    ],
     "main": "build/index.js",
     "homepage": "https://auguwu.github.io/immutable",
     "repository": {
@@ -11,9 +14,10 @@
     },
     "devDependencies": {
         "@augu/eslint-config": "1.0.2",
-        "@typescript-eslint/parser": "2.11.0",
-        "@typescript-eslint/eslint-plugin": "2.11.0",
         "@types/node": "12.12.17",
+        "@typescript-eslint/eslint-plugin": "2.11.0",
+        "@typescript-eslint/parser": "2.11.0",
+        "eslint": "^6.7.2",
         "typedoc": "0.15.4",
         "typescript": "3.7.3"
     },
