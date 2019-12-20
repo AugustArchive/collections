@@ -19,7 +19,7 @@
         "@typescript-eslint/parser": "2.12.0",
         "eslint": "6.7.2",
         "typedoc": "0.15.5",
-        "typescript": "3.7.3"
+        "typescript": "3.7.4"
     },
     "scripts": {
         "prepublish": "yarn docs",
