@@ -1,7 +1,14 @@
 declare module '@augu/immutable' {
     type NormalObject<T> = Record<string | number | symbol, T>;
 
+    /**
+     * The version of library: `@augu/immutable`
+     */
     export const version: string;
+
+    /**
+     * The `Collection` immutable object
+     */
     export class Collection<T> extends Map<string | number, T> {
         /**
          * Creates a new `Collection` instance
@@ -136,5 +143,29 @@ declare module '@augu/immutable' {
          * Collection.from<string>({ a: 'aaa' }); // Form a new collection as an Object
          */
         static from<V>(values: V[] | NormalObject<V>): Collection<V>;
+    }
+
+    /**
+     * The `Pair` immutable object
+     */
+    export class Pair<R, L> {
+        /**
+         * Creates a new instance of the `Pair` immutable object
+         * @param right The right side instance
+         * @param left The left side instance
+         * @example
+         * new Pair<string, string>('a', 'b');
+         */
+        constructor(right: R, left: L);
+
+        /**
+         * Gets the right side instance
+         */
+        getRight(): R;
+
+        /**
+         * Gets the left side instance
+         */
+        getLeft(): L;
     }
 }
