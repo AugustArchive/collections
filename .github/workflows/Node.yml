@@ -16,3 +16,4 @@ jobs:
       - run: npm i -g eslint
       - run: npm i
       - run: eslint src --ext .ts --fix
+      - run: yarn test

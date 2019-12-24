@@ -44,11 +44,10 @@ declare module '@augu/immutable' {
         toObject(): NormalObject<T>;
 
         /**
-         * Alias for `Map#set`
-         * @param key The key to set
-         * @param val The value to set
+         * Adds an Array-like structure to the Collection
+         * @param value The value to set
          */
-        add(key: string | number, val: T): void;
+        add(value: T): void;
 
         /**
          * Filter out anything from the `pred` parameter

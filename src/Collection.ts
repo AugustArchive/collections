@@ -57,12 +57,11 @@ export default class Collection<T> extends Map<string | number, T> {
     }
 
     /**
-     * Alias for `Map#set`
-     * @param key The key to set
-     * @param val The value to set
+     * Adds an Array-like value to the Collection
+     * @param value The value to set
      */
-    add(key: string | number, val: T) {
-        this.set(key, val);
+    add(value: T) {
+        this.set(this.size, value);
     }
 
     /**
@@ -130,7 +129,7 @@ export default class Collection<T> extends Map<string | number, T> {
      */
     merge(coll: Collection<T>) {
         const newC = new Collection<T>();
-        for (const [key, value] of coll) newC.add(key, value);
+        for (const [key, value] of coll) newC.set(key, value);
 
         return newC;
     }
@@ -146,8 +145,8 @@ export default class Collection<T> extends Map<string | number, T> {
         const iter: [Collection<T>, Collection<T>] = [new Collection(), new Collection()];
         for (const [key, val] of this) {
             const result = pred(val);
-            if (result) iter[0].add(key, val);
-            else iter[1].add(key, val);
+            if (result) iter[0].set(key, val);
+            else iter[1].set(key, val);
         }
 
         return iter;
@@ -226,5 +225,7 @@ export default class Collection<T> extends Map<string | number, T> {
         } else if (isObject(values)) {
             for (const [key, value] of Object.entries(values)) coll.set(key, value);
         }
+
+        return coll;
     }
 }

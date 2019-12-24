@@ -15,16 +15,19 @@
     "devDependencies": {
         "@augu/eslint-config": "1.0.2",
         "@types/node": "12.12.21",
+        "@types/jest": "24.0.24",
         "@typescript-eslint/eslint-plugin": "2.13.0",
         "@typescript-eslint/parser": "2.13.0",
         "eslint": "6.8.0",
         "typedoc": "0.15.5",
-        "typescript": "3.7.4"
+        "typescript": "3.7.4",
+        "ts-jest": "24.2.0"
     },
     "scripts": {
-        "prepublish": "yarn docs",
-        "build": "yarn lint && rm -fr dist && tsc",
+        "prepare": "yarn docs && yarn build",
+        "build": "yarn lint && yarn test && rm -fr dist && tsc",
         "lint": "eslint src --ext .ts --fix",
-        "docs": "rm -fr docs && typedoc --mode modules --out docs && touch docs/.nojeykell"
+        "test": "jest --config jest.config.js --no-cache",
+        "docs": "rm -fr docs && typedoc && touch docs/.nojeykll"
     }
 }
