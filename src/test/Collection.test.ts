@@ -6,7 +6,7 @@ describe('Collection', () => {
         const coll2 = new Collection<string>();
 
         coll1.add('a');
-        coll1.add('b');
+        coll1.add('b'); 
         coll1.add('c');
         coll1.add('d');
 
@@ -52,7 +52,7 @@ describe('Collection', () => {
 
         const filtered = collection.filter(a => a === 'foo');
         it('should be an Array of ["bar", "baz"]', () =>
-            expect(filtered).toStrictEqual(['bar', 'baz'])
+            expect(filtered).toStrictEqual(['foo'])
         );
     });
 
@@ -72,8 +72,8 @@ describe('Collection', () => {
         });
 
         const mapped = collection.map(s => s.startsWith('b'));
-        it('should be an Array of ["bar", "baz"]', () =>
-            expect(mapped).toStrictEqual(['bar', 'baz'])
+        it('should be an Array of ["false", "true", "true"]', () =>
+            expect(mapped).toStrictEqual([false, true, true])
         );
     });
 });

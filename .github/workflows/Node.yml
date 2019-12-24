@@ -13,7 +13,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm i -g eslint
+      - run: npm i -g eslint jest
       - run: npm i
       - run: eslint src --ext .ts --fix
       - run: yarn test

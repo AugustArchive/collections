@@ -1,7 +1,7 @@
 {
     "name": "@augu/immutable",
     "description": "📝 Immutable library in TypeScript",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "types": "index.d.ts",
     "files": [
         "build/",
