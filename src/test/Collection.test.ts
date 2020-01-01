@@ -99,7 +99,7 @@ describe('Collection', () => {
 
         const last = collection.last();
         it ('should be "baz"', () =>
-            expect(last).toBe('last')
+            expect(last).toBe('baz')
         );
     });
 
