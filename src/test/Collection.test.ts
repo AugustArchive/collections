@@ -76,4 +76,41 @@ describe('Collection', () => {
             expect(mapped).toStrictEqual([false, true, true])
         );
     });
+
+    describe('Collection#first', () => {
+        const collection = Collection.from({
+            foo: 'a',
+            bar: 'b',
+            baz: 'c'
+        });
+
+        const first = collection.first();
+        it('should be "a"', () =>
+            expect(first).toBe('a')
+        );
+    });
+
+    describe('Collection#last', () => {
+        const collection = Collection.from({
+            foo: 'foo',
+            bar: 'bar',
+            baz: 'baz'
+        });
+
+        const last = collection.last();
+        it ('should be "baz"', () =>
+            expect(last).toBe('last')
+        );
+    });
+
+    describe('Collection#reduce', () => {
+        const collection = new Collection<number>();
+        collection.set('totalCount', 5000);
+        collection.set('allCount', 2500);
+
+        const reduced = collection.reduce<number>((a, b) => a + b, 0);
+        it('should be equal to 7500', () =>
+            expect(reduced).toBe(7500)
+        );
+    });
 });

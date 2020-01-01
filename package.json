@@ -1,14 +1,21 @@
 {
     "name": "@augu/immutable",
     "description": "📝 Immutable library in TypeScript",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "types": "index.d.ts",
-    "files": [
-        "build/",
-        "index.d.ts"
-    ],
     "main": "build/index.js",
     "homepage": "https://auguwu.github.io/immutable",
+    "files": ["build/", "esm.mjs", "index.d.ts"],
+    "exports": {
+        ".": [
+            {
+                "require": "./build/index.js",
+                "import": "./esm.mjs"
+            },
+            "./build/index.js"
+        ],
+        "./esm": "./esm.mjs"
+    },
     "repository": {
         "url": "https://github.com/auguwu/immutable"
     },
@@ -28,6 +35,6 @@
         "build": "yarn lint && yarn test && rm -fr dist && tsc",
         "lint": "eslint src --ext .ts --fix",
         "test": "jest --config jest.config.js --no-cache",
-        "docs": "rm -fr docs && typedoc && touch docs/.nojeykll"
+        "docs": "rm -fr docs && typedoc && ./scripts/docs"
     }
 }

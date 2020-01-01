@@ -6,10 +6,10 @@
 > [Documentation](https://auguwu.github.io/immutable) **|** [NPM](https://npmjs.com/package/@augu/immutable) **|** [GitHub](https://github.com/auguwu/immutable)
 
 ## LICENSE
-> [immutable](https://github.com/auguwu/immutable) was made by auguwu and released under the MIT license
+> Released under the **MIT** License
 
 ```
-Copyright (c) 2019 August
+Copyright (c) 2019-2020 August
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+const { exec } = require('child_process');
+const pkg = require('../package.json');
+
+const command = `git add . && git commit -m "chore(docs): generate documentation for v${pkg.version}" && git push`;
+exec(command, (error, stdout, stderr) => {
+    if (error != null || stderr) console.warn(`[Documentation] Unable to push documentation:\n${stderr}`);
+    console.log('[Documentation] Executed command!');
+});
+
+process.exit(0);
