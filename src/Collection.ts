@@ -17,6 +17,8 @@ export default class Collection<T> extends Map<string | number, T> {
                 for (let i = 0; i < from.length; i++) this.set(i, from[i]);
             } else if (isObject(from)) {
                 for (const [key, value] of Object.entries(from)) this.set(key, value);
+            } else {
+                throw new TypeError(`"from" must be a Object or Array, received ${typeof from}`);
             }
         }
     }

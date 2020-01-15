@@ -167,4 +167,107 @@ declare module '@augu/immutable' {
          */
         getLeft(): L;
     }
+
+    /**
+     * The dictionary immutable, just an extended version of the `Object` primitive type
+     */
+    export class Dictionary<V> {
+        /**
+         * The cache portion of the dictionary, usually private
+         */
+        private cache: { [x: string]: V; } | { [x: number]: V; };
+
+        /**
+         * Creates a new instance of the Dictionary immutable collection
+         * @param from Anything to add when constructing
+         * @example
+         * ```js
+         * // Creates a new empty Dictionary
+         * const dict = new Dictionary<string>();
+         * 
+         * // Creates a Dictionary with values inserted as an Object
+         * const dict = new Dictionary<string>({
+         *   foo: 'foo',
+         *   bar: 'bar',
+         *   baz: 'baz'
+         * });
+         * 
+         * // Creates a Dictionary with values inserted as an Array
+         * const dict = new Dictionary<string>(['foo', 'bar', 'baz']);
+         * ```
+         */
+        constructor(from?: V[] | NormalObject<V>);
+
+        /**
+         * Check if the object is empty
+         */
+        public empty: boolean;
+
+        /**
+         * Returns the size of the object if the key exists in the cache
+         */
+        public size(): number;
+
+        /**
+         * Returns an array of keys
+         */
+        public toKeyArray(): (string | number)[];
+
+        /**
+         * Returns an array of values
+         */
+        public toArray(): V[];
+
+        /**
+         * Returns an Array of the entries in the cache 
+         */
+        public getEntries(): [(string | number), V][];
+
+        /**
+         * Gets the names of the properties in the cache
+         * if it has a `string` tied as the key
+         * 
+         * **NOTE**: This only gets it as a string, if they
+         * are tied with `[Symbol]: value`, use `getPropertySymbols`
+         */
+        public getPropertyNames(): string[];
+
+        /**
+         * Gets the name of the properties in the cache
+         * if it has a `symbol` tied as the key 
+         */
+        public getPropertySymbols(): symbol[];
+
+        /**
+         * Sets a value to the cache
+         * @param key The key to add
+         * @param value The value to insert
+         */
+        public set(key: string | number, value: V): boolean;
+
+        /**
+         * Deletes a key from the cache pool
+         * @param key The key to remove
+         */
+        // eslint-disable-next-line
+        delete(key: string | number): boolean;
+        
+        /**
+         * Maps the object as with the `type` to an Array
+         * @param type The type to get
+         * @param predicate The predicate function to recursive over
+         */
+        map<S>(type: 'key', predicate: (item: string | number) => S): S[];
+        map<S>(type: 'value', predicate: (item: V) => S): S[];
+        map<S>(type: string, predicate: (item: any) => S): S[];
+
+        /**
+         * Filters out by the `type` from it's predicate function
+         * @param type The type to filter out
+         * @param predicate The predicate function to recursive over
+         */
+        filter(type: 'key', predicate: (item: string | number) => boolean): (string | number)[];
+        filter(type: 'value', predicate: (item: V) => boolean): V[];
+        filter(type: string, predicate: (item: any) => boolean): (string | number | V)[];
+    }
 }

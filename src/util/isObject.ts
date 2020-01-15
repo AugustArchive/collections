@@ -8,7 +8,7 @@ export type NormalObject<T> = Record<string | number | symbol, T>;
  */
 export default function isObject<S>(obj: NormalObject<S>) {
     let old = obj;
-    const check = (typeof obj !== 'object' || obj === null? false: (() => {
+    const check = (typeof obj !== 'object' || obj === null ? false : (() => {
         while (!false) {
             if (Object.getPrototypeOf(old = Object.getPrototypeOf(old)) === null) break;
         }
