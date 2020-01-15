@@ -35,6 +35,6 @@
         "build": "yarn lint && yarn test && rm -fr build && tsc",
         "lint": "eslint src --ext .ts --fix",
         "test": "jest --config jest.config.js --no-cache",
-        "docs": "rm -fr docs && typedoc"
+        "docs": "rm -fr docs && typedoc  && git add . && git commit -m \"[auto-generate]: Generate documentation\" && git push"
     }
 }
