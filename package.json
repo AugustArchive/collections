@@ -1,7 +1,7 @@
 {
     "name": "@augu/immutable",
     "description": "📝 Immutable library in TypeScript",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "types": "index.d.ts",
     "main": "build/index.js",
     "homepage": "https://auguwu.github.io/immutable",
@@ -31,10 +31,9 @@
         "ts-jest": "24.3.0"
     },
     "scripts": {
-        "prepare": "yarn build",
         "build": "yarn lint && yarn test && rm -fr build && tsc",
         "lint": "eslint src --ext .ts --fix",
         "test": "jest --config jest.config.js --no-cache",
-        "docs": "rm -fr docs && typedoc  && git add . && git commit -m \"[auto-generate]: Generate documentation\" && git push"
+        "docs": "rm -fr docs && typedoc"
     }
 }

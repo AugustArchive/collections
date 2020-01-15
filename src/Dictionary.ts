@@ -179,4 +179,14 @@ export default class Dictionary<V> {
 
         return results;
     }
+
+    /**
+     * If the object has a contained element in it
+     * @param key The key to find
+     */
+    contains(key: string | number) {
+        if (this.empty) return false;
+        if (!this.cache.hasOwnProperty(key)) return false;
+        return true;
+    }
 }
