@@ -15,9 +15,11 @@ export default class Collection<T> extends Map<string | number, T> {
         if (from) {
             if (Array.isArray(from)) {
                 for (let i = 0; i < from.length; i++) this.set(i, from[i]);
-            } else if (isObject(from)) {
+            }
+            else if (isObject(from)) {
                 for (const [key, value] of Object.entries(from)) this.set(key, value);
-            } else {
+            }
+            else {
                 throw new TypeError(`"from" must be a Object or Array, received ${typeof from}`);
             }
         }
@@ -224,7 +226,8 @@ export default class Collection<T> extends Map<string | number, T> {
         const coll = new Collection<V>();
         if (Array.isArray(values)) {
             for (let i = 0; i < values.length; i++) coll.set(i, values[i]);
-        } else if (isObject(values)) {
+        }
+        else if (isObject(values)) {
             for (const [key, value] of Object.entries(values)) coll.set(key, value);
         }
 

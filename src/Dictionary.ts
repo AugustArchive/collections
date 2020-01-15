@@ -33,9 +33,11 @@ export default class Dictionary<V> {
         if (from) {
             if (Array.isArray(from)) {
                 for (const val of from) this.set(this.size(), val);
-            } else if (isObject(from)) {
+            }
+            else if (isObject(from)) {
                 for (const [key, value] of Object.entries(from)) this.set(key, value);
-            } else {
+            }
+            else {
                 throw new TypeError(`"from" must be a Object or Array, received ${typeof from}`);
             }
         }
