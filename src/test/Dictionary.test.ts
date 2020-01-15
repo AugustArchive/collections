@@ -82,7 +82,7 @@ describe('Dictionary', () => {
         });
 
         const key = dict.filter('value', item => item === 'a')[0];
-        it('should return "true"', () =>
+        it('should return "a"', () =>
             expect(key).toBe('a')
         );
     });
