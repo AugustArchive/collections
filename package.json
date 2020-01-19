@@ -20,7 +20,7 @@
         "url": "https://github.com/auguwu/immutable"
     },
     "devDependencies": {
-        "@augu/eslint-config": "1.0.5",
+        "@augu/eslint-config": "1.1.0",
         "@types/node": "12.12.21",
         "@types/jest": "24.9.0",
         "@typescript-eslint/eslint-plugin": "2.16.0",
