@@ -1,39 +1,39 @@
 {
-    "name": "@augu/immutable",
-    "description": "📝 Immutable library in TypeScript",
-    "version": "0.1.4",
-    "types": "index.d.ts",
-    "main": "build/index.js",
-    "homepage": "https://auguwu.github.io/immutable",
-    "files": ["build/", "esm.mjs", "index.d.ts"],
-    "exports": {
-        ".": [
-            {
-                "require": "./build/index.js",
-                "import": "./esm.mjs"
-            },
-            "./build/index.js"
-        ],
-        "./esm": "./esm.mjs"
-    },
-    "repository": {
-        "url": "https://github.com/auguwu/immutable"
-    },
-    "devDependencies": {
-        "@augu/eslint-config": "1.1.0",
-        "@types/node": "12.12.21",
-        "@types/jest": "24.9.0",
-        "@typescript-eslint/eslint-plugin": "2.16.0",
-        "@typescript-eslint/parser": "2.16.0",
-        "eslint": "6.8.0",
-        "typedoc": "0.16.7",
-        "typescript": "3.7.5",
-        "ts-jest": "24.3.0"
-    },
-    "scripts": {
-        "build": "yarn lint && yarn test && rm -fr build && tsc",
-        "lint": "eslint src --ext .ts --fix",
-        "test": "jest --config jest.config.js --no-cache",
-        "docs": "rm -fr docs && typedoc"
-    }
+  "name": "@augu/immutable",
+  "description": "📝 Immutable library in TypeScript",
+  "version": "0.1.5",
+  "types": "index.d.ts",
+  "main": "build/index.js",
+  "homepage": "https://auguwu.github.io/immutable",
+  "files": ["build/", "esm.mjs", "index.d.ts"],
+  "exports": {
+    ".": [
+      {
+        "require": "./build/index.js",
+        "import": "./esm.mjs"
+      },
+      "./build/index.js"
+    ],
+    "./esm": "./esm.mjs"
+  },
+  "repository": {
+    "url": "https://github.com/auguwu/immutable"
+  },
+  "devDependencies": {
+    "@augu/eslint-config": "1.1.0",
+    "@types/node": "12.12.21",
+    "@types/jest": "24.9.0",
+    "@typescript-eslint/eslint-plugin": "2.16.0",
+    "@typescript-eslint/parser": "2.16.0",
+    "eslint": "6.8.0",
+    "typedoc": "0.16.7",
+    "typescript": "3.7.5",
+    "ts-jest": "24.3.0"
+  },
+  "scripts": {
+    "build": "yarn lint && yarn test && rm -fr build && tsc",
+    "lint": "eslint src --ext .ts --fix",
+    "test": "jest --config jest.config.js --no-cache",
+    "docs": "rm -fr docs && typedoc"
+  }
 }
