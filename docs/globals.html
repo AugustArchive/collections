@@ -52,7 +52,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> Immutable</h1>
+			<h1>Immutable</h1>
 		</div>
 	</div>
 </header>
@@ -67,7 +67,6 @@
 							<h3>Classes</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/collection.html" class="tsd-kind-icon">Collection</a></li>
-								<li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/dictionary.html" class="tsd-kind-icon">Dictionary</a></li>
 								<li class="tsd-kind-class tsd-has-type-parameter"><a href="classes/pair.html" class="tsd-kind-icon">Pair</a></li>
 							</ul>
 						</section>
@@ -83,12 +82,6 @@
 								<li class="tsd-kind-variable"><a href="globals.html#version" class="tsd-kind-icon">version</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section ">
-							<h3>Functions</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-has-type-parameter"><a href="globals.html#isobject" class="tsd-kind-icon">is<wbr>Object</a></li>
-							</ul>
-						</section>
 					</div>
 				</section>
 			</section>
@@ -100,7 +93,7 @@
 					<div class="tsd-signature tsd-kind-icon">Normal<wbr>Object&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/17cdac5/src/util/isObject.ts#L1">src/util/isObject.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/85a774b/src/util/isObject.ts#L1">src/util/isObject.ts:1</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -116,58 +109,12 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="version" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> version</h3>
-					<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;../package.json&#x27;).version</span></div>
+					<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = require(&#x27;../package.json&#x27;).version</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/17cdac5/src/index.ts#L5">src/index.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/85a774b/src/index.ts#L4">src/index.ts:4</a></li>
 						</ul>
 					</aside>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Functions</h2>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
-					<a name="isobject" class="tsd-anchor"></a>
-					<h3>is<wbr>Object</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Object&lt;S&gt;<span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">: </span><a href="globals.html#normalobject" class="tsd-signature-type">NormalObject</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/auguwu/immutable/blob/17cdac5/src/util/isObject.ts#L9">src/util/isObject.ts:9</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Utility check to see if it&#39;s an object</p>
-								</div>
-								<dl class="tsd-comment-tags">
-									<dt>credit</dt>
-									<dd><p><a href="https://github.com/KurozeroPB/Collection/blob/master/src/utils.ts#L1">KurozeroPB</a></p>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>S</h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>obj: <a href="globals.html#normalobject" class="tsd-signature-type">NormalObject</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The object iself</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-							<p>a boolean check</p>
-						</li>
-					</ul>
 				</section>
 			</section>
 		</div>
@@ -185,9 +132,6 @@
 						<a href="classes/collection.html" class="tsd-kind-icon">Collection</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/dictionary.html" class="tsd-kind-icon">Dictionary</a>
-					</li>
-					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/pair.html" class="tsd-kind-icon">Pair</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
@@ -195,9 +139,6 @@
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#version" class="tsd-kind-icon">version</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#isobject" class="tsd-kind-icon">is<wbr>Object</a>
 					</li>
 				</ul>
 			</nav>
