@@ -37,6 +37,6 @@
     "build": "yarn lint && yarn test && tsc",
     "lint": "eslint src --ext .ts --fix",
     "test": "jest --config jest.config.js --no-cache",
-    "docs": "rm -fr build && node ./node_modules/.bin/typedoc"
+    "docs": "rm -fr build && ./node_modules/.bin/typedoc.cmd"
   }
 }
