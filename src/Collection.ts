@@ -14,11 +14,9 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
     if (from) {
       if (Array.isArray(from)) {
         for (let i = 0; i < from.length; i++) this.set(i, from[i]);
-      }
-      else if (isObject(from)) {
+      } else if (isObject(from)) {
         for (const [prop, value] of Object.entries(from)) this.set(prop, value);
-      }
-      else {
+      } else {
         throw new TypeError(`"from" expects to be an Object or Array, received ${typeof from}`);
       }
     }
@@ -190,11 +188,9 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
     const collection = new Collection<V>();
     if (Array.isArray(values)) {
       for (let i = 0; i < values.length; i++) collection.set(i, values[i]);
-    }
-    else if (isObject(values)) {
+    } else if (isObject(values)) {
       for (const [key, value] of Object.entries(values)) collection.set(key, value);
-    }
-    else {
+    } else {
       throw new TypeError(`Collection#from requires the values to be an Object or Array, received ${typeof values}`);
     }
 
@@ -234,9 +230,5 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
 
     const kind = getKindOf();
     return `Collection<${kind}>`;
-  }
-
-  get [Symbol.toStringTag]() {
-    return this.toString();
   }
 }
