@@ -33,7 +33,7 @@
     "ts-jest": "25.2.0"
   },
   "scripts": {
-    "prepare": "yarn docs && yarn build",
+    "prepare": "yarn build",
     "build": "yarn lint && yarn test && rm -fr build && tsc",
     "lint": "eslint src --ext .ts --fix",
     "test": "jest --config jest.config.js --no-cache",
