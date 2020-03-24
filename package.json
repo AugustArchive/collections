@@ -1,7 +1,7 @@
 {
   "name": "@augu/immutable",
   "description": "📝 Collections library made in TypeScript",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "types": "index.d.ts",
   "main": "build/index.js",
   "homepage": "https://auguwu.github.io/immutable",
@@ -34,7 +34,7 @@
   },
   "scripts": {
     "prepare": "yarn docs && yarn build",
-    "build": "yarn lint && yarn test && tsc",
+    "build": "yarn lint && yarn test && rm -fr build && tsc",
     "lint": "eslint src --ext .ts --fix",
     "test": "jest --config jest.config.js --no-cache",
     "docs": "rm -fr build && ./node_modules/.bin/typedoc.cmd"
