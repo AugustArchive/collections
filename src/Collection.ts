@@ -74,11 +74,10 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
 
   /**
    * Merges this collection into a new one
-   * @param collection The collection to merge
    */
-  merge(collection: Collection<T>) {
+  merge() {
     const newColl = new Collection<T>();
-    for (const [key, value] of collection) newColl.set(key, value);
+    for (const [key, value] of this) newColl.set(key, value);
 
     return newColl;
   }
@@ -178,7 +177,13 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
 
     return result;
   }
-  
+
+  /**
+   * Deletes all elements from the collection
+   */
+  deleteAll() {
+    for (const key of this.keys()) this.delete(key);
+  }
 
   /**
    * Build a new Collection with(out) initial values
