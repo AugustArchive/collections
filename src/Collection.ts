@@ -22,7 +22,7 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
     }
   }
 
-  /** Checker if the collection is empty */
+  /** Getter if the collection is empty */
   get empty() {
     return this.size === 0;
   }
@@ -40,10 +40,11 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
    * @param predicate The predicate function to filter out
    * @returns A new Array of the values that returned `true` in the predicate function
    */
-  filter(predicate: (item: T) => boolean) {
+  filter(predicate: (this: Collection<T>, item: T) => boolean) {
     const result: T[] = [];
     for (const value of this.values()) {
-      if (predicate(value)) result.push(value);
+      const func = predicate.bind(this);
+      if (func(value)) result.push(value);
     }
 
     return result;
@@ -54,9 +55,11 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
    * @param predicate The predicate function to map out and return a new array
    * @returns A new Array of the values from that function
    */
-  map<S>(predicate: (item: T) => S) {
+  map<S>(predicate: (this: Collection<T>, item: T) => S) {
     const result: S[] = [];
-    for (const value of this.values()) result.push(predicate(value));
+    const func = predicate.bind(this);
+
+    for (const value of this.values()) result.push(func(value));
 
     return result;
   }
@@ -74,10 +77,15 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
 
   /**
    * Merges this collection into a new one
+   * @param collections Any collections to merge into this one
    */
-  merge() {
+  merge(...collections: Collection<T>[]) {
     const newColl = new Collection<T>();
     for (const [key, value] of this) newColl.set(key, value);
+
+    for (const coll of collections) {
+      for (const [key, val] of coll) newColl.set(key, val);
+    }
 
     return newColl;
   }
@@ -87,10 +95,12 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
    * @param predicate The predicate function
    * @returns An array with 2 collections that represent a `true (first one)` and `false (second one)`
    */
-  partition(predicate: (item: T) => boolean): [Collection<T>, Collection<T>] {
+  partition(predicate: (this: Collection<T>, item: T) => boolean): [Collection<T>, Collection<T>] {
     const [item1, item2]: [Collection<T>, Collection<T>] = [new Collection(), new Collection()];
     for (const [key, value] of this) {
-      const result = predicate(value);
+      const func = predicate.bind(this);
+      const result = func(value);
+
       if (result) item1.set(key, value);
       else item2.set(key, value);
     }
@@ -103,11 +113,13 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
    * @param predicate The predicate function
    * @param initialValue The initial value
    */
-  reduce<S>(predicate: (a: S, b: T) => S, initialValue?: S) {
+  reduce<S>(predicate: (this: Collection<T>, a: S, b: T) => S, initialValue?: S) {
     const iterable = this.values();
     let value!: T;
     let res: S = initialValue === undefined ? iterable.next().value : initialValue;
-    while ((value = iterable.next().value) !== undefined) res = predicate(res, value);
+
+    const func = predicate.bind(this);
+    while ((value = iterable.next().value) !== undefined) res = func(res, value);
 
     return res;
   }
@@ -169,10 +181,11 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
    * @param predicate The predicate function
    * @returns The value found or `null` if not found
    */
-  find(predicate: (item: T) => boolean) {
+  find(predicate: (this: Collection<T>, item: T) => boolean) {
     let result: T | null = null;
     for (const value of this.values()) {
-      if (predicate(value)) result = value;
+      const find = predicate.bind(this);
+      if (find(value)) result = value;
     }
 
     return result;
@@ -206,12 +219,7 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
    * Override function to return this as a String
    */
   toString() {
-    // TODO: Find a better solution for this
-    //? since this uses the first element to find the state.
-    //? and it can get inconsise when there is more then 1 element
-    
-    const getKindOf = () => {
-      const element = this.first();
+    const getKindOf = (element: T) => {
       if (element === undefined) return 'undefined';
       if (element === null) return 'null';
       if (!['object', 'function'].includes(typeof element)) return (typeof element);
@@ -233,7 +241,11 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
       return {}.toString.call(element).slice(8, -2).toLowerCase();
     };
 
-    const kind = getKindOf();
-    return `Collection<${kind}>`;
+    const all: string[] = [];
+    this.map(getKindOf).filter((item) => {
+      if (!all.includes(item)) all.push(item);
+    });
+
+    return `Collection<${all.join(' | ')}>`;
   }
 }

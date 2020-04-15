@@ -28,14 +28,14 @@ declare module '@augu/immutable' {
        * @param func The predicate function to filter out
        * @returns A new Array of the values that returned `true` in the predicate function
        */
-      public filter(func: (item: T) => boolean): T[];
+      public filter(func: (this: Collection<T>, item: T) => boolean): T[];
 
       /**
        * Use a predicate function to map anything into a new array
        * @param func The predicate function to map out and return a new array
        * @returns A new Array of the values from that function
        */
-      public map<S>(func: (item: T) => S): S[];
+      public map<S>(func: (this: Collection<T>, item: T) => S): S[];
 
       /**
        * Returns a random value from the collection
@@ -53,14 +53,14 @@ declare module '@augu/immutable' {
        * @param func The predicate function
        * @returns An array with 2 collections that represent a `true (first one)` and `false (second one)`
        */
-      public partition(func: (item: T) => boolean): [Collection<T>, Collection<T>];
+      public partition(func: (this: Collection<T>, item: T) => boolean): [Collection<T>, Collection<T>];
 
       /**
        * Reduce the collection and return a new initial value
        * @param func The predicate function
        * @param initialValue The initial value
        */
-      public reduce<S>(func: (curr: S, acc: T) => S, initialValue?: S): S;
+      public reduce<S>(func: (this: Collection<T>, curr: S, acc: T) => S, initialValue?: S): S;
 
       /**
        * Returns the first element in the collection
