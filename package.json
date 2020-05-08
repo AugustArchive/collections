@@ -1,10 +1,10 @@
 {
   "name": "@augu/immutable",
   "description": "📝 Collections library made in TypeScript",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "types": "index.d.ts",
   "main": "build/index.js",
-  "homepage": "https://docs.augu.dev",
+  "homepage": "https://docs.augu.dev/immutable",
   "files": ["build/", "esm.mjs", "index.d.ts"],
   "author": "August <august@augu.dev>",
   "exports": {

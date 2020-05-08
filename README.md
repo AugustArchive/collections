@@ -45,6 +45,7 @@ queue.tick(console.log); //> Logs 'a', 'b', 'c', 'd'
           <img src='https://avatars0.githubusercontent.com/u/27751995' alt='August' width='225' height='auto' />
           <br />
           <p>August</p>
+          <br />
         </a>
       </td>
     </tr>
