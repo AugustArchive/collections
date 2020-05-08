@@ -146,12 +146,24 @@ declare module '@augu/immutable' {
 
       /**
        * Enqueue a new value to the cache, run `tick` to process it!
+       * 
+       * This method is deprecated, use `Queue#add`
+       * 
        * @param value The value to put
        */
       public enqueue(value: T): this;
 
       /**
-       * Runs all of the queue values that was put with `enqueue`
+       * Adds a item to the cache
+       * @param value The value to add
+       */
+      public add(value: T): this;
+
+      /**
+       * Runs all of the queue values that was put with `add`.
+       * 
+       * This removes the cache while a for loop doesn't
+       * 
        * @param func The function when a new queue item has ticked
        */
       public tick(func: (item: T) => void): void;
@@ -172,6 +184,11 @@ declare module '@augu/immutable' {
        * Returns the size of the cache
        */
       public size(): number;
+
+      /**
+       * Makes this class iterable
+       */
+      [Symbol.iterator](): { next(): { value?: T, done: boolean} }
     }
   }
 

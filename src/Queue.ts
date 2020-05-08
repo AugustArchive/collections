@@ -1,9 +1,11 @@
+import { deprecated } from './util/deprecated';
+
 /**
  * Queue-based collection to fetch, requeue, and do other stuff!
  */
 export default class Queue<T = any> {
   /** Array of the cache to use */
-  private cache: T[];
+  public cache: T[];
 
   /**
    * Constructs a new instance of the `Queue` class
@@ -15,15 +17,31 @@ export default class Queue<T = any> {
 
   /**
    * Enqueue a new value to the cache, run `tick` to process it!
+   * 
+   * This method is deprecated, use `Queue#add`
+   * 
    * @param value The value to put
    */
+  @deprecated('add')
   enqueue(value: T) {
     this.cache.push(value);
     return this;
   }
 
   /**
-   * Runs all of the queue values that was put with `enqueue`
+   * Adds a item to the cache
+   * @param value The value to add
+   */
+  add(value: T) {
+    this.cache.push(value);
+    return this;
+  }
+
+  /**
+   * Runs all of the queue values that was put with `add`.
+   * 
+   * This removes the cache while a for loop doesn't
+   * 
    * @param func The function when a new queue item has ticked
    */
   tick(func: (item: T) => void) {
@@ -55,3 +73,16 @@ export default class Queue<T = any> {
     return this.cache.length;
   }
 }
+
+// Add it to the prototype
+Queue.prototype[Symbol.iterator] = function iterator() {
+  let index = -1;
+  const items = this.cache;
+
+  return {
+    next: () => ({
+      value: items[++index],
+      done: !(index in items)
+    })
+  };
+};

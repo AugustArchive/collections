@@ -67,4 +67,22 @@ describe('Queue', () => {
     expect(queue.size()).toBe(0);
     expect(items.length).toBe(5);
   });
+
+  it('should return `5` as the index of the iterations', () => {
+    const queue = new Queue([
+      'a',
+      'b',
+      'c',
+      'd',
+      'e'
+    ]);
+
+
+    let index = 0;
+    // @ts-ignore
+    for (const item of queue) index++;
+
+    expect(index).toBe(5);
+    expect(index).not.toBe(0);
+  });
 });
