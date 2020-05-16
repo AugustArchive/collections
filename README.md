@@ -1,5 +1,5 @@
 # @augu/immutable 
-[![npm version](https://badge.fury.io/js/%40augu%2Fimmutable.svg)](https://badge.fury.io/js/%40augu%2Fimmutable) [![Stars](https://img.shields.io/github/stars/auguwu/immutable)](https://github.com/auguwu/immutable)
+[![npm version](https://badge.fury.io/js/%40augu%2Fimmutable.svg)](https://badge.fury.io/js/%40augu%2Fimmutable) [![Stars](https://img.shields.io/github/stars/auguwu/immutable)](https://github.com/auguwu/immutable) [![Workflow Status](https://github.com/auguwu/immutable/workflows/ESLint/badge.svg)](https://github.com/auguwu/immutable/tree/master/.github/workflows) [![Build Status](https://travis-ci.org/auguwu/immutable.svg?branch=master)](https://travis-ci.org/auguwu/immutable)
 
 > Immutable library made in TypeScript
 >
@@ -45,7 +45,6 @@ queue.tick(console.log); //> Logs 'a', 'b', 'c', 'd'
           <img src='https://avatars0.githubusercontent.com/u/27751995' alt='August' width='225' height='auto' />
           <br />
           <p>August</p>
-          <br />
         </a>
       </td>
     </tr>
