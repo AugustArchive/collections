@@ -1,12 +1,13 @@
 {
   "name": "@augu/immutable",
   "description": "📝 Collections library made in TypeScript",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "types": "index.d.ts",
   "main": "build/index.js",
   "homepage": "https://docs.augu.dev/immutable",
   "files": ["build/", "esm.mjs", "index.d.ts"],
   "author": "August <august@augu.dev>",
+  "repository": "https://github.com/auguwu/immutable",
   "exports": {
     ".": [
       {
@@ -16,9 +17,6 @@
       "./build/index.js"
     ],
     "./esm": "./esm.mjs"
-  },
-  "repository": {
-    "url": "https://github.com/auguwu/immutable"
   },
   "devDependencies": {
     "@augu/eslint-config": "1.5.2",

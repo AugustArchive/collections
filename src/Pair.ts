@@ -24,4 +24,28 @@ export default class Pair<R = any, L = any> {
   getLeft() {
     return this.left;
   }
+
+  /** Make this class immutable */
+  freeze() {
+    Object.freeze(this);
+    Object.freeze(this.constructor);
+
+    return this;
+  }
+
+  /**
+   * Override function to return this as a String
+   */
+  toString() {
+    const getKindOf = (element: any) => {
+      if (element === undefined) return 'undefined';
+      if (element === null) return 'null';
+      if (!['object', 'function'].includes(typeof element)) return (typeof element);
+      if (element instanceof Array) return 'array';
+      
+      return {}.toString.call(element).slice(8, -2).toLowerCase();
+    };
+
+    return `Pair<${getKindOf(this.right)}, ${getKindOf(this.left)}>`;
+  }
 }

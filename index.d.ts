@@ -3,6 +3,11 @@ declare module '@augu/immutable' {
     /** Represents an object of key-value pairs */
     type NormalObject<T> = Record<string | number | symbol, T>;
 
+    /** Represents a Iterator */
+    interface Iterator<T> {
+      next(): IteratorReturnResult<T>;
+    }
+
     /** Returns the version of the library */
     export const version: string;
 
@@ -109,6 +114,11 @@ declare module '@augu/immutable' {
       public deleteAll(): void;
 
       /**
+       * Make this Collection immutable, all items will never be removed or added
+       */
+      public freeze(): this;
+
+      /**
        * Build a new Collection with(out) initial values
        * @param values The values to add
        */
@@ -132,6 +142,11 @@ declare module '@augu/immutable' {
        * Function to get the left side of the pair
        */
       public getLeft(): L;
+
+      /**
+       * Make this Pair immutable, all items will never be removed or added
+       */
+      public freeze(): this;
     }
 
     /**
@@ -169,12 +184,37 @@ declare module '@augu/immutable' {
       public tick(func: (item: T) => void): void;
 
       /**
-       * Peek at the last value of the queue
+       * Returns the last value of the queue
+       */
+      public last(): T;
+
+      /**
+       * Returns the value or `null` if not found
+       * @param index The index to peek at
+       * @returns A value if it didn't return null
+       */
+      public get(index: number): T | null;
+
+      /**
+       * Removes an item from the cache
+       * 
+       * @warning Use `Queue#tick` to remove all!
+       * @param item The item to remove or it's index
+       * @returns This queue without the item
+       */
+      public remove(item: T | number): this;
+
+      /**
+       * Returns the last value of the queue
+       * 
+       * This function is deprecated, use `Queue#last`
        */
       public peek(): T;
 
       /**
-       * Peek at an index of the cache
+       * Returns the value or `null` if not found
+       * 
+       * This function is deprecated, use `Queue#get`
        * @param index The index to peek at
        * @returns A value if it didn't return null
        */
@@ -186,9 +226,24 @@ declare module '@augu/immutable' {
       public size(): number;
 
       /**
+       * Makes the queue into an Array
+       */
+      public toArray(): T[];
+
+      /**
+       * Makes the queue into a Collection
+       */
+      public toCollection(): immutable.Collection<T>;
+
+      /**
+       * Make this Queue immutable, all items will never be removed or added
+       */
+      public freeze(): this;
+
+      /**
        * Makes this class iterable
        */
-      [Symbol.iterator](): { next(): { value?: T, done: boolean} }
+      [Symbol.iterator](): immutable.Iterator<T>;
     }
   }
 

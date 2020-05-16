@@ -113,4 +113,16 @@ describe('Collection', () => {
       expect(reduced).toBe(7500)
     );
   });
+
+  describe('Collection#toString', () => {
+    const collection = new Collection({
+      item1: 'item',
+      item2: 'item2'
+    });
+
+    const type = collection.toString();
+    it('should return Collection<string>', () =>
+      expect(type).toStrictEqual('Collection<string>')
+    );
+  });
 });

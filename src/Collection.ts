@@ -198,6 +198,14 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
     for (const key of this.keys()) this.delete(key);
   }
 
+  /** Make this class immutable */
+  freeze() {
+    Object.freeze(this);
+    Object.freeze(this.constructor);
+
+    return this;
+  }
+
   /**
    * Build a new Collection with(out) initial values
    * @param values The values to add
@@ -224,20 +232,7 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
       if (element === null) return 'null';
       if (!['object', 'function'].includes(typeof element)) return (typeof element);
       if (element instanceof Array) return 'array';
-    
-      if (typeof element === 'function') {
-        if (element.toString().includes('class')) {
-          const name = element.toString();
-          return `class:${name.slice(6, name.length - 3)}`;
-        }
-    
-        if (element.toString().includes('function')) {
-          const name = element.toString();
-          const par = name.indexOf('(');
-          return `function:${name.slice(9, par)}`;
-        }
-      }
-    
+      
       return {}.toString.call(element).slice(8, -2).toLowerCase();
     };
 

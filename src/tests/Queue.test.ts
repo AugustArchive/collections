@@ -25,7 +25,7 @@ describe('Queue', () => {
       'c'
     ]);
 
-    const last = queue.peek();
+    const last = queue.last();
     expect(last).toBe('c');
   });
 
@@ -36,7 +36,7 @@ describe('Queue', () => {
       'c'
     ]);
 
-    const item = queue.peekAt(1);
+    const item = queue.get(1);
     expect(item).toBeDefined();
     expect(item).toBe('b');
   });
@@ -48,7 +48,7 @@ describe('Queue', () => {
       'c'
     ]);
 
-    queue.enqueue('d');
+    queue.add('d');
     expect(queue.size()).toBe(4);
   });
 
@@ -79,10 +79,18 @@ describe('Queue', () => {
 
 
     let index = 0;
-    // @ts-ignore
-    for (const item of queue) index++;
+    for (const _ of queue) index++;
 
     expect(index).toBe(5);
     expect(index).not.toBe(0);
+  });
+
+  describe('Queue#toString', () => {
+    const queue = new Queue(['item', 'item', 'item']);
+
+    const type = queue.toString();
+    it('should return Queue<string>', () =>
+      expect(type).toStrictEqual('Queue<string>')
+    );
   });
 });

@@ -14,4 +14,13 @@ describe('Pair', () => {
       expect(pair.getLeft()).toBe('b')
     );
   });
+
+  describe('Pair#toString', () => {
+    const pair = new Pair('item', 'item');
+
+    const type = pair.toString();
+    it('should return Pair<string, string>', () =>
+      expect(type).toStrictEqual('Pair<string, string>')
+    );
+  });
 });
