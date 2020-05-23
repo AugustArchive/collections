@@ -19,7 +19,7 @@
     "./esm": "./esm.mjs"
   },
   "devDependencies": {
-    "@augu/eslint-config": "1.5.2",
+    "@augu/eslint-config": "1.6.0",
     "@types/node": "13.13.5",
     "@types/jest": "25.2.3",
     "@typescript-eslint/eslint-plugin": "2.34.0",
