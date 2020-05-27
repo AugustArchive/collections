@@ -1,5 +1,5 @@
 # @augu/immutable 
-[![npm version](https://badge.fury.io/js/%40augu%2Fimmutable.svg)](https://badge.fury.io/js/%40augu%2Fimmutable) [![Stars](https://img.shields.io/github/stars/auguwu/immutable)](https://github.com/auguwu/immutable) [![Workflow Status](https://github.com/auguwu/immutable/workflows/ESLint/badge.svg)](https://github.com/auguwu/immutable/tree/master/.github/workflows) [![Build Status](https://travis-ci.org/auguwu/immutable.svg?branch=master)](https://travis-ci.org/auguwu/immutable)
+[![npm version](https://badge.fury.io/js/%40augu%2Fimmutable.svg)](https://badge.fury.io/js/%40augu%2Fimmutable) [![Stars](https://img.shields.io/github/stars/auguwu/immutable)](https://github.com/auguwu/immutable) [![Workflow Status](https://github.com/auguwu/immutable/workflows/ESLint/badge.svg)](https://github.com/auguwu/immutable/tree/master/.github/workflows) [![Build Status](https://travis-ci.org/auguwu/immutable.svg?branch=master)](https://travis-ci.org/auguwu/immutable) [![Build Size](https://img.shields.io/bundlephobia/min/@augu/immutable?style=flat-square)](https://github.com/auguwu/immutable)
 
 > Immutable library made in TypeScript
 >
