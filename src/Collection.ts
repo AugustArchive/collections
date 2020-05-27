@@ -1,15 +1,21 @@
-import isObject, { NormalObject } from './util/isObject'; // eslint-disable-line no-unused-vars
+import isObject, { NormalObject } from './util/isObject';
+import { ImmutabilityError } from './util/errors';
 
 /**
  * The `Collection` immutable object
  */
 export default class Collection<T = any> extends Map<string | number | BigInt, T> {
+  /** Checks if this Collection is mutable (values can be added) or not */
+  public mutable: boolean;
+
   /**
    * Creates a new instance of the `Collection` immutable class
    * @param from Any values to add
    */
   constructor(from?: T[] | NormalObject<T>) {
     super();
+
+    this.mutable = true;
 
     if (from) {
       if (Array.isArray(from)) {
@@ -32,6 +38,7 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
    * @param val The value to add to the collection
    */
   add(val: T) {
+    if (!this.mutable) throw new ImmutabilityError('collection', 'add');
     this.set(this.size, val);
   }
 
@@ -76,10 +83,15 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
   }
 
   /**
-   * Merges this collection into a new one
+   * Merges all collections provided and this one to a new collection
    * @param collections Any collections to merge into this one
    */
   merge(...collections: Collection<T>[]) {
+    if (collections.some(x => !x.mutable)) {
+      const immutable = collections.filter(x => !x.mutable).map(x => x.toString()).join(', ');
+      throw new Error(`Collections ${immutable} cannot be merged due to it being immutable.`);
+    }
+
     const newColl = new Collection<T>();
     for (const [key, value] of this) newColl.set(key, value);
 
@@ -195,15 +207,37 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
    * Deletes all elements from the collection
    */
   deleteAll() {
+    if (!this.mutable) throw new ImmutabilityError('collection', 'deleteAll');
     for (const key of this.keys()) this.delete(key);
+  }
+
+  /** Overriden from `Map#delete` */
+  delete(key: string | number | BigInt) {
+    if (!this.mutable) throw new ImmutabilityError('collection', 'delete');
+    return super.delete(key);
+  }
+
+  /** Overriden from `Map#set` */
+  set(key: string | number | BigInt, value: T) {
+    if (!this.mutable) throw new ImmutabilityError('collection', 'set');
+    return super.set(key, value);
   }
 
   /** Make this class immutable */
   freeze() {
+    this.mutable = false;
     Object.freeze(this);
     Object.freeze(this.constructor);
+  }
 
-    return this;
+  /** Makes this class mutable and returns a new collection of the copied values of this immutable collection */
+  unfreeze() {
+    // There is no "way" that this can be unfrozed, so we make a
+    // new collection for safety precautions
+    const collection = new (this.constructor as typeof Collection)<T>();
+    for (const [key, value] of this) collection.set(key, value);
+
+    return collection;
   }
 
   /**
@@ -233,7 +267,7 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
       if (!['object', 'function'].includes(typeof element)) return (typeof element);
       if (element instanceof Array) return 'array';
       
-      return {}.toString.call(element).slice(8, -2).toLowerCase();
+      return {}.toString.call(element).slice(8, -2);
     };
 
     const all: string[] = [];

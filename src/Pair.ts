@@ -1,4 +1,7 @@
 export default class Pair<R = any, L = any> {
+  /** Checks if this pair is mutable (values can be added) or not */
+  public mutable: boolean;
+
   /** The right side of the pair */
   private right: R;
 
@@ -11,6 +14,7 @@ export default class Pair<R = any, L = any> {
    * @param left The left side
    */
   constructor(right: R, left: L) {
+    this.mutable = true;
     this.right = right;
     this.left = left;
   }
@@ -27,10 +31,14 @@ export default class Pair<R = any, L = any> {
 
   /** Make this class immutable */
   freeze() {
+    this.mutable = false;
     Object.freeze(this);
     Object.freeze(this.constructor);
+  }
 
-    return this;
+  /** Returns a new Pair instance of this immutable class */
+  unfreeze() {
+    return new Pair<R, L>(this.getRight(), this.getLeft());
   }
 
   /**

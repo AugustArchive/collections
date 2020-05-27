@@ -1,10 +1,14 @@
-import { deprecated } from './util/deprecated';
+import { ImmutabilityError } from './util/errors';
+import { deprecate } from './util/deprecated';
 import Collection from './Collection';
 
 /**
  * Queue-based collection to fetch, requeue, and do other stuff!
  */
 export default class Queue<T = any> {
+  /** Checks if this Queue is mutable (values can be added) or not */
+  public mutable: boolean;
+
   /** Array of the cache to use */
   private cache: T[];
 
@@ -13,6 +17,7 @@ export default class Queue<T = any> {
    * @param cache Optional value to set your own cache to the queue
    */
   constructor(cache: T[] = []) {
+    this.mutable = true;
     this.cache = cache;
   }
 
@@ -23,8 +28,8 @@ export default class Queue<T = any> {
    * 
    * @param value The value to put
    */
-  @deprecated('add')
   enqueue(value: T) {
+    deprecate('enqueue', 'add');
     this.cache.push(value);
     return this;
   }
@@ -34,6 +39,7 @@ export default class Queue<T = any> {
    * @param value The value to add
    */
   add(value: T) {
+    if (!this.mutable) throw new ImmutabilityError('queue', 'add');
     this.cache.push(value);
     return this;
   }
@@ -53,8 +59,8 @@ export default class Queue<T = any> {
   /**
    * Peek at the last value of the queue
    */
-  @deprecated('last')
   peek() {
+    deprecate('peek', 'last');
     return this.cache[this.cache.length - 1];
   }
 
@@ -63,8 +69,8 @@ export default class Queue<T = any> {
    * @param index The index to peek at
    * @returns A value if it didn't return null
    */
-  @deprecated('get')
   peekAt(index: number): T | null {
+    deprecate('peekAt', 'get');
     const item = this.cache[index];
     return (item === void 0 || item === null) ? null : item!;
   }
@@ -93,6 +99,7 @@ export default class Queue<T = any> {
    * @param item The item to remove
    */
   remove(item: T | number) {
+    if (!this.mutable) throw new ImmutabilityError('queue', 'remove');
     if (typeof item === 'number') {
       const value = this.cache[(item as number)];
       if (!value || value === null) throw new Error(`Item at index ${item} is not in the cache.`);
@@ -134,10 +141,17 @@ export default class Queue<T = any> {
 
   /** Make this class immutable */
   freeze() {
+    this.mutable = false;
     Object.freeze(this);
     Object.freeze(this.constructor);
+  }
 
-    return this;
+  /** Make this class mutable and returns a new Queue instance that is mutable */
+  unfreeze() {
+    const queue = new (this.constructor as typeof Queue)<T>();
+    for (const item of this) queue.add(item);
+
+    return queue;
   }
 
   /**

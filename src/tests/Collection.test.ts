@@ -1,3 +1,4 @@
+import * as errors from '../util/errors';
 import Collection from '../Collection';
 
 describe('Collection', () => {
@@ -124,5 +125,18 @@ describe('Collection', () => {
     it('should return Collection<string>', () =>
       expect(type).toStrictEqual('Collection<string>')
     );
+
+    const collection2 = new Collection({
+      item1: 'item',
+      item2: 1,
+      item3: false,
+      item4: Symbol('$item4')
+    });
+
+    const type2 = collection2.toString();
+    it('should return Collection<string | number | boolean | symbol>', () => {
+      expect(type2).toBeDefined();
+      expect(type2).toContain(' | ');
+    });
   });
 });

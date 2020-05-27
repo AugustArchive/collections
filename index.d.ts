@@ -116,7 +116,12 @@ declare module '@augu/immutable' {
       /**
        * Make this Collection immutable, all items will never be removed or added
        */
-      public freeze(): this;
+      public freeze(): void;
+
+      /**
+       * Makes this class mutable and returns a new collection of the copied values of this immutable collection
+       */
+      public unfreeze(): this;
 
       /**
        * Build a new Collection with(out) initial values
@@ -146,7 +151,12 @@ declare module '@augu/immutable' {
       /**
        * Make this Pair immutable, all items will never be removed or added
        */
-      public freeze(): this;
+      public freeze(): void;
+
+      /**
+       * Makes this class mutable and returns a new Pair of the copied values of this immutable Pair
+       */
+      public unfreeze(): this;
     }
 
     /**
@@ -238,7 +248,12 @@ declare module '@augu/immutable' {
       /**
        * Make this Queue immutable, all items will never be removed or added
        */
-      public freeze(): this;
+      public freeze(): void;
+
+      /**
+       * Makes this class mutable and returns a new collection of the copied values of this immutable collection
+       */
+      public unfreeze(): this;
 
       /**
        * Makes this class iterable
