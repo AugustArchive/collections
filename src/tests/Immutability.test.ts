@@ -39,6 +39,14 @@ describe('Collection - Immutability Checks', () => {
     expect(coll.mutable).toBeTruthy();
     expect(coll).toStrictEqual(collection);
   });
+
+  it('should not merge collections', () => {
+    const coll1 = new Collection([1, 2, 3]);
+    const coll2 = new Collection(['a', 'b', 'c']);
+
+    coll1.freeze();
+    expect(() => coll2.merge(coll1)).toThrow(Error);
+  });
 });
 
 describe('Pair - Immutability Checks', () => {

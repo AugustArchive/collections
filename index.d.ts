@@ -49,9 +49,10 @@ declare module '@augu/immutable' {
       public random(): T | null;
       
       /**
-       * Merges this collection into a new one
+       * Merges all collections provided and this one to a new collection
+       * @param collections Any collections to merge into this one
        */
-      public merge(): Collection<T>;
+      public merge(...collections: Collection<any>[]): Collection<T>;
 
       /**
        * Paritition the collection and return an Array of 2 collections that returned `true` or `false`
@@ -79,12 +80,6 @@ declare module '@augu/immutable' {
       public first(amount: number): T[];
 
       /**
-       * Returns the first element in the collection or an Array of the values from the correspondant `amount`
-       * @param amount The amount to fetch from
-       */
-      public first(amount?: number): T | T[] | undefined;
-
-      /**
        * Returns the last element in the collection
        */
       public last(): T | undefined;
@@ -94,12 +89,6 @@ declare module '@augu/immutable' {
        * @param amount The amount to fetch from
        */
       public last(amount: number): T[];
-
-      /**
-       * Returns the last element in the collection or an Array of the values from the correspondant `amount`
-       * @param amount The amount to fetch from
-       */
-      public last(amount?: number): T | T[] | undefined;
 
       /**
        * Find a value in the collection from it's predicate function

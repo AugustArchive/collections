@@ -86,10 +86,10 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
    * Merges all collections provided and this one to a new collection
    * @param collections Any collections to merge into this one
    */
-  merge(...collections: Collection<T>[]) {
+  merge(...collections: Collection<any>[]) {
     if (collections.some(x => !x.mutable)) {
-      const immutable = collections.filter(x => !x.mutable).map(x => x.toString()).join(', ');
-      throw new Error(`Collections ${immutable} cannot be merged due to it being immutable.`);
+      const immutable = collections.filter(x => !x.mutable);
+      throw new Error(`${immutable.length} collections cannot be merged due to some being immutable.`);
     }
 
     const newColl = new Collection<T>();
