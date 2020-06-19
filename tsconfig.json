@@ -9,10 +9,13 @@
     "strict": true,
     "noImplicitAny": false,
     "moduleResolution": "node",
-    "types": ["node", "jest"],
+    // typescript ur bad
+    "types": ["node", "@types/jest"],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["src/tests", "node_modules"]
 }

@@ -1,5 +1,5 @@
+import { ImmutabilityError, MergeConflictError } from './util/errors';
 import isObject, { NormalObject } from './util/isObject';
-import { ImmutabilityError } from './util/errors';
 
 /**
  * The `Collection` immutable object
@@ -89,7 +89,7 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
   merge(...collections: Collection<any>[]) {
     if (collections.some(x => !x.mutable)) {
       const immutable = collections.filter(x => !x.mutable);
-      throw new Error(`${immutable.length} collections cannot be merged due to some being immutable.`);
+      throw new MergeConflictError(immutable.length);
     }
 
     const newColl = new Collection<T>();
@@ -261,13 +261,19 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
    * Override function to return this as a String
    */
   toString() {
-    const getKindOf = (element: T) => {
+    const getKindOf = (element: unknown) => {
       if (element === undefined) return 'undefined';
       if (element === null) return 'null';
       if (!['object', 'function'].includes(typeof element)) return (typeof element);
-      if (element instanceof Array) return 'array';
+      if (Array.isArray(element)) return 'array';
+      if (typeof element === 'function') {
+        const func = element.toString();
+
+        if (func.startsWith('function')) return 'function';
+        if (func.startsWith('class')) return func.slice(5, func.indexOf('{')).trim();
+      }
       
-      return {}.toString.call(element).slice(8, -2);
+      return 'object';
     };
 
     const all: string[] = [];

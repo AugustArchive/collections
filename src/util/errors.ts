@@ -12,3 +12,11 @@ export class ImmutabilityError extends Error {
     this.name = 'ImmutabilityError';
   }
 }
+
+export class MergeConflictError extends Error {
+  constructor(collections: number) {
+    super(`${collections} collections cannot be merged due to some being immutable`);
+
+    this.name = 'MergeConflictError';
+  }
+}

@@ -45,7 +45,7 @@ describe('Collection - Immutability Checks', () => {
     const coll2 = new Collection(['a', 'b', 'c']);
 
     coll1.freeze();
-    expect(() => coll2.merge(coll1)).toThrow(Error);
+    expect(() => coll2.merge(coll1)).toThrow(errors.MergeConflictError);
   });
 });
 

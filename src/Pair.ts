@@ -45,13 +45,19 @@ export default class Pair<R = any, L = any> {
    * Override function to return this as a String
    */
   toString() {
-    const getKindOf = (element: any) => {
+    const getKindOf = (element: unknown) => {
       if (element === undefined) return 'undefined';
       if (element === null) return 'null';
       if (!['object', 'function'].includes(typeof element)) return (typeof element);
-      if (element instanceof Array) return 'array';
+      if (Array.isArray(element)) return 'array';
+      if (typeof element === 'function') {
+        const func = element.toString();
+
+        if (func.startsWith('function')) return 'function';
+        if (func.startsWith('class')) return func.slice(5, func.indexOf('{')).trim();
+      }
       
-      return {}.toString.call(element).slice(8, -2).toLowerCase();
+      return 'object';
     };
 
     return `Pair<${getKindOf(this.right)}, ${getKindOf(this.left)}>`;
