@@ -245,6 +245,12 @@ declare module '@augu/immutable' {
       public unfreeze(): this;
 
       /**
+      * Checks if the key is included in the cache
+      * @param key The key to find
+      */
+      public includes(key: T): boolean;
+
+      /**
        * Makes this class iterable
        */
       [Symbol.iterator](): immutable.Iterator<T>;

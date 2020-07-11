@@ -119,6 +119,14 @@ export default class Queue<T = any> {
   }
 
   /**
+   * Checks if the key is included in the cache
+   * @param key The key to find
+   */
+  includes(key: T) {
+    return this.cache.includes(key);
+  }
+
+  /**
    * Returns the size of the cache
    */
   size() {

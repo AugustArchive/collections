@@ -77,7 +77,6 @@ describe('Queue', () => {
       'e'
     ]);
 
-
     let index = 0;
     for (const _ of queue) index++;
 
@@ -85,10 +84,15 @@ describe('Queue', () => {
     expect(index).not.toBe(0);
   });
 
+  it('should include `5` in the queue', () => {
+    const queue = new Queue(['a', 'b', '5']);
+    expect(queue.includes('5')).toBeTruthy();
+  });
+
   describe('Queue#toString', () => {
     const queue = new Queue(['item', 'item', 'item']);
-
     const type = queue.toString();
+    
     it('should return Queue<string>', () =>
       expect(type).toStrictEqual('Queue<string>')
     );
