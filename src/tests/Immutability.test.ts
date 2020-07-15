@@ -1,4 +1,4 @@
-import { Collection, Pair, Queue } from '..';
+import { Collection, Pair, Queue, TimedQueue } from '..';
 import * as errors from '../util/errors';
 
 describe('Collection - Immutability Checks', () => {
@@ -94,9 +94,9 @@ describe('Queue - Immutability Checks', () => {
   );
 
   // TODO: Fix this test and inspect why it's not working as intended
-  //it('should not allow to delete items in this specific queue', () => 
-  //  expect(queue.remove('a')).toThrow(errors.ImmutabilityError)
-  //);
+  it('should not allow to delete items in this specific queue', () => 
+    expect(() => queue.remove('a')).toThrow(errors.ImmutabilityError)
+  );
 
   it('should be the exact Queue if we make a new mutable Queue instanace', () => {
     const q = queue.unfreeze();
@@ -104,6 +104,46 @@ describe('Queue - Immutability Checks', () => {
     expect(q.mutable).toBeDefined();
     expect(q.mutable).toBeTruthy();
     expect(q).toStrictEqual(queue);
+    expect(q.size()).toBe(7);
+  });
+});
+
+describe('Immutability - TimedQueue', () => {
+  let queue!: TimedQueue<number>;
+  beforeAll(() => {
+    queue = new TimedQueue();
+    queue.add([0, 1, 2, 3, 4, 5, 6]);
+  });
+
+  afterAll(() => {
+    queue.clear();
+  });
+
+  it('should be mutable by default', () => {
+    expect(queue.mutable).toBeDefined();
+    expect(queue.mutable).toBeTruthy();
+  });
+
+  it('should not be mutable when called TimedQueue#freeze', () => {
+    queue.freeze();
+
+    expect(queue.mutable).toBeDefined();
+    expect(queue.mutable).toBeFalsy();
+  });
+
+  it('should not allow new items to be queued', () => 
+    expect(() => queue.add([0, 1, 2])).toThrow(errors.ImmutabilityError)
+  );
+
+  it('should not allow items to be removed', () =>
+    expect(() => queue.remove(0)).toThrow(errors.ImmutabilityError)
+  );
+
+  it('should be the same exact TimedQueue when becoming mutable', () => {
+    const q = queue.unfreeze();
+
+    expect(q.mutable).toBeDefined();
+    expect(q.mutable).toBeTruthy();
     expect(q.size()).toBe(7);
   });
 });

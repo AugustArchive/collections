@@ -6,13 +6,4 @@ export type NormalObject<T> = Record<string | number | symbol, T>;
  * @returns a boolean check
  * @credit [KurozeroPB](https://github.com/KurozeroPB/Collection/blob/master/src/utils.ts#L1)
  */
-export default <S>(obj: NormalObject<S>): obj is NormalObject<S> => {
-  let old = obj;
-  return (typeof obj !== 'object' || obj === null ? false : (() => {
-    while (!false) {
-      if (Object.getPrototypeOf(old = Object.getPrototypeOf(old)) === null) break;
-    }
-
-    return Object.getPrototypeOf(obj) === old;
-  })());
-};
+export default <S>(obj: NormalObject<S>): obj is NormalObject<S> => typeof obj === 'object';

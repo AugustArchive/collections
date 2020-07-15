@@ -1,8 +1,7 @@
-import * as errors from '../util/errors';
 import Collection from '../Collection';
 
-describe('Collection', () => {
-  describe('Collection#from', () => {
+describe('immutable.Collection', () => {
+  describe('immutable.Collection#from', () => {
     const coll1 = new Collection<string>();
     const coll2 = new Collection<string>();
 
@@ -31,7 +30,7 @@ describe('Collection', () => {
     });
   });
 
-  describe('Collection#find', () => {
+  describe('immutable.Collection#find', () => {
     const collection = Collection.from({
       foo: 'foo',
       bar: 'bar',
@@ -44,7 +43,7 @@ describe('Collection', () => {
     );
   });
 
-  describe('Collection#filter', () => {
+  describe('immutable.Collection#filter', () => {
     const collection = Collection.from({
       foo: 'foo',
       bar: 'bar',
@@ -57,7 +56,7 @@ describe('Collection', () => {
     );
   });
 
-  describe('Collection#add', () => {
+  describe('immutable.Collection#add', () => {
     const collection = Collection.from(['foo', 'bar', 'baz']);
     collection.add('test');
     it('should have a length of 4', () =>
@@ -65,7 +64,7 @@ describe('Collection', () => {
     );
   });
 
-  describe('Collection#map', () => {
+  describe('immutable.Collection#map', () => {
     const collection = Collection.from({
       foo: 'foo',
       bar: 'bar',
@@ -78,7 +77,7 @@ describe('Collection', () => {
     );
   });
 
-  describe('Collection#first', () => {
+  describe('immutable.Collection#first', () => {
     const collection = Collection.from({
       foo: 'a',
       bar: 'b',
@@ -91,7 +90,7 @@ describe('Collection', () => {
     );
   });
 
-  describe('Collection#last', () => {
+  describe('immutable.Collection#last', () => {
     const collection = Collection.from({
       foo: 'foo',
       bar: 'bar',
@@ -104,7 +103,7 @@ describe('Collection', () => {
     );
   });
 
-  describe('Collection#reduce', () => {
+  describe('immutable.Collection#reduce', () => {
     const collection = new Collection<number>();
     collection.set('totalCount', 5000);
     collection.set('allCount', 2500);
@@ -115,7 +114,7 @@ describe('Collection', () => {
     );
   });
 
-  describe('Collection#toString', () => {
+  describe('immutable.Collection#toString', () => {
     const collection = new Collection({
       item1: 'item',
       item2: 'item2'

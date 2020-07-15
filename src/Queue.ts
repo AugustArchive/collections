@@ -1,5 +1,6 @@
 import { ImmutabilityError } from './util/errors';
 import { deprecate } from './util/deprecated';
+import removeArray from './util/removeArray';
 import Collection from './Collection';
 
 /**
@@ -8,6 +9,9 @@ import Collection from './Collection';
 export default class Queue<T = any> {
   /** Checks if this Queue is mutable (values can be added) or not */
   public mutable: boolean;
+
+  /** Array of timers to use */
+  private timers: NodeJS.Timer[];
 
   /** Array of the cache to use */
   private cache: T[];
@@ -18,6 +22,7 @@ export default class Queue<T = any> {
    */
   constructor(cache: T[] = []) {
     this.mutable = true;
+    this.timers = [];
     this.cache = cache;
   }
 
@@ -60,6 +65,8 @@ export default class Queue<T = any> {
    * Peek at the last value of the queue
    */
   peek() {
+    if (!this.cache.length) throw new Error('There are no items in the queue');
+
     deprecate('peek', 'last');
     return this.cache[this.cache.length - 1];
   }
@@ -71,6 +78,8 @@ export default class Queue<T = any> {
    */
   peekAt(index: number): T | null {
     deprecate('peekAt', 'get');
+    if (!this.cache.length) throw new Error('There are no items in the queue');
+
     const item = this.cache[index];
     return (item === void 0 || item === null) ? null : item!;
   }
@@ -88,6 +97,8 @@ export default class Queue<T = any> {
    * @returns A value if it didn't return null
    */
   get(index: number): T | null {
+    if (!this.cache.length) throw new Error('There are no items in the queue');
+
     const item = this.cache[index];
     return (item === void 0 || item === null) ? null : item!;
   }
@@ -100,22 +111,9 @@ export default class Queue<T = any> {
    */
   remove(item: T | number) {
     if (!this.mutable) throw new ImmutabilityError('queue', 'remove');
-    if (typeof item === 'number') {
-      const value = this.cache[(item as number)];
-      if (!value || value === null) throw new Error(`Item at index ${item} is not in the cache.`);
+    removeArray(this.cache, item);
 
-      for (let i = 0; i < this.size(); i++) {
-        if (i === item) this.cache.splice(i, 1);
-      }
-
-      return this;
-    } else {
-      for (let i = 0; i < this.size(); i++) {
-        if (this.cache[i] === item) this.cache.splice(i, 1);
-      }
-
-      return this;
-    }
+    return this;
   }
 
   /**
@@ -203,7 +201,7 @@ export default class Queue<T = any> {
 }
 
 // Add it to the prototype
-Queue.prototype[Symbol.iterator] = function iterator() {
+Queue.prototype[Symbol.iterator] = function iterator(this: Queue<any>) {
   let index = -1;
   const items = this.toArray();
 

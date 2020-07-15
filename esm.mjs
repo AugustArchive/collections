@@ -4,5 +4,6 @@ export const {
   Collection,
   Queue,
   Pair,
-  version
+  version,
+  TimedQueue
 } = Immutable;

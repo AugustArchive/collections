@@ -14,6 +14,20 @@ on:
       - 'README.md'
       - 'renovate.json'
       - 'tsconfig.json'
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      # We ignore node modules, the build that TypeScript creates and the root directory
+      # because it's mostly modifying the source code, not really these folder/files
+      - 'node_modules/**'
+      - 'build/**'
+      - '.eslintrc.json'
+      - '.gitignore'
+      - 'LICENSE'
+      - 'README.md'
+      - 'renovate.json'
+      - 'tsconfig.json'
 jobs:
   build:
     runs-on: ubuntu-latest

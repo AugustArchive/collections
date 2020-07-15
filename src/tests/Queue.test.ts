@@ -1,6 +1,6 @@
 import Queue from '../Queue';
 
-describe('Queue', () => {
+describe('immutable.Queue', () => {
   it('should return 0 as the size of the queue', () => {
     const queue = new Queue();
 

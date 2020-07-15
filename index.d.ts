@@ -1,4 +1,6 @@
 declare module '@augu/immutable' {
+  import { EventEmitter } from 'events';
+
   namespace immutable {
     /** Represents an object of key-value pairs */
     type NormalObject<T> = Record<string | number | symbol, T>;
@@ -7,6 +9,19 @@ declare module '@augu/immutable' {
     interface Iterator<T> {
       next(): IteratorReturnResult<T>;
     }
+
+    /** Options for the timed queue */
+    interface TimedQueueOptions {
+      /** The amount of items to locate */
+      itemCount?: number;
+
+      /** Interval to stop the timer */
+      every?: number;
+
+      /** The amount of time to wait */
+      time?: number;
+    }
+
 
     /** Returns the version of the library */
     export const version: string;
@@ -254,6 +269,83 @@ declare module '@augu/immutable' {
        * Makes this class iterable
        */
       [Symbol.iterator](): immutable.Iterator<T>;
+    }
+
+    export class TimedQueue<T = unknown> extends EventEmitter {
+      /** The timer instance (that is running) */
+      private _timer?: NodeJS.Timer;
+
+      /** The amount of items to allocate */
+      public itemCount: number;
+
+      /** If the timer started or not */
+      public started: boolean;
+
+      /** The mutable state */
+      public mutable: boolean;
+
+      /** The cache of the queue */
+      private cache: T[];
+
+      /** Interval to stop the timer */
+      public every: number;
+
+      /** The amount of time to wait */
+      public time: number;
+
+      /**
+       * Creates a new TimedQueue
+       * @param options The options to use
+       */
+      constructor(options?: TimedQueueOptions);
+
+      /**
+       * Adds an item to the queue
+       * @param item The item to add
+       */
+      public add(item: T): this;
+
+      /**
+       * Adds an array of items to the queue
+       * @param item The items to add
+       */
+      public add(item: T[]): this;
+
+      /**
+       * Removes an item from the queue
+       * @param item The item to remove
+       */
+      public remove(item: T | number): void;
+
+      /**
+       * Clears the cache
+       */
+      public clear(): void;
+
+      /**
+       * Returns the size of this TimedQueue
+       */
+      public size(): number;
+
+      /**
+       * Starts the timed queue
+       */
+      public start(): Promise<void>;
+
+      /**
+       * Stops the timed queue
+       */
+      public stop(): void;
+
+      /**
+       * Make this TimedQueue immutable, all items will never be removed or added
+       */
+      public freeze(): void;
+
+      /**
+       * Makes this class mutable and returns a new collection of the copied values of this immutable collection
+       */
+      public unfreeze(): this;
     }
   }
 

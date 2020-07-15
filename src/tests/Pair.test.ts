@@ -1,6 +1,6 @@
 import Pair from '../Pair';
 
-describe('Pair', () => {
+describe('immutable.Pair', () => {
   describe('Pair#getRight', () => {
     const pair = new Pair('a', 'b');
     it('should return "a"', () =>
