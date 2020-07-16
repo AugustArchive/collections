@@ -36,6 +36,22 @@ queue.enqueue('d'); //> Queue<string>
 queue.tick(console.log); //> Logs 'a', 'b', 'c', 'd'
 ```
 
+### TimedQueue
+```ts
+import { TimedQueue } from '@augu/immutable';
+
+const queue = new TimedQueue({
+  itemCount: 1, // emit only 1 item
+  every: 3000, // stop the timer at 3 seconds
+  time: 1000 // every time to "sleep" until enqueueing
+});
+
+queue.on('tick', console.log);
+
+queue.add(['a', 'b', 'c']); // adds 'a', 'b', and 'c' to the queue
+queue.start(); // starts the timer
+```
+
 ## Maintainers
 <table>
   <tbody>

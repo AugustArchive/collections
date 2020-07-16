@@ -22,7 +22,6 @@ declare module '@augu/immutable' {
       time?: number;
     }
 
-
     /** Returns the version of the library */
     export const version: string;
 
