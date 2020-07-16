@@ -118,6 +118,40 @@ declare module '@augu/immutable' {
       public deleteAll(): void;
 
       /**
+       * Returns the first element in the collection
+       */
+      public firstKey(): T | undefined;
+
+      /**
+       * Returns an Array of the keys from the correspondant `amount`
+       * @param amount The amount to fetch from
+       */
+      public firstKey(amount: number): T[];
+
+      /**
+       * Returns the last key in the collection
+       */
+      public lastKey(): T | undefined;
+
+      /**
+       * Returns an Array of the keys from the correspondant `amount`
+       * @param amount The amount to fetch from
+       */
+      public lastKey(amount: number): T[];
+
+      /**
+       * Gets the first item in the collection and removes it (if provided)
+       * @param remove If we should remove it or not
+       */
+      public shift(remove?: boolean): T | null;
+
+      /**
+       * Gets the last item in the collection and removes it(if provided)
+       * @param remove If we should remove it or not
+       */
+      public unshift(remove?: boolean): T | null;
+
+      /**
        * Make this Collection immutable, all items will never be removed or added
        */
       public freeze(): void;

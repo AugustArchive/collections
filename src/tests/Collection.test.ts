@@ -138,4 +138,64 @@ describe('immutable.Collection', () => {
       expect(type2).toContain(' | ');
     });
   });
+
+  describe('Collection#shift', () => {
+    const collection = new Collection({ item1: 'uwu', item2: 'owo' });
+    
+    it('should not be removed by default', () => {
+      const item = collection.shift();
+      
+      expect(collection.size).toBe(2);
+      expect(item).toBeDefined();
+      expect(item).toBe('uwu');
+    });
+
+    it('should remove it', () => {
+      const item = collection.shift(true);
+
+      expect(collection.size).toBe(1);
+      expect(item).toBeDefined();
+      expect(item).toBe('uwu');
+    });
+  });
+
+  describe('Collection#unshift', () => {
+    const collection = new Collection({ item1: 'uwu', item2: 'owo' });
+    
+    it('should not be removed by default', () => {
+      const item = collection.unshift();
+      
+      expect(collection.size).toBe(2);
+      expect(item).toBeDefined();
+      expect(item).toBe('owo');
+    });
+
+    it('should remove it', () => {
+      const item = collection.unshift(true);
+
+      expect(collection.size).toBe(1);
+      expect(item).toBeDefined();
+      expect(item).toBe('owo');
+    });
+  });
+
+  describe('Collection#firstKey', () => {
+    const collection = new Collection({ item1: 'uwu', item2: 'owo' });
+    it('should be "item1"', () => {
+      const key = collection.firstKey();
+
+      expect(key).toBeDefined();
+      expect(key).toBe('item1');
+    });
+  });
+
+  describe('Collection#lastKey', () => {
+    const collection = new Collection({ item1: 'uwu', item2: 'owo' });
+    it('should be "item2"', () => {
+      const key = collection.lastKey();
+
+      expect(key).toBeDefined();
+      expect(key).toBe('item2');
+    });
+  });
 });

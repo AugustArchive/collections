@@ -4,7 +4,7 @@ import isObject, { NormalObject } from './util/isObject';
 /**
  * The `Collection` immutable object
  */
-export default class Collection<T = any> extends Map<string | number | BigInt, T> {
+export default class Collection<T = any> extends Map<string | number | bigint, T> {
   /** Checks if this Collection is mutable (values can be added) or not */
   public mutable: boolean;
 
@@ -204,6 +204,57 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
   }
 
   /**
+   * Returns the last element in the collection
+   */
+  lastKey(): (string | number | bigint) | undefined;
+
+  /**
+   * Returns an Array of the values from the correspondant `amount`
+   * @param amount The amount to fetch from
+   */
+  lastKey(amount: number): (string | number | bigint)[];
+
+  /**
+   * Returns the last element in the collection or an Array of the values from the correspondant `amount`
+   * @param amount The amount to fetch from
+   */
+  lastKey(amount?: number): (string | number | bigint) | (string | number | bigint)[] | undefined {
+    const iter = [...this.keys()];
+    if (typeof amount === 'undefined') return iter[iter.length - 1];
+    if (amount < 0) return this.firstKey(amount! * -1);
+    if (!amount) return [];
+
+    return iter.slice(-amount);
+  }
+
+  /**
+   * Returns the first key in the collection
+   */
+  firstKey(): (string | number | bigint) | undefined;
+
+  /**
+   * Returns an Array of the keys from the correspondant `amount`
+   * @param amount The amount to fetch from
+   */
+  firstKey(amount: number): (string | number | bigint)[];
+
+  /**
+   * Returns the first key in the collection or an Array of the values from the correspondant `amount`
+   * @param amount The amount to fetch from
+   */
+  firstKey(amount?: number): (string | number | bigint) | (string | number | bigint)[] | undefined  {
+    if (typeof amount === 'undefined') {
+      return (this.keys()).next().value;
+    }
+
+    if (amount < 0) return this.lastKey(amount! * -1);
+    amount = Math.min(amount, this.size);
+
+    const iterable = this.keys();
+    return Array.from({ length: amount }, (): (string | number | bigint) => iterable.next().value);
+  }
+
+  /**
    * Deletes all elements from the collection
    */
   deleteAll() {
@@ -212,15 +263,42 @@ export default class Collection<T = any> extends Map<string | number | BigInt, T
   }
 
   /** Overriden from `Map#delete` */
-  delete(key: string | number | BigInt) {
+  delete(key: string | number | bigint) {
     if (!this.mutable) throw new ImmutabilityError('collection', 'delete');
     return super.delete(key);
   }
 
   /** Overriden from `Map#set` */
-  set(key: string | number | BigInt, value: T) {
+  set(key: string | number | bigint, value: T) {
     if (!this.mutable) throw new ImmutabilityError('collection', 'set');
     return super.set(key, value);
+  }
+
+  /**
+   * Gets the first item in the collection and removes it (if provided)
+   * @param remove If we should remove it or not
+   */
+  shift(remove: boolean = false) {
+    const item = this.first();
+    const key = this.firstKey();
+    if (item === undefined || key === undefined) return null;
+
+    if (remove) this.delete(key);
+    return item;
+  }
+
+  /**
+   * Gets the last item in the collection and removes it(if provided)
+   * @param remove If we should remove it or not
+   */
+  unshift(remove: boolean = false) {
+    const item = this.last();
+    const key = this.lastKey();
+
+    if (item === undefined || key === undefined) return null;
+    
+    if (remove) this.delete(key);
+    return item;
   }
 
   /** Make this class immutable */
