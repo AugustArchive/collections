@@ -212,6 +212,12 @@ declare module '@augu/immutable' {
       public empty: boolean;
 
       /**
+       * Adds an item to the cache but hirearchy is on first instead of last
+       * @param item The item to add at the cache
+       */
+      public addFirst(item: T): this;
+
+      /**
        * Enqueue a new value to the cache, run `tick` to process it!
        * 
        * This method is deprecated, use `Queue#add`

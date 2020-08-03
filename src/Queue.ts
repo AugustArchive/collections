@@ -28,6 +28,17 @@ export default class Queue<T = any> {
   get empty() {
     return this.cache.length === 0;
   }
+  
+  /**
+   * Adds an item to the cache but hirearchy is on first instead of last
+   * @param item The item to add at the cache
+   */
+  addFirst(item: T) {
+    if (!this.mutable) throw new ImmutabilityError('queue', 'addFirst');
+
+    this.cache.unshift(item);
+    return this;
+  }
 
   /**
    * Enqueue a new value to the cache, run `tick` to process it!
