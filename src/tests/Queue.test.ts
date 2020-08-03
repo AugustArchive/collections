@@ -89,6 +89,24 @@ describe('immutable.Queue', () => {
     expect(queue.includes('5')).toBeTruthy();
   });
 
+  it('should return "a" from the first item in the queue', () => {
+    const queue = new Queue(['a', 'b', '5']);
+    const item = queue.shift();
+
+    expect(queue).toBeDefined();
+    expect(queue.size()).toBe(2);
+    expect(item).toBe('a');
+  });
+
+  it('should return "5" from the last item in the queue', () => {
+    const queue = new Queue(['a', 'b', '5']);
+    const item = queue.unshift();
+
+    expect(queue).toBeDefined();
+    expect(queue.size()).toBe(2);
+    expect(item).toBe('5');
+  });
+
   describe('Queue#toString', () => {
     const queue = new Queue(['item', 'item', 'item']);
     const type = queue.toString();

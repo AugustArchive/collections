@@ -10,9 +10,6 @@ export default class Queue<T = any> {
   /** Checks if this Queue is mutable (values can be added) or not */
   public mutable: boolean;
 
-  /** Array of timers to use */
-  private timers: NodeJS.Timer[];
-
   /** Array of the cache to use */
   private cache: T[];
 
@@ -22,8 +19,14 @@ export default class Queue<T = any> {
    */
   constructor(cache: T[] = []) {
     this.mutable = true;
-    this.timers = [];
     this.cache = cache;
+  }
+
+  /**
+   * Checks if the queue is empty
+   */
+  get empty() {
+    return this.cache.length === 0;
   }
 
   /**
@@ -158,6 +161,20 @@ export default class Queue<T = any> {
     for (const item of this) queue.add(item);
 
     return queue;
+  }
+
+  /**
+   * Returns the first item in the cache and removes it from the cache
+   */
+  shift() {
+    return this.cache.shift();
+  }
+
+  /**
+   * Returns the last item in the cache and removes it from the cache
+   */
+  unshift() {
+    return this.cache.pop();
   }
 
   /**

@@ -207,6 +207,11 @@ declare module '@augu/immutable' {
       constructor(cache?: T[]);
 
       /**
+       * Check to see if the Queue is empty or not
+       */
+      public empty: boolean;
+
+      /**
        * Enqueue a new value to the cache, run `tick` to process it!
        * 
        * This method is deprecated, use `Queue#add`
@@ -293,10 +298,20 @@ declare module '@augu/immutable' {
       public unfreeze(): this;
 
       /**
-      * Checks if the key is included in the cache
-      * @param key The key to find
-      */
+       * Checks if the key is included in the cache
+       * @param key The key to find
+       */
       public includes(key: T): boolean;
+
+      /**
+       * Removes the first item and removes it from the cache
+       */
+      public shift(): T | undefined;
+
+      /**
+       * Removes the last item and removes it from the cache
+       */
+      public unshift(): T | undefined;
 
       /**
        * Makes this class iterable
