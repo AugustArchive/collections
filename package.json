@@ -27,7 +27,7 @@
     "eslint": "7.6.0",
     "jest": "26.3.0",
     "typescript": "3.9.7",
-    "ts-jest": "26.1.4"
+    "ts-jest": "26.2.0"
   },
   "scripts": {
     "prepare": "yarn lint && rm -fr build && tsc",
