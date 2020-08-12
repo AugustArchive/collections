@@ -198,4 +198,46 @@ describe('immutable.Collection', () => {
       expect(key).toBe('item2');
     });
   });
+
+  describe('Collection#emplace', () => {
+    const collection = new Collection({ item1: 'uwu' });
+
+    it('should insert "item2" into the collection', () => {
+      const value = collection.emplace('item2', () => 'owo');
+
+      expect(value).toBeDefined();
+      expect(value).toStrictEqual('owo');
+    });
+
+    it('shouldn\'t insert "item2" into the collection', () => {
+      const value = collection.emplace('item2', () => 'uwu');
+
+      expect(value).toBeDefined();
+      expect(value).toStrictEqual('owo');
+    });
+  });
+
+  describe('Collection#toArray', () => {
+    const collection = new Collection({ item1: 'uwu', item2: 'owo' });
+
+    it('should return ["uwu", "owo"]', () => {
+      const values = collection.toArray();
+
+      expect(values).toBeDefined();
+      expect(values.length).toBe(2);
+      expect(values.join(', ')).toStrictEqual('uwu, owo');
+    });
+  });
+
+  describe('Collection#toKeyArray', () => {
+    const collection = new Collection({ item1: 'uwu', item2: 'owo' });
+
+    it('should return ["item1", "item2"]', () => {
+      const values = collection.toKeyArray();
+
+      expect(values).toBeDefined();
+      expect(values.length).toBe(2);
+      expect(values.join(', ')).toStrictEqual('item1, item2');
+    });
+  });
 });

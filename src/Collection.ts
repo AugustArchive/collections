@@ -1,5 +1,6 @@
 import { ImmutabilityError, MergeConflictError } from './util/errors';
 import isObject, { NormalObject } from './util/isObject';
+import getKindOf from './util/getKindOf';
 
 /**
  * The `Collection` immutable object
@@ -319,6 +320,38 @@ export default class Collection<T = any> extends Map<string | number | bigint, T
   }
 
   /**
+   * Returns all of the values as an Array
+   */
+  toArray() {
+    return [...this.values()];
+  }
+
+  /**
+   * Returns all of the keys as an Array
+   */
+  toKeyArray() {
+    return [...this.keys()];
+  }
+
+  /**
+   * Computes a value if it's absent in this Collection
+   * @param key The key to find
+   * @param insert Function to run if the key doesn't exist
+   */
+  emplace(key: string, insert: () => T) {
+    if (!this.has(key)) {
+      if (!this.mutable) throw new ImmutabilityError('collection', 'emplace');
+
+      const item = insert();
+
+      this.set(key, item);
+      return item;
+    } else {
+      return this.get(key)!;
+    }
+  }
+
+  /**
    * Build a new Collection with(out) initial values
    * @param values The values to add
    */
@@ -339,21 +372,6 @@ export default class Collection<T = any> extends Map<string | number | bigint, T
    * Override function to return this as a String
    */
   toString() {
-    const getKindOf = (element: unknown) => {
-      if (element === undefined) return 'undefined';
-      if (element === null) return 'null';
-      if (!['object', 'function'].includes(typeof element)) return (typeof element);
-      if (Array.isArray(element)) return 'array';
-      if (typeof element === 'function') {
-        const func = element.toString();
-
-        if (func.startsWith('function')) return 'function';
-        if (func.startsWith('class')) return func.slice(5, func.indexOf('{')).trim();
-      }
-      
-      return 'object';
-    };
-
     const all: string[] = [];
     this.map(getKindOf).filter((item) => {
       if (!all.includes(item)) all.push(item);

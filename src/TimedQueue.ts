@@ -1,6 +1,7 @@
 import { ImmutabilityError } from './util/errors';
 import { EventEmitter } from 'events';
 import removeArray from './util/removeArray';
+import getKindOf from './util/getKindOf';
 import sleep from './util/sleep';
 
 /** Options for the timed queue */
@@ -118,8 +119,9 @@ export default class TimedQueue<T = unknown> extends EventEmitter {
           await sleep(this.time);
         }
       } else {
+        let index = -1;
         while (this.started && this.cache.length > 0) {
-          const items = this.cache.slice(0, this.itemCount);
+          const items = this.cache.splice(this.itemCount, this.itemCount);
           this.emit('tick', items);
           await sleep(this.time);
         }
@@ -162,21 +164,6 @@ export default class TimedQueue<T = unknown> extends EventEmitter {
    * Override function to return this as a String
    */
   toString() {
-    const getKindOf = (element: unknown) => {
-      if (element === undefined) return 'undefined';
-      if (element === null) return 'null';
-      if (!['object', 'function'].includes(typeof element)) return (typeof element);
-      if (Array.isArray(element)) return 'array';
-      if (typeof element === 'function') {
-        const func = element.toString();
-
-        if (func.startsWith('function')) return 'function';
-        if (func.startsWith('class')) return func.slice(5, func.indexOf('{')).trim();
-      }
-      
-      return 'object';
-    };
-
     const all: string[] = [];
     this.cache.map(getKindOf).filter((item) => {
       if (!all.includes(item)) all.push(item);

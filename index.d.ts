@@ -161,6 +161,23 @@ declare module '@augu/immutable' {
       public unfreeze(): this;
 
       /**
+       * Returns all of the values as an Array
+       */
+      toArray(): T[];
+
+      /**
+       * Returns all of the keys as an Array
+       */
+      toKeyArray(): (string | number | bigint)[];
+
+      /**
+       * Computes a value if it's absent in this Collection
+       * @param key The key to find
+       * @param insert Function to run if the key doesn't exist
+       */
+      emplace(key: string, insert: () => T): T;
+
+      /**
        * Build a new Collection with(out) initial values
        * @param values The values to add
        */
