@@ -175,7 +175,25 @@ declare module '@augu/immutable' {
        * @param key The key to find
        * @param insert Function to run if the key doesn't exist
        */
-      emplace(key: string, insert: () => T): T;
+      emplace(key: string, insert: T): T;
+
+      /**
+       * Similar to [Array.sort], which basically sorts the values of this Collection
+       * to return a value
+       * 
+       * @param compareFn The compare function
+       * @returns The value
+       */
+      sort(compareFn: (this: Collection<T>, a: T, b: T) => number): T[];
+
+      /**
+       * Similar to [Array.sort], which basically sorts the values of this Collection
+       * to return a value
+       * 
+       * @param compareFn The compare function
+       * @returns The value
+       */
+      sortKeys(compareFn: (this: Collection<T>, a: string | number | bigint, b: string | number | bigint) => number): (string | number | bigint)[];
 
       /**
        * Build a new Collection with(out) initial values
@@ -184,23 +202,23 @@ declare module '@augu/immutable' {
       public static from<V>(values: V[] | NormalObject<V>): Collection<V>;
     }
 
-    export class Pair<R = any, L = any> {
+    export class Pair<F = unknown, S = unknown> {
       /**
        * Creates a new `Pair` instance
-       * @param right The right side of the pair
-       * @param left The left side of the pair
+       * @param right The first instance of the pair
+       * @param left The second instance of the pair
        */
-      constructor(right: R, left: L);
+      constructor(right: F, left: S);
 
       /**
        * Function to get the right side of the pair
        */
-      public getRight(): R;
+      public first: F;
 
       /**
        * Function to get the left side of the pair
        */
-      public getLeft(): L;
+      public second: S;
 
       /**
        * Make this Pair immutable, all items will never be removed or added

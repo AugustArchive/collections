@@ -4,14 +4,14 @@ describe('immutable.Pair', () => {
   describe('Pair#getRight', () => {
     const pair = new Pair('a', 'b');
     it('should return "a"', () =>
-      expect(pair.getRight()).toBe('a')
+      expect(pair.first).toBe('a')
     );
   });
 
   describe('Pair#getLeft', () => {
     const pair = new Pair('a', 'b');
     it('should return "b"', () =>
-      expect(pair.getLeft()).toBe('b')
+      expect(pair.second).toBe('b')
     );
   });
 

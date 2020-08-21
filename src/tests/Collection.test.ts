@@ -203,14 +203,14 @@ describe('immutable.Collection', () => {
     const collection = new Collection({ item1: 'uwu' });
 
     it('should insert "item2" into the collection', () => {
-      const value = collection.emplace('item2', () => 'owo');
+      const value = collection.emplace('item2', 'owo');
 
       expect(value).toBeDefined();
       expect(value).toStrictEqual('owo');
     });
 
     it('shouldn\'t insert "item2" into the collection', () => {
-      const value = collection.emplace('item2', () => 'uwu');
+      const value = collection.emplace('item2', 'uwu');
 
       expect(value).toBeDefined();
       expect(value).toStrictEqual('owo');
@@ -239,5 +239,32 @@ describe('immutable.Collection', () => {
       expect(values.length).toBe(2);
       expect(values.join(', ')).toStrictEqual('item1, item2');
     });
+  });
+
+  describe('Collection#sort', () => {
+    const collection = new Collection({ item1: 'uwu', item2: 'owo', item3: 'owow' });
+    const values = collection.sort((a, b) => b.length - a.length);
+
+    expect(values).toBeDefined();
+    expect(values.length).toBe(3);
+    expect(values).toStrictEqual(['owow', 'uwu', 'owo']);
+  });
+
+  describe('Collection#sortKeys', () => {
+    const collection = new Collection({ item1: 'uwu', item2: 'owo', item34: 'owow' });
+
+    // ok, what the fuck?
+    // Look, I have no idea on how to fix 
+    // Argument of type '(a: string, b: string) => number' is not assignable to parameter of type '(this: Collection<string>, a: string | number | bigint, b: string | number | bigint) => number'.
+    //  Types of parameters 'a' and 'a' are incompatible.
+    //  Type 'string | number | bigint' is not assignable to type 'string'.
+    //    Type 'number' is not assignable to type 'string'.
+    //
+    // If you have a solution, make a PR!
+    const values = collection.sortKeys(((a: string, b: string) => b.length - a.length) as any);
+
+    expect(values).toBeDefined();
+    expect(values.length).toBe(3);
+    expect(values).toStrictEqual(['item34', 'item1', 'item2']);
   });
 });

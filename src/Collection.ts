@@ -336,19 +336,45 @@ export default class Collection<T = any> extends Map<string | number | bigint, T
   /**
    * Computes a value if it's absent in this Collection
    * @param key The key to find
-   * @param insert Function to run if the key doesn't exist
+   * @param insert Item to add when it doesn't exist
    */
-  emplace(key: string, insert: () => T) {
+  emplace(key: string | number | bigint, insert: T) {
     if (!this.has(key)) {
       if (!this.mutable) throw new ImmutabilityError('collection', 'emplace');
 
-      const item = insert();
-
-      this.set(key, item);
-      return item;
+      this.set(key, insert);
+      return insert;
     } else {
       return this.get(key)!;
     }
+  }
+
+  /**
+   * Similar to [Array.sort], which basically sorts the values of this Collection
+   * to return a value
+   * 
+   * @param compareFn The compare function
+   * @returns The value
+   */
+  sort(compareFn: (this: Collection<T>, a: T, b: T) => number) {
+    const values = this.toArray();
+    values.sort(compareFn.bind(this));
+
+    return values;
+  } 
+
+  /**
+   * Similar to [Array.sort], which basically sorts the values of this Collection
+   * to return a value
+   * 
+   * @param compareFn The compare function
+   * @returns The value
+   */
+  sortKeys(compareFn: (this: Collection<T>, a: string | number | bigint, b: string | number | bigint) => number) {
+    const keys = this.toKeyArray();
+    keys.sort(compareFn.bind(this));
+
+    return keys;
   }
 
   /**

@@ -69,8 +69,8 @@ describe('Pair - Immutability Checks', () => {
 
     expect(pair2.mutable).toBeDefined();
     expect(pair2.mutable).toBeTruthy();
-    expect(pair2.getRight()).toStrictEqual(pair.getRight());
-    expect(pair2.getLeft()).toStrictEqual(pair.getLeft());
+    expect(pair2.first).toStrictEqual(pair.first);
+    expect(pair2.second).toStrictEqual(pair.second);
   });
 });
 
