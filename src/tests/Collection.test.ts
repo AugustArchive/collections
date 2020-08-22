@@ -253,8 +253,9 @@ describe('immutable.Collection', () => {
   describe('Collection#sortKeys', () => {
     const collection = new Collection({ item1: 'uwu', item2: 'owo', item34: 'owow' });
 
-    // ok, what the fuck?
-    // Look, I have no idea on how to fix 
+    // ok, what the fuck? why type an arrow function to `any`?!
+    //
+    // Look, I have no idea on how to fix - 
     // Argument of type '(a: string, b: string) => number' is not assignable to parameter of type '(this: Collection<string>, a: string | number | bigint, b: string | number | bigint) => number'.
     //  Types of parameters 'a' and 'a' are incompatible.
     //  Type 'string | number | bigint' is not assignable to type 'string'.
