@@ -257,6 +257,7 @@ declare module '@augu/immutable' {
        * 
        * This method is deprecated, use `Queue#add`
        * 
+       * @deprecated
        * @param value The value to put
        */
       public enqueue(value: T): this;
@@ -301,6 +302,7 @@ declare module '@augu/immutable' {
        * Returns the last value of the queue
        * 
        * This function is deprecated, use `Queue#last`
+       * @deprecated
        */
       public peek(): T;
 
@@ -308,6 +310,7 @@ declare module '@augu/immutable' {
        * Returns the value or `null` if not found
        * 
        * This function is deprecated, use `Queue#get`
+       * @deprecated
        * @param index The index to peek at
        * @returns A value if it didn't return null
        */
@@ -353,6 +356,12 @@ declare module '@augu/immutable' {
        * Removes the last item and removes it from the cache
        */
       public unshift(): T | undefined;
+
+      /**
+       * Finds an item in the cache or returns `undefined` if not found
+       * @param predicate The predicate function
+       */
+      public find(predicate: (item: T) => boolean): T | undefined;
 
       /**
        * Makes this class iterable

@@ -190,6 +190,14 @@ export default class Queue<T = any> {
   }
 
   /**
+   * Finds an item in the cache or returns `undefined` if not found
+   * @param predicate The predicate function
+   */
+  find(predicate: (item: T) => boolean) {
+    return this.cache.find(predicate);
+  }
+
+  /**
    * Override function to return this as a String
    */
   toString() {
