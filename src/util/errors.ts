@@ -7,7 +7,7 @@ const names: { [x in 'collection' | 'queue' | 'timedQueue']: string } = {
 
 export class ImmutabilityError extends Error {
   constructor(type: 'collection' | 'queue' | 'timedQueue', func: string) {
-    super(`${names[type]} is immutable, values cannot be changed. (Called by ${names[type]}#${func})`);
+    super(`${names[type]} is immutable, values cannot be changed (Called by ${names[type]}#${func})`);
 
     //Error.captureStackTrace(this);
     this.name = 'ImmutabilityError';

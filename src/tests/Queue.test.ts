@@ -115,4 +115,16 @@ describe('immutable.Queue', () => {
       expect(type).toStrictEqual('Queue<string>')
     );
   });
+
+  describe('Queue#find', () => {
+    const queue = new Queue(['a', 'b', 'c', 'd']);
+
+    it('should return "d" when using Queue#find', () => 
+      expect(queue.find((item) => item === 'd')).toStrictEqual('d')
+    );
+
+    it('should return "undefined" when using Queue#find', () =>
+      expect(queue.find(e => e === 'f')).toBeUndefined()
+    );
+  });
 });
