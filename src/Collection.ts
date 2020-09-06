@@ -63,11 +63,12 @@ export default class Collection<T = any> extends Map<string | number | bigint, T
    * @param predicate The predicate function to map out and return a new array
    * @returns A new Array of the values from that function
    */
-  map<S>(predicate: (this: Collection<T>, item: T) => S) {
+  map<S>(predicate: (this: Collection<T>, item: T, index: number) => S) {
     const result: S[] = [];
     const func = predicate.bind(this);
 
-    for (const value of this.values()) result.push(func(value));
+    let index = -1;
+    for (const value of this.values()) result.push(func(value, ++index));
 
     return result;
   }
@@ -198,7 +199,11 @@ export default class Collection<T = any> extends Map<string | number | bigint, T
     let result: T | null = null;
     for (const value of this.values()) {
       const find = predicate.bind(this);
-      if (find(value)) result = value;
+
+      if (find(value)) {
+        result = value;
+        break;
+      }
     }
 
     return result;
@@ -338,11 +343,12 @@ export default class Collection<T = any> extends Map<string | number | bigint, T
    * @param key The key to find
    * @param insert Item to add when it doesn't exist
    */
-  emplace(key: string | number | bigint, insert: T) {
+  emplace(key: string | number | bigint, insert: T | (() => T)) {
     if (!this.has(key)) {
       if (!this.mutable) throw new ImmutabilityError('collection', 'emplace');
 
-      this.set(key, insert);
+      const item = typeof insert !== 'function' ? insert : (<any> insert)();
+      this.set(key, item);
       return insert;
     } else {
       return this.get(key)!;

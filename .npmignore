@@ -1,0 +1,13 @@
+.github/
+.vscode/
+node_modules/
+src/
+
+.eslintrc.json
+.travis.yml
+jest.config.js
+renovate.json
+tsconfig.json
+package-*.json
+*.lock
+*.log

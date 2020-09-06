@@ -54,7 +54,7 @@ declare module '@augu/immutable' {
        * @param func The predicate function to map out and return a new array
        * @returns A new Array of the values from that function
        */
-      public map<S>(func: (this: Collection<T>, item: T) => S): S[];
+      public map<S>(func: (this: Collection<T>, item: T, index: number) => S): S[];
 
       /**
        * Returns a random value from the collection
@@ -255,9 +255,7 @@ declare module '@augu/immutable' {
       /**
        * Enqueue a new value to the cache, run `tick` to process it!
        * 
-       * This method is deprecated, use `Queue#add`
-       * 
-       * @deprecated
+       * @deprecated Use Queue#add
        * @param value The value to put
        */
       public enqueue(value: T): this;
@@ -301,16 +299,14 @@ declare module '@augu/immutable' {
       /**
        * Returns the last value of the queue
        * 
-       * This function is deprecated, use `Queue#last`
-       * @deprecated
+       * @deprecated Use Queue#last
        */
       public peek(): T;
 
       /**
        * Returns the value or `null` if not found
        * 
-       * This function is deprecated, use `Queue#get`
-       * @deprecated
+       * @deprecated Use Queue#get
        * @param index The index to peek at
        * @returns A value if it didn't return null
        */
