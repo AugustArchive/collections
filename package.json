@@ -1,7 +1,7 @@
 {
   "name": "@augu/immutable",
   "description": "📝 Collections library made in TypeScript",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "types": "index.d.ts",
   "main": "build/index.js",
   "homepage": "https://docs.augu.dev/immutable",

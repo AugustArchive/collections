@@ -268,4 +268,32 @@ describe('immutable.Collection', () => {
     expect(values.length).toBe(3);
     expect(values).toStrictEqual(['item34', 'item1', 'item2']);
   });
+
+  describe('Collection#some', () => {
+    const collection = new Collection({ item1: 'uwu', item2: 'owo', item34: 'owow' });
+
+    it('should return `true` if the string length threshold is over 2', () => {
+      const value = collection.some(value => value.length > 2);
+      expect(value).toBeTruthy();
+    });
+
+    it('should return `false` if the string length is over 5', () => {
+      const value = collection.some(value => value.length > 5);
+      expect(value).toBeFalsy();
+    });
+  });
+
+  describe('Collection#someKeys', () => {
+    const collection = new Collection({ item1: 'uwu', item2: 'owo', item34: 'owow' });
+
+    it('should return `true` if the string length is over 3', () => {
+      const value = collection.someKeys(((key: string) => key.length > 3) as any);
+      expect(value).toBeTruthy();
+    });
+
+    it('should return `false` if the string length is over 8', () => {
+      const value = collection.someKeys(((key: string) => key.length > 8) as any);
+      expect(value).toBeFalsy();
+    });
+  });
 });

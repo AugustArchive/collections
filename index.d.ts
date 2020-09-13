@@ -163,19 +163,19 @@ declare module '@augu/immutable' {
       /**
        * Returns all of the values as an Array
        */
-      toArray(): T[];
+      public toArray(): T[];
 
       /**
        * Returns all of the keys as an Array
        */
-      toKeyArray(): (string | number | bigint)[];
+      public toKeyArray(): (string | number | bigint)[];
 
       /**
        * Computes a value if it's absent in this Collection
        * @param key The key to find
        * @param insert Function to run if the key doesn't exist
        */
-      emplace(key: string, insert: T): T;
+      public emplace(key: string, insert: T): T;
 
       /**
        * Similar to [Array.sort], which basically sorts the values of this Collection
@@ -184,7 +184,7 @@ declare module '@augu/immutable' {
        * @param compareFn The compare function
        * @returns The value
        */
-      sort(compareFn: (this: Collection<T>, a: T, b: T) => number): T[];
+      public sort(compareFn: (this: Collection<T>, a: T, b: T) => number): T[];
 
       /**
        * Similar to [Array.sort], which basically sorts the values of this Collection
@@ -193,7 +193,25 @@ declare module '@augu/immutable' {
        * @param compareFn The compare function
        * @returns The value
        */
-      sortKeys(compareFn: (this: Collection<T>, a: string | number | bigint, b: string | number | bigint) => number): (string | number | bigint)[];
+      public sortKeys(compareFn: (this: Collection<T>, a: string | number | bigint, b: string | number | bigint) => number): (string | number | bigint)[];
+
+      /**
+       * Similar to [Array.some], this function tests whether atleast 1 item
+       * in the predicate function passes the test in the values cache.
+       * 
+       * @param func The function to use to filter out
+       * @returns A boolean value if 1 item of the cache is truthy
+       */
+      public some(func: (this: Collection<T>, item: T) => boolean): boolean;
+
+      /**
+       * Similar to [Array.some], this functions tests whether atleast 1 key
+       * in the predicate function passes the test in the key cache.
+       * 
+       * @param func The function to use to filter out
+       * @returns A boolean value if 1 item of the cache is truthy
+       */
+      public someKeys(func: (this: Collection<T>, item: string | number | bigint) => boolean): boolean;
 
       /**
        * Build a new Collection with(out) initial values

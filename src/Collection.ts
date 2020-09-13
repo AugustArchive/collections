@@ -384,6 +384,38 @@ export default class Collection<T = any> extends Map<string | number | bigint, T
   }
 
   /**
+   * Similar to [Array.some], this function tests whether atleast 1 item
+   * in the predicate function passes the test in the values cache.
+   * 
+   * @param func The function to use to filter out
+   * @returns A boolean value if 1 item of the cache is truthy
+   */
+  some(func: (this: Collection<T>, item: T) => boolean) {
+    const values = this.toArray();
+
+    for (let i = 0; i < values.length; i++) {
+      if (func.call(this, values[i])) return true;
+      else return false;
+    }
+  }
+
+  /**
+   * Similar to [Array.some], this functions tests whether atleast 1 key
+   * in the predicate function passes the test in the key cache.
+   * 
+   * @param func The function to use to filter out
+   * @returns A boolean value if 1 item of the cache is truthy
+   */
+  someKeys(func: (this: Collection<T>, item: string | number | bigint) => boolean) {
+    const keys = this.toKeyArray();
+
+    for (let i = 0; i < keys.length; i++) {
+      if (func.call(this, keys[i])) return true;
+      else return false;
+    }
+  }
+
+  /**
    * Build a new Collection with(out) initial values
    * @param values The values to add
    */
