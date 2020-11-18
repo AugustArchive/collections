@@ -29,7 +29,7 @@ export default class Queue<T = any> {
   get empty() {
     return this.cache.length === 0;
   }
-  
+
   /**
    * Adds an item to the cache but hirearchy is on first instead of last
    * @param item The item to add at the cache
@@ -43,9 +43,9 @@ export default class Queue<T = any> {
 
   /**
    * Enqueue a new value to the cache, run `tick` to process it!
-   * 
+   *
    * This method is deprecated, use `Queue#add`
-   * 
+   *
    * @param value The value to put
    */
   enqueue(value: T) {
@@ -66,9 +66,9 @@ export default class Queue<T = any> {
 
   /**
    * Runs all of the queue values that was put with `add`.
-   * 
+   *
    * This removes the cache while a for loop doesn't
-   * 
+   *
    * @param func The function when a new queue item has ticked
    */
   tick(func: (item: T) => void) {
@@ -120,7 +120,7 @@ export default class Queue<T = any> {
 
   /**
    * Removes the item from the queue
-   * 
+   *
    * @warning Use `Queue#tick` to remove all items!
    * @param item The item to remove
    */
@@ -212,7 +212,7 @@ export default class Queue<T = any> {
   [Symbol.iterator]() {
     let index = -1;
     const items = this.toArray();
-  
+
     return {
       next: () => ({
         value: items[++index],

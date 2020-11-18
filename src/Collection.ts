@@ -161,7 +161,7 @@ export default class Collection<T = any> extends Map<string | number | bigint, T
 
     if (amount < 0) return this.last(amount! * -1);
     amount = Math.min(amount, this.size);
-    
+
     const iterable = this.values();
     return Array.from({ length: amount }, (): T => iterable.next().value);
   }
@@ -302,7 +302,7 @@ export default class Collection<T = any> extends Map<string | number | bigint, T
     const key = this.lastKey();
 
     if (item === undefined || key === undefined) return null;
-    
+
     if (remove) this.delete(key);
     return item;
   }
@@ -358,7 +358,7 @@ export default class Collection<T = any> extends Map<string | number | bigint, T
   /**
    * Similar to [Array.sort], which basically sorts the values of this Collection
    * to return a value
-   * 
+   *
    * @param compareFn The compare function
    * @returns The value
    */
@@ -367,12 +367,12 @@ export default class Collection<T = any> extends Map<string | number | bigint, T
     values.sort(compareFn.bind(this));
 
     return values;
-  } 
+  }
 
   /**
    * Similar to [Array.sort], which basically sorts the values of this Collection
    * to return a value
-   * 
+   *
    * @param compareFn The compare function
    * @returns The value
    */
@@ -386,7 +386,7 @@ export default class Collection<T = any> extends Map<string | number | bigint, T
   /**
    * Similar to [Array.some], this function tests whether atleast 1 item
    * in the predicate function passes the test in the values cache.
-   * 
+   *
    * @param func The function to use to filter out
    * @returns A boolean value if 1 item of the cache is truthy
    */
@@ -402,7 +402,7 @@ export default class Collection<T = any> extends Map<string | number | bigint, T
   /**
    * Similar to [Array.some], this functions tests whether atleast 1 key
    * in the predicate function passes the test in the key cache.
-   * 
+   *
    * @param func The function to use to filter out
    * @returns A boolean value if 1 item of the cache is truthy
    */

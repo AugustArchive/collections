@@ -89,12 +89,12 @@ describe('Queue - Immutability Checks', () => {
     expect(queue.mutable).toBeFalsy();
   });
 
-  it('should not allow new values to be added', () => 
+  it('should not allow new values to be added', () =>
     expect(() => queue.add('value')).toThrow(errors.ImmutabilityError)
   );
 
   // TODO: Fix this test and inspect why it's not working as intended
-  it('should not allow to delete items in this specific queue', () => 
+  it('should not allow to delete items in this specific queue', () =>
     expect(() => queue.remove('a')).toThrow(errors.ImmutabilityError)
   );
 
@@ -131,7 +131,7 @@ describe('Immutability - TimedQueue', () => {
     expect(queue.mutable).toBeFalsy();
   });
 
-  it('should not allow new items to be queued', () => 
+  it('should not allow new items to be queued', () =>
     expect(() => queue.add([0, 1, 2])).toThrow(errors.ImmutabilityError)
   );
 

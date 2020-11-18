@@ -6,7 +6,7 @@ describe('immutable.Collection', () => {
     const coll2 = new Collection<string>();
 
     coll1.add('a');
-    coll1.add('b'); 
+    coll1.add('b');
     coll1.add('c');
     coll1.add('d');
 
@@ -141,10 +141,10 @@ describe('immutable.Collection', () => {
 
   describe('Collection#shift', () => {
     const collection = new Collection({ item1: 'uwu', item2: 'owo' });
-    
+
     it('should not be removed by default', () => {
       const item = collection.shift();
-      
+
       expect(collection.size).toBe(2);
       expect(item).toBeDefined();
       expect(item).toBe('uwu');
@@ -161,10 +161,10 @@ describe('immutable.Collection', () => {
 
   describe('Collection#unshift', () => {
     const collection = new Collection({ item1: 'uwu', item2: 'owo' });
-    
+
     it('should not be removed by default', () => {
       const item = collection.unshift();
-      
+
       expect(collection.size).toBe(2);
       expect(item).toBeDefined();
       expect(item).toBe('owo');
@@ -255,7 +255,7 @@ describe('immutable.Collection', () => {
 
     // ok, what the fuck? why type an arrow function to `any`?!
     //
-    // Look, I have no idea on how to fix - 
+    // Look, I have no idea on how to fix -
     // Argument of type '(a: string, b: string) => number' is not assignable to parameter of type '(this: Collection<string>, a: string | number | bigint, b: string | number | bigint) => number'.
     //  Types of parameters 'a' and 'a' are incompatible.
     //  Type 'string | number | bigint' is not assignable to type 'string'.

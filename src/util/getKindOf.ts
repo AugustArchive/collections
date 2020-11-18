@@ -14,6 +14,6 @@ export default (element: unknown) => {
     if (func.startsWith('function')) return 'function';
     if (func.startsWith('class')) return func.slice(5, func.indexOf('{')).trim();
   }
-  
+
   return 'object';
 };

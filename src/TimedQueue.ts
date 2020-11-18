@@ -130,7 +130,7 @@ export default class TimedQueue<T = unknown> extends EventEmitter {
       this.emit('end');
       this._timer = undefined;
     }, this.every);
-    
+
     return this;
   }
 

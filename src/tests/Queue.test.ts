@@ -63,7 +63,7 @@ describe('immutable.Queue', () => {
     ]);
 
     queue.tick((item) => items.push(item));
-    
+
     expect(queue.size()).toBe(0);
     expect(items.length).toBe(5);
   });
@@ -110,7 +110,7 @@ describe('immutable.Queue', () => {
   describe('Queue#toString', () => {
     const queue = new Queue(['item', 'item', 'item']);
     const type = queue.toString();
-    
+
     it('should return Queue<string>', () =>
       expect(type).toStrictEqual('Queue<string>')
     );
@@ -119,7 +119,7 @@ describe('immutable.Queue', () => {
   describe('Queue#find', () => {
     const queue = new Queue(['a', 'b', 'c', 'd']);
 
-    it('should return "d" when using Queue#find', () => 
+    it('should return "d" when using Queue#find', () =>
       expect(queue.find((item) => item === 'd')).toStrictEqual('d')
     );
 
