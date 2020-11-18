@@ -1,7 +1,6 @@
 import { ImmutabilityError, MergeConflictError } from './util/errors';
 import isObject, { NormalObject } from './util/isObject';
 import getKindOf from './util/getKindOf';
-import { timeStamp } from 'console';
 
 /**
  * The `Collection` immutable object
