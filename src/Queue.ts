@@ -216,21 +216,8 @@ export default class Queue<T = any> {
     return {
       next: () => ({
         value: items[++index],
-        done: index === items.length
+        done: index >= items.length
       })
     };
   }
 }
-
-// Add it to the prototype
-Queue.prototype[Symbol.iterator] = function iterator(this: Queue<any>) {
-  let index = -1;
-  const items = this.toArray();
-
-  return {
-    next: () => ({
-      value: items[++index],
-      done: index === items.length
-    })
-  };
-};

@@ -1,11 +1,14 @@
 import { ImmutabilityError, MergeConflictError } from './util/errors';
 import isObject, { NormalObject } from './util/isObject';
 import getKindOf from './util/getKindOf';
+import { timeStamp } from 'console';
 
 /**
  * The `Collection` immutable object
  */
 export default class Collection<T = any> extends Map<string | number | bigint, T> {
+  public ['constructor']: typeof Collection;
+
   /** Checks if this Collection is mutable (values can be added) or not */
   public mutable: boolean;
 
@@ -94,7 +97,7 @@ export default class Collection<T = any> extends Map<string | number | bigint, T
       throw new MergeConflictError(immutable.length);
     }
 
-    const newColl = new Collection<T>();
+    const newColl = new this.constructor<T>();
     for (const [key, value] of this) newColl.set(key, value);
 
     for (const coll of collections) {
@@ -110,7 +113,7 @@ export default class Collection<T = any> extends Map<string | number | bigint, T
    * @returns An array with 2 collections that represent a `true (first one)` and `false (second one)`
    */
   partition(predicate: (this: Collection<T>, item: T) => boolean): [Collection<T>, Collection<T>] {
-    const [item1, item2]: [Collection<T>, Collection<T>] = [new Collection(), new Collection()];
+    const [item1, item2]: [Collection<T>, Collection<T>] = [new this.constructor(), new this.constructor()];
     for (const [key, value] of this) {
       const func = predicate.bind(this);
       const result = func(value);
@@ -318,7 +321,7 @@ export default class Collection<T = any> extends Map<string | number | bigint, T
   unfreeze() {
     // There is no "way" that this can be unfrozed, so we make a
     // new collection for safety precautions
-    const collection = new (this.constructor as typeof Collection)<T>();
+    const collection = new this.constructor<T>();
     for (const [key, value] of this) collection.set(key, value);
 
     return collection;

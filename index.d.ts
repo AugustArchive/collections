@@ -61,7 +61,7 @@ declare module '@augu/immutable' {
        * @returns A random value or `null` if the collection is empty
        */
       public random(): T | null;
-      
+
       /**
        * Merges all collections provided and this one to a new collection
        * @param collections Any collections to merge into this one
@@ -96,13 +96,13 @@ declare module '@augu/immutable' {
       /**
        * Returns the last element in the collection
        */
-      public last(): T | undefined;
+      public last(): (string | number | bigint) | undefined;
 
       /**
        * Returns an Array of the values from the correspondant `amount`
        * @param amount The amount to fetch from
        */
-      public last(amount: number): T[];
+      public last(amount: number): (string | number | bigint)[];
 
       /**
        * Find a value in the collection from it's predicate function
@@ -130,13 +130,13 @@ declare module '@augu/immutable' {
       /**
        * Returns the last key in the collection
        */
-      public lastKey(): T | undefined;
+      public lastKey(): (string | number | bigint) | undefined;
 
       /**
        * Returns an Array of the keys from the correspondant `amount`
        * @param amount The amount to fetch from
        */
-      public lastKey(amount: number): T[];
+      public lastKey(amount: number): (string | number | bigint)[];
 
       /**
        * Gets the first item in the collection and removes it (if provided)
@@ -180,7 +180,7 @@ declare module '@augu/immutable' {
       /**
        * Similar to [Array.sort], which basically sorts the values of this Collection
        * to return a value
-       * 
+       *
        * @param compareFn The compare function
        * @returns The value
        */
@@ -189,7 +189,7 @@ declare module '@augu/immutable' {
       /**
        * Similar to [Array.sort], which basically sorts the values of this Collection
        * to return a value
-       * 
+       *
        * @param compareFn The compare function
        * @returns The value
        */
@@ -198,7 +198,7 @@ declare module '@augu/immutable' {
       /**
        * Similar to [Array.some], this function tests whether atleast 1 item
        * in the predicate function passes the test in the values cache.
-       * 
+       *
        * @param func The function to use to filter out
        * @returns A boolean value if 1 item of the cache is truthy
        */
@@ -207,7 +207,7 @@ declare module '@augu/immutable' {
       /**
        * Similar to [Array.some], this functions tests whether atleast 1 key
        * in the predicate function passes the test in the key cache.
-       * 
+       *
        * @param func The function to use to filter out
        * @returns A boolean value if 1 item of the cache is truthy
        */
@@ -272,7 +272,7 @@ declare module '@augu/immutable' {
 
       /**
        * Enqueue a new value to the cache, run `tick` to process it!
-       * 
+       *
        * @deprecated Use Queue#add
        * @param value The value to put
        */
@@ -286,9 +286,9 @@ declare module '@augu/immutable' {
 
       /**
        * Runs all of the queue values that was put with `add`.
-       * 
+       *
        * This removes the cache while a for loop doesn't
-       * 
+       *
        * @param func The function when a new queue item has ticked
        */
       public tick(func: (item: T) => void): void;
@@ -307,7 +307,7 @@ declare module '@augu/immutable' {
 
       /**
        * Removes an item from the cache
-       * 
+       *
        * @warning Use `Queue#tick` to remove all!
        * @param item The item to remove or it's index
        * @returns This queue without the item
@@ -316,14 +316,14 @@ declare module '@augu/immutable' {
 
       /**
        * Returns the last value of the queue
-       * 
+       *
        * @deprecated Use Queue#last
        */
       public peek(): T;
 
       /**
        * Returns the value or `null` if not found
-       * 
+       *
        * @deprecated Use Queue#get
        * @param index The index to peek at
        * @returns A value if it didn't return null
