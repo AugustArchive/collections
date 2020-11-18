@@ -45,7 +45,7 @@ jobs:
 
       - run: npm i -g eslint jest
 
-      - run: npm ci
+      - run: npm i
 
       - run: eslint src --ext .ts --fix
 
