@@ -24,8 +24,11 @@ const { existsSync } = require('fs');
 const { version } = require('../package.json');
 const { join } = require('path');
 const typedoc = require('typedoc');
+const { execSync } = require('child_process');
 
 const log = (message) => process.stdout.write(`[docs] ${message}\n`);
+
+const commitHash = execSync('git rev-parse HEAD', { cwd: join(__dirname, '..') }).toString().trim() ?? 'master';
 
 async function generate() {
   log('initalising typedoc...');
@@ -79,9 +82,10 @@ function read(child) {
   if (child.children && child.children.length > 0) {
     for (let i = 0; i < child.children.length; i++) {
       const c = child.children[i];
-      console.log(`received ${c.kindString} ${c.name}`);
+      //console.log(`received ${c.kindString} ${c.name}`);
 
-      elements.push(readChild(c, child));
+      const element = readChild(c, child);
+      elements.push(element);
     }
   }
 
@@ -96,12 +100,62 @@ function readChild(child, parent) {
     accessors: [],
     properties: [],
     variables: [],
-    functions: []
+    functions: [],
+    comment: null,
+    name: null,
+    generics: [],
+    sources: [],
+    extends: []
   };
 
   switch (child.kindString) {
     case 'Class': {
-      // noop
+      if (child.comment !== undefined) elements.comment = child.comment.shortText.trim();
+      if (child.name !== undefined) elements.name = child.name === 'default' ? elements.parent?.name ?? 'default' : child.name;
+      if (child.typeParameter !== undefined) {
+        for (let i = 0; i < child.typeParameter.length; i++) {
+          const generic = child.typeParameter[i];
+          elements.generics.push({
+            name: generic.name,
+            comment: generic.comment?.shortText.trim() ?? ''
+          });
+        }
+      }
+
+      if (child.sources !== undefined) {
+        elements.sources = child.sources.map(e => ({
+          path: e.fileName,
+          github: `https://github.com/auguwu/collections/blob/${commitHash}/${e.fileName}`,
+          line: e.line,
+          character: e.character
+        }));
+      }
+
+      if (child.groups !== undefined) {
+        for (let i = 0; i < child.groups.length; i++) {
+          const group = child.groups[i];
+        }
+      }
+
+      if (child.extendedTypes !== undefined) {
+        for (let i = 0; i < child.extendedTypes.length; i++) {
+          const type = child.extendedTypes[i];
+          let name = type.name;
+
+          if (type.typeArguments !== undefined) {
+            name += '<';
+            const args = [];
+
+            for (let i = 0; i < type.typeArguments.length; i++) {
+              const argument = type.typeArguments[i];
+              args.push(argument.name);
+            }
+
+            name += `${args.join(', ')}>`;
+            elements.extends.push(name);
+          }
+        }
+      }
     } break;
 
     case 'Method': {
