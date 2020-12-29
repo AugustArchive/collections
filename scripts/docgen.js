@@ -73,18 +73,22 @@ async function main() {
 
     elements = elements.concat(E);
   }
+
+  log(`received ${elements.length} elements! now formatting...`);
+  for (let i = 0; i < elements.length; i++) {
+    const element = elements[i];
+    console.log(element);
+  }
 }
 
 function read(child) {
   const elements = [];
 
-  //console.log(`received ${child.kindString} ${child.name}`);
   if (child.children && child.children.length > 0) {
     for (let i = 0; i < child.children.length; i++) {
       const c = child.children[i];
-      //console.log(`received ${c.kindString} ${c.name}`);
-
       const element = readChild(c, child);
+
       elements.push(element);
     }
   }
@@ -95,24 +99,19 @@ function read(child) {
 function readChild(child, parent) {
   const elements = {
     parent: parent ? { kind: parent.kindString, name: parent.name } : null,
-    constructor: null,
-    methods: [],
-    accessors: [],
-    properties: [],
-    variables: [],
-    functions: [],
     comment: null,
-    name: null,
-    generics: [],
-    sources: [],
-    extends: []
+    name: null
   };
 
   switch (child.kindString) {
     case 'Class': {
+      elements.kind = 'Class';
+
       if (child.comment !== undefined) elements.comment = child.comment.shortText.trim();
       if (child.name !== undefined) elements.name = child.name === 'default' ? elements.parent?.name ?? 'default' : child.name;
       if (child.typeParameter !== undefined) {
+        if (!elements.generics) elements.generics = [];
+
         for (let i = 0; i < child.typeParameter.length; i++) {
           const generic = child.typeParameter[i];
           elements.generics.push({
@@ -131,13 +130,8 @@ function readChild(child, parent) {
         }));
       }
 
-      if (child.groups !== undefined) {
-        for (let i = 0; i < child.groups.length; i++) {
-          const group = child.groups[i];
-        }
-      }
-
       if (child.extendedTypes !== undefined) {
+        if (!elements.extends) elements.extends = [];
         for (let i = 0; i < child.extendedTypes.length; i++) {
           const type = child.extendedTypes[i];
           let name = type.name;
@@ -156,34 +150,96 @@ function readChild(child, parent) {
           }
         }
       }
-    } break;
 
-    case 'Method': {
-      // noop
-    } break;
+      if (child.children && child.children.length > 0) {
+        if (!elements.children) elements.children = [];
 
-    case 'Accessor': {
-      // noop
-    } break;
+        for (let i = 0; i < child.children.length; i++) {
+          const c = child.children[i];
+          const element = readChild(c, child);
 
-    case 'Property': {
-      // noop
+          elements.children.push(element);
+        }
+      }
     } break;
 
     case 'Variable': {
-      // noop
+      elements.kind = 'Variable';
+
+      if (child.name !== undefined) elements.name = child.name;
+      if (child.flags !== undefined && child.flags.isConst !== undefined) elements.constant = child.flags.isConst;
+      if (child.comment !== undefined) elements.comment = child.comment.shortText.trim() ?? '';
+      if (child.type !== undefined) elements.type = child.type.name;
+      if (child.sources !== undefined) {
+        elements.sources = child.sources.map(e => ({
+          path: e.fileName,
+          github: `https://github.com/auguwu/collections/blob/${commitHash}/${e.fileName}${e.line !== undefined ? `#L${e.line}` : ''}`,
+          line: e.line,
+          character: e.character
+        }));
+      }
     } break;
 
-    case 'Function': {
-      // noop
+    case 'Type alias': {
+      elements.kind = 'Type Alias';
+      if (child.name !== undefined) elements.name = child.name;
+      if (child.comment !== undefined) elements.comment = child.comment.shortText.trim() ?? '';
+      if (child.sources !== undefined) {
+        elements.sources = child.sources.map(e => ({
+          path: e.fileName,
+          github: `https://github.com/auguwu/collections/blob/${commitHash}/${e.fileName}${e.line !== undefined ? `#L${e.line}` : ''}`,
+          line: e.line,
+          character: e.character
+        }));
+      }
+
+      if (child.typeParameter !== undefined) {
+        if (!elements.generics) elements.generics = [];
+
+        for (let i = 0; i < child.typeParameter.length; i++) {
+          const generic = child.typeParameter[i];
+          elements.generics.push({
+            name: generic.name,
+            comment: generic.comment?.shortText.trim() ?? ''
+          });
+        }
+      }
+
+      if (child.type !== undefined) elements.type = typeToString(child.type);
     } break;
 
-    case 'Constructor': {
-      // noop
+    case 'Interface': {
+      elements.kind = 'Interface';
+
+      if (child.name !== undefined) elements.name = child.name;
+      if (child.comment !== undefined) elements.comment = child.comment.shortText.trim() ?? '';
+      if (child.sources !== undefined) {
+        elements.sources = child.sources.map(e => ({
+          path: e.fileName,
+          github: `https://github.com/auguwu/collections/blob/${commitHash}/${e.fileName}${e.line !== undefined ? `#L${e.line}` : ''}`,
+          line: e.line,
+          character: e.character
+        }));
+      }
+
+      if (child.children && child.children.length > 0) {
+        if (!elements.children) elements.children = [];
+
+        for (let i = 0; i < child.children.length; i++) {
+          const c = child.children[i];
+          const element = readChild(c, child);
+
+          elements.children.push(element);
+        }
+      }
     } break;
   }
 
   return elements;
+}
+
+function typeToString(type) {
+  return 'unknown';
 }
 
 main();
