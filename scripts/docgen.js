@@ -69,7 +69,7 @@ async function main() {
   log(`loaded documentation for ${docs.name} and received ${docs.children.length} children to read from`);
   for (let i = 0; i < docs.children.length; i++) {
     const parent = docs.children[i];
-    const E = read(parent);
+    const E = read(parent, elements);
 
     elements = elements.concat(E);
   }
@@ -77,17 +77,17 @@ async function main() {
   log(`received ${elements.length} elements! now formatting...`);
   for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
-    console.log(element);
+    //console.log(element);
   }
 }
 
-function read(child) {
+function read(child, all) {
   const elements = [];
 
   if (child.children && child.children.length > 0) {
     for (let i = 0; i < child.children.length; i++) {
       const c = child.children[i];
-      const element = readChild(c, child);
+      const element = readChild(c, child, undefined, all);
 
       elements.push(element);
     }
@@ -96,8 +96,8 @@ function read(child) {
   return elements;
 }
 
-function readChild(child, parent) {
-  const elements = {
+function readChild(child, parent, els = undefined, all = []) {
+  const elements = els ? els : {
     parent: parent ? { kind: parent.kindString, name: parent.name } : null,
     comment: null,
     name: null
@@ -156,7 +156,7 @@ function readChild(child, parent) {
 
         for (let i = 0; i < child.children.length; i++) {
           const c = child.children[i];
-          const element = readChild(c, child);
+          const element = readChild(c, child, elements, all);
 
           elements.children.push(element);
         }
@@ -227,9 +227,189 @@ function readChild(child, parent) {
 
         for (let i = 0; i < child.children.length; i++) {
           const c = child.children[i];
-          const element = readChild(c, child);
+          const element = readChild(c, child, elements, all);
 
           elements.children.push(element);
+        }
+      }
+    } break;
+
+    case 'Constructor': {
+      // don't do anything if the parent is a module
+      if (elements.parent && elements.parent.name === 'Module') break;
+
+      elements.kind = 'Constructor';
+      if (child.name !== undefined) elements.name = child.name;
+      if (child.signatures !== undefined) {
+        if (!elements.signatures) elements.signatures = [];
+
+        for (let i = 0; i < child.signatures.length; i++) {
+          const signature = child.signatures[i];
+
+          const el = {};
+          el.kind = 'Constructor Signature';
+          if (signature.name !== undefined) el.name = signature.name;
+          if (signature.comment !== undefined) el.comment = signature.comment.shortText?.trim() ?? '';
+          if (signature.parameters !== undefined) {
+            if (!el.parameters) el.parameters = [];
+
+            for (let p = 0; p < signature.parameters.length; p++) {
+              const param = signature.parameters[p];
+              const block = {};
+
+              if (param.name !== undefined) block.name = param.name;
+              if (param.comment !== undefined) block.comment = param.comment.shortText?.trim() ?? '';
+              if (param.flags !== undefined) {
+                block.optional = param.flags.isOptional !== undefined;
+              }
+
+              if (param.type !== undefined) block.type = typeToString(param.type);
+              el.parameters.push(block);
+            }
+          }
+
+          elements.signatures.push(el);
+        }
+      }
+
+      if (child.type !== undefined) elements.type = typeToString(child.type);
+    } break;
+
+    case 'Method': {
+      elements.kind = 'Method';
+      if (child.name !== undefined) elements.name = child.name;
+      if (child.comment !== undefined) elements.comment = child.comment.shortText.trim() ?? '';
+      if (child.sources !== undefined) {
+        elements.sources = child.sources.map(e => ({
+          path: e.fileName,
+          github: `https://github.com/auguwu/collections/blob/${commitHash}/${e.fileName}${e.line !== undefined ? `#L${e.line}` : ''}`,
+          line: e.line,
+          character: e.character
+        }));
+      }
+
+      if (child.signatures !== undefined) {
+        if (!elements.signatures) elements.signatures = [];
+
+        for (let i = 0; i < child.signatures.length; i++) {
+          const signature = child.signatures[i];
+
+          const el = {};
+          el.kind = 'Method Signature';
+          if (signature.name !== undefined) el.name = signature.name;
+          if (signature.comment !== undefined) el.comment = signature.comment.shortText?.trim() ?? '';
+          if (signature.parameters !== undefined) {
+            if (!el.parameters) el.parameters = [];
+
+            for (let p = 0; p < signature.parameters.length; p++) {
+              const param = signature.parameters[p];
+              const block = {};
+
+              if (param.name !== undefined) block.name = param.name;
+              if (param.comment !== undefined) block.comment = param.comment.shortText?.trim() ?? '';
+              if (param.flags !== undefined) {
+                block.optional = param.flags.isOptional !== undefined;
+              }
+
+              if (param.type !== undefined) block.type = typeToString(param.type);
+              el.parameters.push(block);
+            }
+          }
+
+          elements.signatures.push(el);
+        }
+      }
+    } break;
+
+    case 'Accessor': {
+      elements.kind = 'Accessor';
+      if (child.name !== undefined) elements.name = child.name;
+      if (child.comment !== undefined) elements.comment = child.comment.shortText.trim() ?? '';
+      if (child.sources !== undefined) {
+        elements.sources = child.sources.map(e => ({
+          path: e.fileName,
+          github: `https://github.com/auguwu/collections/blob/${commitHash}/${e.fileName}${e.line !== undefined ? `#L${e.line}` : ''}`,
+          line: e.line,
+          character: e.character
+        }));
+      }
+
+      if (child.getSignatures !== undefined) {
+        if (!elements.signatures) elements.signatures = [];
+
+        for (let i = 0; i < child.getSignatures.length; i++) {
+          const signature = child.getSignatures[i];
+
+          const el = {};
+          el.kind = 'Getter Signature';
+          el.getter = true;
+          el.setter = false;
+
+          if (signature.name !== undefined) el.name = signature.name;
+          if (signature.comment !== undefined) el.comment = signature.comment.shortText?.trim() ?? '';
+          if (signature.type !== undefined) el.type = typeToString(signature.type);
+
+          elements.signatures.push(el);
+        }
+      }
+
+      if (child.setSignatures !== undefined) {
+        for (let i = 0; i < child.setSignatures.length; i++) {
+          const signature = child.setSignatures[i];
+
+          const el = {};
+          el.kind = 'Setter Signature';
+          el.getter = false;
+          el.setter = true;
+
+          if (signature.name !== undefined) el.name = signature.name;
+          if (signature.comment !== undefined) el.comment = signature.comment.shortText?.trim() ?? '';
+          if (signature.type !== undefined) el.type = typeToString(signature.type);
+
+          elements.signatures.push(el);
+        }
+      }
+    } break;
+
+    case 'Function': {
+      elements.type = 'Function';
+      if (child.name !== undefined) elements.name = child.name;
+      if (child.comment !== undefined) elements.comment = child.comment.shortText.trim() ?? '';
+      if (child.sources !== undefined) {
+        elements.sources = child.sources.map(e => ({
+          path: e.fileName,
+          github: `https://github.com/auguwu/collections/blob/${commitHash}/${e.fileName}${e.line !== undefined ? `#L${e.line}` : ''}`,
+          line: e.line,
+          character: e.character
+        }));
+      }
+
+      if (child.signatures !== undefined) {
+        if (!elements.signatures) elements.signatures = [];
+
+        for (let i = 0; i < child.signatures.length; i++) {
+          const signature = child.signatures[i];
+
+          const el = {};
+          el.kind = 'Function Signature';
+          if (signature.name !== undefined) el.name = signature.name;
+          if (signature.comment !== undefined) el.comment = signature.comment.shortText?.trim() ?? '';
+          if (signature.parameters !== undefined) {
+            if (!el.parameters) el.parameters = [];
+
+            for (let p = 0; p < signature.parameters.length; p++) {
+              const param = signature.parameters[p];
+              const block = {};
+
+              if (param.name !== undefined) block.name = param.name;
+              if (param.comment !== undefined) block.comment = param.comment.shortText?.trim() ?? '';
+              if (param.type !== undefined) block.type = typeToString(param.type);
+
+              el.parameters.push(block);
+            }
+          }
+
+          elements.signatures.push(el);
         }
       }
     } break;
