@@ -20,8 +20,170 @@
  * SOFTWARE.
  */
 
+import * as utils from './utils';
+
 /**
  * Represents a [[Queue]] class, which handles queue-based systems in a simple class.
  * @template T The structure of this [[Queue]] instance
  */
-export class Queue<T = unknown> {}
+export class Queue<T = unknown> {
+  private items: T[];
+
+  /**
+   * Inserts a new element at the start of the callstack
+   * @notice This is for backwards compatibility for Queue.add from 0.x
+   * @param item The item to push
+   * @returns The size of this [[Queue]]
+   */
+  public addFirst!: (item: T) => number;
+
+  /**
+   * Pushes a new item at the end of the callstack
+   * @notice This is for backwards compatibility for Queue.add from 0.x
+   * @param item The item to push
+   * @returns The size of this [[Queue]]
+   */
+  public add!: (item: T) => number;
+
+  /**
+   * Represents a [[Queue]] class, which handles queue-based systems in a simple class.
+   * @param items The items to inject when creating a new instance
+   */
+  constructor(items?: T[]) {
+    this.items = items ?? [];
+
+    const compat = [
+      'add',
+      'addFirst'
+    ] as const;
+
+    for (let i = 0; i < compat.length; i++) {
+      let func;
+      switch (compat[i]) {
+        case 'addFirst':
+          func = this.unshift;
+          break;
+
+        case 'add':
+          func = this.push;
+          break;
+
+        default:
+          func = undefined;
+          break;
+      }
+
+      if (func !== undefined) {
+        this[compat[i] as any] = function (thiz: Queue, ...args: any[]) {
+          return func.apply(thiz, [...args]);
+        }.bind(this);
+      }
+    }
+  }
+
+  /** Returns if this [[`Queue`]] is empty or not */
+  get empty() {
+    return this.items.length === 0;
+  }
+
+  /**
+   * Pushes a new item at the end of the callstack
+   * @param item The item to push
+   * @returns The size of this [[Queue]]
+   */
+  push(item: T) {
+    this.items.push(item);
+    return this.items.length;
+  }
+
+  /**
+   * Inserts a new element at the start of the callstack
+   * @param item The item to push
+   * @returns The size of this [[Queue]]
+   */
+  unshift(item: T) {
+    this.items.unshift(item);
+    return this.items.length;
+  }
+
+  /**
+   * Returns the first item in the cache and removes it from the cache
+   */
+  shift() {
+    return this.items.shift();
+  }
+
+  /**
+   * Returns the last item in the cache and removes it from the cache
+   */
+  pop() {
+    return this.items.pop();
+  }
+
+  /**
+   * Finds an item in the cache or returns `undefined` if not found
+   * @param predicate The predicate function
+   */
+  find(predicate: (item: T) => boolean) {
+    return this.items.find(predicate);
+  }
+
+  /**
+   * Returns the the queued items as an Array
+   */
+  toArray() {
+    return this.items;
+  }
+
+  /**
+   * Returns the last value of the cache
+   */
+  last() {
+    return this.items[this.items.length - 1];
+  }
+
+  /**
+   * Returns the value or `null` if not found
+   * @param index The index to peek at
+   * @returns A value if it didn't return null
+   */
+  get(index: number): T | null {
+    if (!this.items.length) return null;
+
+    const item = this.items[index];
+    return (item === void 0 || item === null) ? null : item!;
+  }
+
+  /**
+   * Removes the item from the queue
+   *
+   * @warning Use `Queue#tick` to remove all items!
+   * @param item The item to remove
+   */
+  remove(item: T | number) {
+    const r = utils.removeArray(this.items, item);
+    this.items = r;
+
+    return this;
+  }
+
+  /**
+   * Checks if the key is included in the cache
+   * @param key The key to find
+   */
+  includes(key: T) {
+    return this.items.includes(key);
+  }
+
+  [Symbol.iterator]() {
+    let index = -1;
+    const items = this.toArray();
+
+    return {
+      next: () => ({
+        value: items[++index],
+        done: index >= items.length
+      })
+    };
+  }
+}

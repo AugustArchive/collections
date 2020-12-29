@@ -20,7 +20,40 @@
  * SOFTWARE.
  */
 
+/** List of update types that the [[UpdateBuilder]] can handle */
+type UpdateQueryTypes = 'set' | 'push' | 'pull' | 'inc' | 'dec';
+
+/** Query selector for [[UpdateQuery]] */
+type ObjectQuerySelector<T> = T extends object ? { [P in keyof T]?: T[P]; } : T;
+
+export type UpdateQuery<T> = {
+  [P in UpdateQueryTypes]?: {
+    [x: string]: ObjectQuerySelector<T>;
+  };
+}
+
+const QueryTypes: UpdateQueryTypes[] = ['set', 'push', 'pull', 'inc', 'dec'];
+
 /**
  * Represents a builder structure for updating objects in a [[Collection]]
+ * @template T The type to update
  */
-export default class UpdateBuilder {}
+export default class UpdateBuilder<T> {
+  /**
+   * Create a [[UpdateBuilder]] and returns a [[`callback`]] function of what has updated or not
+   * @param query The query to create
+   * @param callback The callback function, if any
+   */
+  update(query: UpdateQuery<T>) {
+    const keys = Object.keys(query);
+    if (!keys.length) throw new TypeError('Query object cannot be a empty object');
+    if (keys.some(i => !QueryTypes.includes(<any> i))) {
+      const values = keys.filter(i => !QueryTypes.includes(<any> i));
+      throw new TypeError(`Keys ${values.length} were not a valid query type. (valid: ${QueryTypes.join(', ')})`);
+    }
+
+    for (let i = 0; i < keys.length; i++) {
+      // noop
+    }
+  }
+}
