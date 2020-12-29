@@ -4,6 +4,7 @@ node_modules/
 examples/
 tests/
 src/
+docs/
 
 .eslintrc.json
 .travis.yml

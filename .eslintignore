@@ -2,6 +2,7 @@ node_modules/
 .github/
 .vscode/
 build/
+docs/
 
 .gitignore
 .npmignore
