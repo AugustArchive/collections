@@ -1,7 +1,15 @@
+/**
+ * Jest configuration for Immutable
+ */
 module.exports = {
-  name: 'Immutable',
+  testEnvironment: 'node',
+  testMatch: ['<rootDir>/tests/*.spec.ts'],
   verbose: true,
   preset: 'ts-jest',
-  testEnvironment: 'node',
-  testMatch: ['<rootDir>/src/tests/*.test.ts']
+  name: 'Immutable',
+  globals: {
+    'ts-jest': {
+      tsconfig: './tsconfig.test.json'
+    }
+  }
 };

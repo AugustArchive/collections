@@ -1,6 +1,7 @@
 node_modules/
 .vscode/
 build/
+old/
 
-package-*.json
-yarn.lock
+*.lock
+*.log

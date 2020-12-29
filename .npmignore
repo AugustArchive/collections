@@ -1,6 +1,8 @@
 .github/
 .vscode/
 node_modules/
+examples/
+tests/
 src/
 
 .eslintrc.json
