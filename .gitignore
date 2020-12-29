@@ -1,3 +1,4 @@
+scripts/generated/*.json
 node_modules/
 .vscode/
 build/
