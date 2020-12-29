@@ -276,6 +276,9 @@ function readChild(child, parent, els = undefined, all = []) {
     } break;
 
     case 'Method': {
+      // don't do anything if the parent is a module
+      if (elements.parent && elements.parent.name === 'Module') break;
+
       elements.kind = 'Method';
       if (child.name !== undefined) elements.name = child.name;
       if (child.comment !== undefined) elements.comment = child.comment.shortText.trim() ?? '';
@@ -322,6 +325,9 @@ function readChild(child, parent, els = undefined, all = []) {
     } break;
 
     case 'Accessor': {
+      // don't do anything if the parent is a module
+      if (elements.parent && elements.parent.name === 'Module') break;
+
       elements.kind = 'Accessor';
       if (child.name !== undefined) elements.name = child.name;
       if (child.comment !== undefined) elements.comment = child.comment.shortText.trim() ?? '';
