@@ -1,10 +1,13 @@
 {
   "name": "@augu/immutable",
   "description": "📝 Collections library made in TypeScript",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "types": "index.d.ts",
   "main": "build/index.js",
-  "homepage": "https://docs.augu.dev/immutable",
+  "license": "MIT",
+  "funding": {
+    "url": "https://github.com/auguwu/collections?sponsor=1"
+  },
   "files": [
     "build/",
     "esm.mjs",

@@ -1,9 +1,12 @@
+# NOTICE
+This library is deprecated in favour of **@augu/collections**, if you want a updated version of this library, please install it using `npm i @augu/collections`! View the [changes](https://github.com/auguwu/collections#changes-from-0x---1x) here.
+
+~ August
+
 # @augu/immutable 
 [![npm version](https://badge.fury.io/js/%40augu%2Fimmutable.svg)](https://badge.fury.io/js/%40augu%2Fimmutable) [![Stars](https://img.shields.io/github/stars/auguwu/immutable)](https://github.com/auguwu/immutable) [![Workflow Status](https://github.com/auguwu/immutable/workflows/ESLint/badge.svg)](https://github.com/auguwu/immutable/tree/master/.github/workflows) [![Build Status](https://travis-ci.org/auguwu/immutable.svg?branch=master)](https://travis-ci.org/auguwu/immutable) [![Build Size](https://img.shields.io/bundlephobia/min/@augu/immutable?style=flat-square)](https://github.com/auguwu/immutable)
 
 > Immutable library made in TypeScript
->
-> [Documentation](https://docs.augu.dev/immutable) **|** [NPM](https://npmjs.com/package/@augu/immutable) **|** [GitHub](https://github.com/auguwu/immutable)
 
 ## Examples
 ### Collection
