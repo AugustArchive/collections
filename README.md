@@ -10,7 +10,6 @@ If you would like to use the 0.x builds or view it's source code, it'll be avail
 - All deprecated methods are removed
 - Name is changed from `@augu/immutable` to `@augu/collections`
 - Added `Collection.update` to update values if they exist
-- Immutable data is under the `immutable` namespace
 
 ## Usage
 ```js

@@ -21,7 +21,6 @@
  */
 
 /**
- * Represents a [[Queue]] class, which handles queue-based systems in a simple class.
- * @template T The structure of this [[Queue]] instance
+ * Represents a builder structure for updating objects in a [[Collection]]
  */
-export class Queue<T = unknown> {}
+export default class UpdateBuilder {}

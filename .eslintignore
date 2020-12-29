@@ -1,0 +1,13 @@
+node_modules/
+.github/
+.vscode/
+build/
+
+.gitignore
+.npmignore
+.travis.yml
+package.json
+package-*.json
+renovate.json
+README.md
+tsconfig.*.json
