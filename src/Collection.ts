@@ -20,7 +20,6 @@
  * SOFTWARE.
  */
 
-import UpdateBuilder, { UpdateQuery } from './UpdateBuilder';
 import * as utils from './utils';
 
 type ObjectLike<T> = T extends object ? { [P in keyof T]: T[P]; } : T;
@@ -39,37 +38,12 @@ type UndetailedMinimalPredicate<Value, ReturnAs> = (value: Value) => ReturnAs;
  * @template K The key structure for this [[Collection]]
  * @template V The value structure for this [[Collection]]
  */
-export class Collection<K extends string | number | symbol = string, V = unknown> extends Map<K, V> {
+export class Collection<K extends string | number | symbol, V = any> extends Map<K, V> {
   public ['constructor']: typeof Collection;
-
-  /**
-   * Creates a new [[`Collection`]] instance
-   * @param values The values to inject into this [[`Collection`]], if any
-   */
-  constructor(values?: ObjectLike<V>) {
-    super();
-
-    if (values && utils.isObject(values)) {
-      for (const [key, value] of Object.entries(values)) this.set(<any> key, value);
-    } else {
-      throw new SyntaxError(`\`values\` was expecting a object but received ${typeof values}`);
-    }
-  }
 
   /** Returns if this [[`Collection`]] is empty or not */
   get empty() {
     return this.size === 0;
-  }
-
-  /**
-   * Updates a value from this [[`Collection`]] and updates accordinly
-   * @param query The query to use
-   */
-  update(query: UpdateQuery<V>) {
-    const builder = new UpdateBuilder<V>();
-    const updated = builder.update(query);
-
-    // noop
   }
 
   /**
@@ -330,9 +304,9 @@ export class Collection<K extends string | number | symbol = string, V = unknown
    */
   emplace(key: K, insert: V | (() => V)) {
     if (!this.has(key)) {
-      const item = typeof insert !== 'function' ? insert : (<any> insert)();
+      const item = typeof insert === 'function' ? (insert as any)() : insert;
       this.set(key, item);
-      return insert;
+      return item as unknown as V;
     } else {
       return this.get(key)!;
     }
@@ -398,5 +372,15 @@ export class Collection<K extends string | number | symbol = string, V = unknown
     }
 
     return false;
+  }
+
+  /**
+   * Bulk add items into this [[`Collection`]] using an object
+   * @param obj The object to bulk-add to this [[`Collection`]]
+   */
+  bulkAdd(obj: { [X in K]: V }) {
+    for (const [key, value] of Object.entries<V>(obj)) {
+      this.emplace(<any> key, value);
+    }
   }
 }

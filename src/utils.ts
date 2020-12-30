@@ -32,6 +32,15 @@ export function isObject(value: unknown): value is object {
 }
 
 /**
+ * Checks if [[`value`]] is an Array or not
+ * @param value The value to check
+ * @returns If the value is an Array or not.
+ */
+export function isArray(value: unknown): value is any[] {
+  return typeof value === 'object' && Array.isArray(value);
+}
+
+/**
  * Deprecates a method if it's no longer gonna be updated
  * @param method The method that is deprecated
  */

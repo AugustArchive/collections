@@ -41,7 +41,7 @@
     "prepare": "npm run lint && rm -fr build && tsc",
     "docgen": "node scripts/docgen.js",
     "build": "npm run lint && npm test && rm -fr build && tsc",
-    "lint": "eslint src,tests --ext .ts --fix",
+    "lint": "eslint src --ext .ts --fix",
     "test": "jest --config jest.config.js --no-cache --i"
   }
 }
