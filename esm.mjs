@@ -1,9 +1,7 @@
-import Immutable from './build/index.js';
+import Collections from './build/index.js';
 
 export const {
   Collection,
   Queue,
-  Pair,
-  version,
-  TimedQueue
-} = Immutable;
+  version
+} = Collections;
