@@ -1,0 +1,43 @@
+name: ESLint
+on:
+  push:
+  pull_request:
+    branches:
+      - 'feature/**'
+      - 'issue/**'
+      - 'master'
+    paths-ignore:
+      - 'examples/**'
+      - '.github/**'
+      - '.vscode/**'
+      - 'docs/**'
+      - '.eslintiginore'
+      - '.gitignore'
+      - '.npmignore'
+      - '.travis.yml'
+      - 'LICENSE'
+      - '**.md'
+      - 'renovate.json'
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 11.x, 12.x, 13.x, 14.x, 15.x]
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+
+      - name: Uses Node.js v${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Installs dependencies
+        run: npm i -g eslint && npm ci
+
+      - name: Lints the repository
+        run: npm run lint
+
+      - name: Runs Jest for unit testing
+        run: npm test
