@@ -175,6 +175,13 @@ export class Queue<T = unknown> {
     return this.items.includes(key);
   }
 
+  /**
+   * Returns the size of this [[Queue]]
+   */
+  size() {
+    return this.items.length;
+  }
+
   [Symbol.iterator]() {
     let index = -1;
     const items = this.toArray();

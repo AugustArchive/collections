@@ -18,7 +18,7 @@ declare module '@augu/collections' {
      * @template K The key structure for this [[Collection]]
      * @template V The value structure for this [[Collection]]
      */
-    export class Collection<K extends string | number | symbol, V = any> extends Map<K, V> {
+    export class Collection<K, V = unknown> extends Map<K, V> {
       public ['constructor']: typeof Collection;
 
       /** Returns if this [[`Collection`]] is empty or not */
@@ -183,7 +183,10 @@ declare module '@augu/collections' {
        * Bulk add items into this [[`Collection`]] using an object
        * @param obj The object to bulk-add to this [[`Collection`]]
        */
-      bulkAdd(obj: { [X in K]: V }): void;
+      bulkAdd(obj: {
+        [x: string]: V
+        [x: number]: V
+      }): void;
     }
 
     /**
@@ -203,7 +206,7 @@ declare module '@augu/collections' {
 
       /**
        * Pushes a new item at the end of the callstack
-       * @notice This is for backwards compatibility for Queue.add from 0.x
+       * @deprecated This is for backwards compatibility for Queue.add from 0.x
        * @param item The item to push
        * @returns The size of this [[Queue]]
        */
@@ -217,6 +220,12 @@ declare module '@augu/collections' {
 
       /** Returns if this [[`Queue`]] is empty or not */
       public get empty(): boolean;
+
+      /**
+       * Returns the size of the Queue
+       * @returns The size of this [[Queue]]
+       */
+      public size(): number;
 
       /**
        * Pushes a new item at the end of the callstack
