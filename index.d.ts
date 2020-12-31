@@ -288,6 +288,11 @@ declare module '@augu/collections' {
        */
       includes(key: T): boolean;
 
+      /**
+       * Clones a new [[Queue]] instance with the items available
+       */
+      clone(): this;
+
       [Symbol.iterator](): IteratorResult<T>;
     }
   }

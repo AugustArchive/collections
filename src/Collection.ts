@@ -38,7 +38,7 @@ type UndetailedMinimalPredicate<Value, ReturnAs> = (value: Value) => ReturnAs;
  * @template K The key structure for this [[Collection]]
  * @template V The value structure for this [[Collection]]
  */
-export class Collection<K extends string | number | symbol, V = any> extends Map<K, V> {
+export class Collection<K, V = unknown> extends Map<K, V> {
   public ['constructor']: typeof Collection;
 
   /** Returns if this [[`Collection`]] is empty or not */
@@ -378,7 +378,7 @@ export class Collection<K extends string | number | symbol, V = any> extends Map
    * Bulk add items into this [[`Collection`]] using an object
    * @param obj The object to bulk-add to this [[`Collection`]]
    */
-  bulkAdd(obj: { [X in K]: V }) {
+  bulkAdd(obj: {}) {
     for (const [key, value] of Object.entries<V>(obj)) {
       this.emplace(<any> key, value);
     }

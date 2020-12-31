@@ -27,6 +27,7 @@ import * as utils from './utils';
  * @template T The structure of this [[Queue]] instance
  */
 export class Queue<T = unknown> {
+  public ['constructor']: typeof Queue;
   private items: T[];
 
   /**
@@ -180,6 +181,13 @@ export class Queue<T = unknown> {
    */
   size() {
     return this.items.length;
+  }
+
+  /**
+   * Clones a new [[Queue]] instance with the items available
+   */
+  clone() {
+    return new this.constructor(this.items);
   }
 
   [Symbol.iterator]() {
