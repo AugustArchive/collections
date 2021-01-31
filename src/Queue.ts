@@ -62,11 +62,11 @@ export class Queue<T = unknown> {
       let func;
       switch (compat[i]) {
         case 'addFirst':
-          func = this.unshift;
+          func = this.unshift.bind(this);
           break;
 
         case 'add':
-          func = this.push;
+          func = this.push.bind(this);
           break;
 
         default:
