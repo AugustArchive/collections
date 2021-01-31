@@ -75,9 +75,10 @@ export class Queue<T = unknown> {
       }
 
       if (func !== undefined) {
-        this[compat[i] as any] = function (thiz: Queue, ...args: any[]) {
-          return func.apply(thiz, [...args]);
-        }.bind(this);
+        this[compat[i] as string] = (...args: any[]) => {
+          utils.deprecate(compat[i]);
+          return func(...args);
+        };
       }
     }
   }
