@@ -13,7 +13,7 @@
     "esm.mjs",
     "index.d.ts"
   ],
-  "author": "August <august@augu.dev>",
+  "author": "August <cutie@floofy.dev>",
   "repository": "https://github.com/auguwu/collections",
   "exports": {
     ".": [
