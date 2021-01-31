@@ -9,7 +9,6 @@ If you would like to use the 0.x builds or view it's source code, it'll be avail
 - `Pair` and `TimedQueue` are remvoed
 - All deprecated methods are removed
 - Name is changed from `@augu/immutable` to `@augu/collections`
-- Added `Collection.update` to update values if they exist
 
 ## Usage
 ```js
@@ -28,11 +27,6 @@ const coll = new collections.Collection({ // Create one with key-value pairs
 
 coll.get('key'); // the value if added or undefined
 coll.set('key', 'value'); // the value if the key isn't added
-coll.update({ // Returns the new value updated
-  set: {
-    'key': 'value' // dot notation is supported for nested objects
-  }
-});
 
 coll.filter(value => value === 'value'); // Returns a Array of values if the predicate is true
 coll.map(v => v); // Returns a Array of values that are mapped by it's predicate function
