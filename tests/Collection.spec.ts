@@ -23,12 +23,11 @@
 import { Collection } from '../src';
 
 describe('Collections', () => {
-  const collection = new Collection<string, string>();
-  collection.bulkAdd({
-    a: 'b',
-    c: 'd',
-    e: 'f'
-  });
+  const collection = new Collection<string, string>([
+    ['a', 'b'],
+    ['c', 'd'],
+    ['e', 'f']
+  ]);
 
   it('should return "b" as the value', () =>
     expect(collection.find(value => value === 'b')).toStrictEqual('b')
