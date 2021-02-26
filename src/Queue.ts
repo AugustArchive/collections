@@ -191,6 +191,20 @@ export class Queue<T = unknown> {
     return new this.constructor(this.items);
   }
 
+  /**
+   * Perform a specific action from it's [[predicate]] function
+   * @param predicate The predicate function
+   * @param thisArg A custom `this` context for the predicate
+   */
+  forEach<ThisArg = Queue<T>>(predicate: (this: ThisArg, value: T, index: number) => void, thisArg?: ThisArg) {
+    // @ts-ignore overloads can go suck my ass
+    predicate = predicate.bind(thisArg !== undefined ? thisArg : this);
+
+    for (let i = 0; i < this.items.length; i++)
+      // @ts-ignore go suck it
+      predicate(this.items[i], i);
+  }
+
   [Symbol.iterator]() {
     let index = -1;
     const items = this.toArray();

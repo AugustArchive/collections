@@ -11,6 +11,10 @@ declare module '@augu/collections' {
     type MinimalPredicate<ThisArg, Value, ReturnAs> = (this: ThisArg, value: Value) => ReturnAs;
     type UndetailedMinimalPredicate<Value, ReturnAs> = (value: Value) => ReturnAs;
 
+    interface AIteratorResult<T> {
+      next(): { done: boolean; value: T };
+    }
+
     /**
      * Represents a class to hold key-value pairs using [[Collection]]. This is a extension
      * of [Map] to add Array-like functions and a update builder.
@@ -178,15 +182,6 @@ declare module '@augu/collections' {
        * @returns A boolean value if 1 item of the cache is truthy
        */
       someKeys(func: (item: K) => boolean): boolean;
-
-      /**
-       * Bulk add items into this [[`Collection`]] using an object
-       * @param obj The object to bulk-add to this [[`Collection`]]
-       */
-      bulkAdd(obj: {
-        [x: string]: V
-        [x: number]: V
-      }): void;
     }
 
     /**
@@ -198,7 +193,7 @@ declare module '@augu/collections' {
 
       /**
        * Inserts a new element at the start of the callstack
-       * @notice This is for backwards compatibility for Queue.add from 0.x
+       * @deprecated This is for backwards compatibility for Queue.addFirst from 0.x, use `Queue.unshift`
        * @param item The item to push
        * @returns The size of this [[Queue]]
        */
@@ -206,7 +201,7 @@ declare module '@augu/collections' {
 
       /**
        * Pushes a new item at the end of the callstack
-       * @deprecated This is for backwards compatibility for Queue.add from 0.x
+       * @deprecated This is for backwards compatibility for Queue.add from 0.x, use `Queue.push`
        * @param item The item to push
        * @returns The size of this [[Queue]]
        */
@@ -293,7 +288,14 @@ declare module '@augu/collections' {
        */
       clone(): this;
 
-      [Symbol.iterator](): IteratorResult<T>;
+      /**
+       * Perform a specific action from it's [[predicate]] function
+       * @param predicate The predicate function
+       * @param thisArg A custom `this` context for the predicate function
+       */
+      forEach<ThisArg = Queue<T>>(predicate: (this: ThisArg, value: T, index: number) => void, thisArg?: ThisArg): void;
+
+      [Symbol.iterator](): AIteratorResult<T>;
     }
   }
 

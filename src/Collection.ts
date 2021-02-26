@@ -373,14 +373,4 @@ export class Collection<K, V = unknown> extends Map<K, V> {
 
     return false;
   }
-
-  /**
-   * Bulk add items into this [[`Collection`]] using an object
-   * @param obj The object to bulk-add to this [[`Collection`]]
-   */
-  bulkAdd(obj: {}) {
-    for (const [key, value] of Object.entries<V>(obj)) {
-      this.emplace(<any> key, value);
-    }
-  }
 }
