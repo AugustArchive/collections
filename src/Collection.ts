@@ -123,6 +123,8 @@ export class Collection<K, V = unknown> extends Map<K, V> {
 
     const func = predicate.bind(this);
     while ((value = iterable.next().value) !== undefined) res = func(res, value);
+      
+    return res;
   }
 
   /**
