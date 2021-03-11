@@ -48,4 +48,4 @@ queue.map(u => u); // Map out anything from a predicate function
 - [August](https://floofy.dev)
 
 ## License
-**@augu/collections** is released under [MIT](/LICENSE). :)
+**@augu/collections** is released under [MIT](/LICENSE). :sparkling_heart:

@@ -141,6 +141,17 @@ declare module '@augu/collections' {
       ): V | null;
 
       /**
+       * Finds a key in the collection from it's predicate function
+       * @param predicate The predicate function
+       * @param thisArg An additional `this` context if needed
+       * @returns The key found or `null` if not found
+       */
+      findKey<ThisArg = Collection<K, V>>(
+        predicate: MinimalPredicate<ThisArg, V, boolean>,
+        thisArg?: ThisArg
+      ): K | null;
+
+      /**
        * Computes a value if it's absent in this Collection
        * @param key The key to find
        * @param insert Item to add when it doesn't exist

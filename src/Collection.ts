@@ -123,7 +123,7 @@ export class Collection<K, V = unknown> extends Map<K, V> {
 
     const func = predicate.bind(this);
     while ((value = iterable.next().value) !== undefined) res = func(res, value);
-      
+
     return res;
   }
 
@@ -292,6 +292,34 @@ export class Collection<K, V = unknown> extends Map<K, V> {
     for (const value of this.values()) {
       if (func(value)) {
         result = value;
+        break;
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Finds a key in the collection from it's predicate function
+   * @param predicate The predicate function
+   * @param thisArg An additional `this` context if needed
+   * @returns The key found or `null` if not found
+   */
+  findKey<ThisArg = Collection<K, V>>(
+    predicate: MinimalPredicate<ThisArg, V, boolean>,
+    thisArg?: ThisArg
+  ) {
+    let func: UndetailedMinimalPredicate<V, boolean>;
+
+    if (thisArg !== undefined)
+      func = predicate.bind(thisArg);
+    else
+      func = predicate.bind(<any> this);
+
+    let result: K | null = null;
+    for (const [key, value] of this.entries()) {
+      if (func(value)) {
+        result = key;
         break;
       }
     }
