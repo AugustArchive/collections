@@ -1,6 +1,6 @@
 # @augu/collections · [![npm version](https://badge.fury.io/js/%40augu%2Fcollections.svg)](https://badge.fury.io/js/%40augu%2Fcollections) [![Stars](https://img.shields.io/github/stars/auguwu/collections)](https://github.com/auguwu/collections) [![Workflow Status](https://github.com/auguwu/collections/workflows/ESLint/badge.svg)](https://github.com/auguwu/collections/tree/master/.github/workflows) [![Build Status](https://travis-ci.org/auguwu/collections.svg?branch=master)](https://travis-ci.org/auguwu/collections) [![Build Size](https://img.shields.io/bundlephobia/min/@augu/collections?style=flat-square)](https://github.com/auguwu/collections)
 
-> :pencil: **Collections library made in TypeScript**
+> 📝 **Collections library made in TypeScript**
 
 ## 0.x builds
 If you would like to use the 0.x builds or view it's source code, it'll be available under the [0.x](https://github.com/auguwu/collections/tree/0.x) branch and you can do so with `npm i @augu/immutable`.
@@ -48,4 +48,4 @@ queue.map(u => u); // Map out anything from a predicate function
 - [August](https://floofy.dev)
 
 ## License
-**@augu/collections** is released under [MIT](/LICENSE). :sparkling_heart:
+**@augu/collections** is released under [MIT](/LICENSE). 💖

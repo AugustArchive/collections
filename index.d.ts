@@ -65,6 +65,17 @@ declare module '@augu/collections' {
       filter<ThisArg = Collection<K, V>>(predicate: Predicate<ThisArg, V, number, K, boolean>, thisArg?: ThisArg): V[];
 
       /**
+       * Use a predicate function to filter out values and return a new Array of the values
+       * that resolved true in the predicate function. Use Collection#filterKeys to filter
+       * out any keys if needed.
+       *
+       * @param predicate The predicate function to filter out
+       * @param thisArg An additional `this` context if needed
+       * @returns A new Array of the values that returned `true` in the predicate function
+       */
+      filterKeys<ThisArg = Collection<K, V>>(predicate: PredicateWithoutKey<ThisArg, K, number, boolean>, thisArg?: ThisArg): K[];
+
+      /**
        * Use a predicate function to map anything into a new array
        * @param predicate The predicate function to map out and return a new array
        * @param thisArg An additional `this` context if needed

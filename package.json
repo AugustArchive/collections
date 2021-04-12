@@ -1,7 +1,7 @@
 {
   "name": "@augu/collections",
   "description": "📝 Collections library made in TypeScript",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "types": "index.d.ts",
   "main": "build/index.js",
   "homepage": "https://docs.floofy.dev/collections",
@@ -25,6 +25,9 @@
       "./build/index.js"
     ],
     "./esm": "./esm.mjs"
+  },
+  "engines": {
+    "node": ">=10"
   },
   "devDependencies": {
     "@augu/eslint-config": "2.0.2",
