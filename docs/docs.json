@@ -1,9 +1,0 @@
-{
-  "name": "Collections",
-  "description": "Collections library made in TypeScript, formally **@augu/immutable**",
-  "endpoints": {
-    "/classes": "~/classes.md",
-    "/types": "~/types.md",
-    "/": "~/index.md"
-  }
-}
