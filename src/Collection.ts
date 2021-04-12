@@ -99,16 +99,16 @@ export class Collection<K, V = unknown> extends Map<K, V> {
   }
 
   /**
-   * Use a predicate function to filter out values and return a new Array of the values
-   * that resolved true in the predicate function. Use Collection#filterKeys to filter
-   * out any keys if needed.
+   * Use a predicate function to filter out keys and return a new Array of the keys
+   * that resolved true in the predicate function. Use Collection#filter to filter out
+   * any values from this [[`Collection`]].
    *
    * @param predicate The predicate function to filter out
    * @param thisArg An additional `this` context if needed
    * @returns A new Array of the values that returned `true` in the predicate function
    */
-  filterKeys<ThisArg = Collection<K, V>>(predicate: PredicateWithoutKey<ThisArg, K, number, boolean>, thisArg?: ThisArg) {
-    let func: MinimalPredicateWithKey<K, number, boolean>;
+  filterKeys<ThisArg = Collection<K, V>>(predicate: Predicate<ThisArg, V, number, K, boolean>, thisArg?: ThisArg) {
+    let func: UndetailedPredicate<V, number, K, boolean>;
 
     if (thisArg !== undefined)
       func = predicate.bind(thisArg);
@@ -118,8 +118,8 @@ export class Collection<K, V = unknown> extends Map<K, V> {
     const results: K[] = [];
     let i = -1;
 
-    for (const key of this.keys()) {
-      if (func(key, ++i)) results.push(key);
+    for (const [key, value] of this.entries()) {
+      if (func(value, i++, key)) results.push(key);
     }
 
     return results;
