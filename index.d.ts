@@ -3,15 +3,43 @@ declare module '@augu/collections' {
     /** Returns the version of this library */
     export const version: string;
 
+    /**
+     * Represents a predicate function for any mutable methods
+     */
     type Predicate<ThisArg, Value, Index, Key, ReturnAs>
       = (this: ThisArg, value: Value, index: Index, key: Key) => ReturnAs;
 
+    /**
+     * Represents a predicate function for [[Collection#reduce]]
+     */
     type ReducePredicate<ThisArg, Current, Acc, ReturnAs> = (this: ThisArg, acc: Acc, current: Current) => ReturnAs;
+
+    /**
+     * Same as [[Predicate]] but with no this context binded.
+     */
     type UndetailedPredicate<Value, Index, Key, ReturnAs> = (value: Value, index: Index, key: Key) => ReturnAs;
+
+    /**
+     * Same as [[Predicate]] but with no `key` argument
+     */
+    type PredicateWithoutKey<ThisArg, Value, Index, ReturnAs> = (this: ThisArg, value: Value, index: Index) => ReturnAs;
+
+    /**
+     * Same as [[Predicate]] but without `index` and `key` arguments
+     */
     type MinimalPredicate<ThisArg, Value, ReturnAs> = (this: ThisArg, value: Value) => ReturnAs;
+
+    /**
+     * Same as [[Predicate]] but with no `index` argument
+     */
+    type MinimalPredicateWithKey<Value, Index, ReturnAs> = (value: Value, index: Index) => ReturnAs;
+
+    /**
+     * Same as [[Predicate]] but with no this context binded and without `index` or `key` arguments
+     */
     type UndetailedMinimalPredicate<Value, ReturnAs> = (value: Value) => ReturnAs;
 
-    interface AIteratorResult<T> {
+    interface ForLoopIteration<T> {
       next(): { done: boolean; value: T };
     }
 
@@ -306,7 +334,7 @@ declare module '@augu/collections' {
        */
       forEach<ThisArg = Queue<T>>(predicate: (this: ThisArg, value: T, index: number) => void, thisArg?: ThisArg): void;
 
-      [Symbol.iterator](): AIteratorResult<T>;
+      [Symbol.iterator](): collections.ForLoopIteration<T>;
     }
   }
 

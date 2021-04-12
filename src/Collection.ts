@@ -20,15 +20,40 @@
  * SOFTWARE.
  */
 
-import * as utils from './utils';
-
-type ObjectLike<T> = T extends object ? { [P in keyof T]: T[P]; } : T;
+/**
+ * Represents a predicate function for any mutable methods
+ */
 type Predicate<ThisArg, Value, Index, Key, ReturnAs>
   = (this: ThisArg, value: Value, index: Index, key: Key) => ReturnAs;
 
+/**
+ * Represents a predicate function for [[Collection#reduce]]
+ */
 type ReducePredicate<ThisArg, Current, Acc, ReturnAs> = (this: ThisArg, acc: Acc, current: Current) => ReturnAs;
+
+/**
+ * Same as [[Predicate]] but with no this context binded.
+ */
 type UndetailedPredicate<Value, Index, Key, ReturnAs> = (value: Value, index: Index, key: Key) => ReturnAs;
+
+/**
+ * Same as [[Predicate]] but with no `key` argument
+ */
+type PredicateWithoutKey<ThisArg, Value, Index, ReturnAs> = (this: ThisArg, value: Value, index: Index) => ReturnAs;
+
+/**
+ * Same as [[Predicate]] but without `index` and `key` arguments
+ */
 type MinimalPredicate<ThisArg, Value, ReturnAs> = (this: ThisArg, value: Value) => ReturnAs;
+
+/**
+ * Same as [[Predicate]] but with no `index` argument
+ */
+type MinimalPredicateWithKey<Value, Index, ReturnAs> = (value: Value, index: Index) => ReturnAs;
+
+/**
+ * Same as [[Predicate]] but with no this context binded and without `index` or `key` arguments
+ */
 type UndetailedMinimalPredicate<Value, ReturnAs> = (value: Value) => ReturnAs;
 
 /**
@@ -47,7 +72,10 @@ export class Collection<K, V = unknown> extends Map<K, V> {
   }
 
   /**
-   * Use a predicate function to filter out anything and return a new Array
+   * Use a predicate function to filter out values and return a new Array of the values
+   * that resolved true in the predicate function. Use Collection#filterKeys to filter
+   * out any keys if needed.
+   *
    * @param predicate The predicate function to filter out
    * @param thisArg An additional `this` context if needed
    * @returns A new Array of the values that returned `true` in the predicate function
@@ -65,6 +93,33 @@ export class Collection<K, V = unknown> extends Map<K, V> {
 
     for (const [key, value] of this.entries()) {
       if (func(value, i++, key)) results.push(value);
+    }
+
+    return results;
+  }
+
+  /**
+   * Use a predicate function to filter out values and return a new Array of the values
+   * that resolved true in the predicate function. Use Collection#filterKeys to filter
+   * out any keys if needed.
+   *
+   * @param predicate The predicate function to filter out
+   * @param thisArg An additional `this` context if needed
+   * @returns A new Array of the values that returned `true` in the predicate function
+   */
+  filterKeys<ThisArg = Collection<K, V>>(predicate: PredicateWithoutKey<ThisArg, K, number, boolean>, thisArg?: ThisArg) {
+    let func: MinimalPredicateWithKey<K, number, boolean>;
+
+    if (thisArg !== undefined)
+      func = predicate.bind(thisArg);
+    else
+      func = predicate.bind(<any> this);
+
+    const results: K[] = [];
+    let i = -1;
+
+    for (const key of this.keys()) {
+      if (func(key, ++i)) results.push(key);
     }
 
     return results;
