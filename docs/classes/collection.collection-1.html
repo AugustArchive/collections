@@ -114,6 +114,9 @@
 									<a href="collection.collection-1.html#filter" class="tsd-kind-icon">filter</a>
 								</li>
 								<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+									<a href="collection.collection-1.html#filterkeys" class="tsd-kind-icon">filter<wbr>Keys</a>
+								</li>
+								<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
 									<a href="collection.collection-1.html#find" class="tsd-kind-icon">find</a>
 								</li>
 								<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
@@ -346,6 +349,13 @@
 							<div class="tsd-navigation secondary">
 								<ul>
 									<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+										<a href="collection.collection-1.html#filterkeys" class="tsd-kind-icon">filter<wbr>Keys</a>
+									</li>
+								</ul>
+							</div>
+							<div class="tsd-navigation secondary">
+								<ul>
+									<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
 										<a href="collection.collection-1.html#find" class="tsd-kind-icon">find</a>
 									</li>
 								</ul>
@@ -570,7 +580,7 @@
 					<div class="tsd-signature tsd-kind-icon">constructor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">typeof Collection</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/10096f1/src/Collection.ts#L42">src/Collection.ts:42</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L67">src/Collection.ts:67</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -615,7 +625,7 @@
 					</div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/10096f1/src/Collection.ts#L45">src/Collection.ts:45</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L70">src/Collection.ts:70</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -699,7 +709,7 @@
 					</ul>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/10096f1/src/Collection.ts#L335">src/Collection.ts:335</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L390">src/Collection.ts:390</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -728,7 +738,9 @@
 					</ul>
 					<div class="tsd-comment">
 						<div class="lead">
-							<p>Use a predicate function to filter out anything and return a new Array</p>
+							<p>Use a predicate function to filter out values and return a new Array of the values
+								that resolved true in the predicate function. Use Collection#filterKeys to filter
+							out any keys if needed.</p>
 						</div>
 					</div>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -756,7 +768,49 @@
 					</ul>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/10096f1/src/Collection.ts#L55">src/Collection.ts:55</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L83">src/Collection.ts:83</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-descriptions">
+					<a name="filterkeys" class="tsd-anchor"></a>
+					<h3>filter<wbr>Keys</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">filter<wbr>Keys&lt;ThisArg&gt;<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PredicateWithoutKey</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ThisArg</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span>, thisArg<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ThisArg</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>    <span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<div class="tsd-comment">
+						<div class="lead">
+							<p>Use a predicate function to filter out values and return a new Array of the values
+								that resolved true in the predicate function. Use Collection#filterKeys to filter
+							out any keys if needed.</p>
+						</div>
+					</div>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+						<span class="name">ThisArg</span>                    </li>
+					</ul>
+					<h4 class="tsd-parameters-title">Parameters</h4>
+					<ul class="tsd-parameters">
+						<li>
+							<span class="name">predicate</span>: <span class="tsd-signature-type">PredicateWithoutKey</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ThisArg</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span>
+							<div class="tsd-comment">
+								<p>The predicate function to filter out</p>
+							</div>
+						</li>
+						<li>
+							<span class="name">thisArg</span>: <span class="tsd-signature-type">ThisArg</span> <span class="tsd-flag ts-flagOptional">Optional</span>
+							<div class="tsd-comment">
+								<p>An additional <code>this</code> context if needed</p>
+							</div>
+						</li>
+					</ul>
+					<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">K</span>    <span class="tsd-signature-symbol">[]</span></h4>
+					<p>A new Array of the values that returned <code>true</code> in the predicate function</p>
+					</ul>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L110">src/Collection.ts:110</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -799,7 +853,7 @@
 					</ul>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/10096f1/src/Collection.ts#L280">src/Collection.ts:280</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L335">src/Collection.ts:335</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -842,7 +896,7 @@
 					</ul>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/10096f1/src/Collection.ts#L308">src/Collection.ts:308</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L363">src/Collection.ts:363</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -880,7 +934,7 @@
 					</ul>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/10096f1/src/Collection.ts#L133">src/Collection.ts:133</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L188">src/Collection.ts:188</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -918,7 +972,7 @@
 					</ul>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/10096f1/src/Collection.ts#L209">src/Collection.ts:209</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L264">src/Collection.ts:264</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1057,7 +1111,7 @@
 					</ul>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/10096f1/src/Collection.ts#L161">src/Collection.ts:161</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L216">src/Collection.ts:216</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1095,7 +1149,7 @@
 					</ul>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/10096f1/src/Collection.ts#L185">src/Collection.ts:185</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L240">src/Collection.ts:240</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1137,7 +1191,7 @@
 					</ul>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/10096f1/src/Collection.ts#L79">src/Collection.ts:79</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L134">src/Collection.ts:134</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1160,7 +1214,7 @@
 					</ul>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/10096f1/src/Collection.ts#L104">src/Collection.ts:104</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L159">src/Collection.ts:159</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1199,7 +1253,7 @@
 					</ul>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/10096f1/src/Collection.ts#L116">src/Collection.ts:116</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L171">src/Collection.ts:171</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1251,7 +1305,7 @@
 					</ul>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/10096f1/src/Collection.ts#L251">src/Collection.ts:251</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L306">src/Collection.ts:306</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1299,7 +1353,7 @@
 					</ul>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/10096f1/src/Collection.ts#L380">src/Collection.ts:380</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L435">src/Collection.ts:435</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1347,7 +1401,7 @@
 					</ul>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/10096f1/src/Collection.ts#L397">src/Collection.ts:397</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L452">src/Collection.ts:452</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1398,7 +1452,7 @@
 					</ul>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/10096f1/src/Collection.ts#L352">src/Collection.ts:352</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L407">src/Collection.ts:407</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1449,7 +1503,7 @@
 					</ul>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/10096f1/src/Collection.ts#L366">src/Collection.ts:366</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L421">src/Collection.ts:421</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1468,7 +1522,7 @@
 					</ul>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/10096f1/src/Collection.ts#L236">src/Collection.ts:236</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L291">src/Collection.ts:291</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1487,7 +1541,7 @@
 					</ul>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/10096f1/src/Collection.ts#L243">src/Collection.ts:243</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L298">src/Collection.ts:298</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1518,7 +1572,7 @@
 					</ul>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/10096f1/src/Collection.ts#L264">src/Collection.ts:264</a></li>
+							<li>Defined in <a href="https://github.com/auguwu/immutable/blob/488db4e/src/Collection.ts#L319">src/Collection.ts:319</a></li>
 						</ul>
 					</aside>
 				</section>
