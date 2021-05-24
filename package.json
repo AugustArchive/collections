@@ -1,12 +1,11 @@
 {
   "name": "@augu/collections",
   "description": "📝 Collections library made in TypeScript",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "types": "index.d.ts",
   "main": "build/index.js",
-  "homepage": "https://docs.floofy.dev/collections",
   "funding": {
-    "url": "https://github.com/auguwu/collections?sponsor=1"
+    "url": "https://github.com/sponsors/auguwu"
   },
   "license": "MIT",
   "files": [
@@ -15,7 +14,7 @@
     "index.d.ts"
   ],
   "author": "August <cutie@floofy.dev>",
-  "repository": "https://github.com/auguwu/collections",
+  "repository": "https://github.com/Noelware/collections",
   "exports": {
     ".": [
       {
