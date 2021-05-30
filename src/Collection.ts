@@ -56,6 +56,33 @@ type MinimalPredicateWithKey<Value, Index, ReturnAs> = (value: Value, index: Ind
  */
 type UndetailedMinimalPredicate<Value, ReturnAs> = (value: Value) => ReturnAs;
 
+// eslint-disable-next-line
+type NewMapArguments<K, V = unknown> = readonly (readonly [K, V])[] | null;
+
+/**
+ * Options for constructing a new [[Collection]].
+ */
+export interface CollectionOptions<K, V = unknown> {
+  sweep?: SweepOptions<K, V>;
+}
+
+interface SweepOptions<K, V> {
+  predicate?(value: V, index: number, key: K): boolean;
+  timeout?: number;
+}
+
+function isCollectionOptions(value: unknown): value is CollectionOptions<any, any> {
+  return value === null || !Array.isArray(value);
+}
+
+function getEntries<K, V>(opts?: NewMapArguments<K, V> | CollectionOptions<K, V>): NewMapArguments<K, V> {
+  return opts !== undefined
+    ? isCollectionOptions(opts)
+      ? null
+      : opts as NewMapArguments<K, V>
+    : null;
+}
+
 /**
  * Represents a class to hold key-value pairs using [[Collection]]. This is a extension
  * of [Map] to add Array-like functions and a update builder.
@@ -64,7 +91,50 @@ type UndetailedMinimalPredicate<Value, ReturnAs> = (value: Value) => ReturnAs;
  * @template V The value structure for this [[Collection]]
  */
 export class Collection<K, V = unknown> extends Map<K, V> {
+  protected _sweepInterval?: NodeJS.Timer;
   public ['constructor']: typeof Collection;
+
+  /**
+   * Creates a new empty Collection
+   */
+  constructor();
+
+  /**
+   * Creates a new empty Collection
+   * @param options Any additional options to use
+   */
+  constructor(options?: CollectionOptions<K, V>);
+
+  /**
+   * Creates an collection with entries inserted.
+   * @param entries The entries to insert into this Collection.
+   */
+  constructor(entries?: NewMapArguments<K, V>);
+
+  /**
+   * Creates a collection with entries inserted.
+   * @param entries The entries to insert into this Collection.
+   * @param options Any additional options to use
+   */
+  constructor(entries?: NewMapArguments<K, V>, options?: CollectionOptions<K, V>);
+
+  constructor(entriesOrOptions?: NewMapArguments<K, V> | CollectionOptions<K, V>, options?: CollectionOptions<K, V>) {
+    super(entriesOrOptions === undefined ? null : getEntries(entriesOrOptions ?? options));
+
+    if (isCollectionOptions(entriesOrOptions) && entriesOrOptions.sweep !== undefined) {
+      this._sweepInterval = setInterval(() => {
+        const entries = this.filterKeys(entriesOrOptions.sweep?.predicate ?? (() => true));
+        for (const entry of entries)
+          this.delete(entry);
+      }, entriesOrOptions.sweep.timeout ?? 30000);
+    } else if (isCollectionOptions(options) && options?.sweep !== undefined) {
+      this._sweepInterval = setInterval(() => {
+        const entries = this.filterKeys(options.sweep?.predicate ?? (() => true));
+        for (const entry of entries)
+          this.delete(entry);
+      }, options.sweep.timeout ?? 30000);
+    }
+  }
 
   /** Returns if this [[`Collection`]] is empty or not */
   get empty() {
@@ -457,5 +527,38 @@ export class Collection<K, V = unknown> extends Map<K, V> {
     }
 
     return false;
+  }
+
+  /**
+   * Deletes any entries that satisfy the predicate function.
+   * @param predicate The predicate function
+   * @param thisArg A custom `this` context provided value for [[predicate]].
+   * @returns The size from the previous size and the current size.
+   */
+  sweep<ThisArg = Collection<K, V>>(
+    predicate: Predicate<ThisArg, V, number, K, boolean>,
+    thisArg?: ThisArg
+  ) {
+    const func = thisArg !== undefined ? predicate.bind(thisArg) : predicate;
+    const prevSize = this.size;
+
+    let idx = -1;
+    for (const [key, value] of this) {
+      if (func.call(thisArg !== undefined ? thisArg : this as any, value, ++idx, key)) {
+        this.delete(key);
+      }
+    }
+
+    return prevSize - this.size;
+  }
+
+  /**
+   * Clears every element in this [[Collection]].
+   */
+  clear() {
+    if (this._sweepInterval !== undefined)
+      clearInterval(this._sweepInterval);
+
+    super.clear();
   }
 }
