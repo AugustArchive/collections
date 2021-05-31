@@ -39,22 +39,8 @@ declare module '@augu/collections' {
      */
     type UndetailedMinimalPredicate<Value, ReturnAs> = (value: Value) => ReturnAs;
 
-    type NewMapArguments<K, V = unknown> = readonly (readonly [K, V])[] | null;
-
     interface ForLoopIteration<T> {
       next(): { done: boolean; value: T };
-    }
-
-    /**
-     * Options for constructing a new [[Collection]].
-     */
-    interface CollectionOptions<K, V = unknown> {
-      sweep?: SweepOptions<K, V>;
-    }
-
-    interface SweepOptions<K, V> {
-      predicate?(value: V, index: number, key: K): boolean;
-      timeout?: number;
     }
 
     /**
@@ -66,30 +52,6 @@ declare module '@augu/collections' {
      */
     export class Collection<K, V = unknown> extends Map<K, V> {
       public ['constructor']: typeof Collection;
-
-      /**
-       * Creates a new empty Collection
-       */
-      constructor();
-
-      /**
-        * Creates a new empty Collection
-        * @param options Any additional options to use
-        */
-      constructor(options?: CollectionOptions<K, V>);
-
-      /**
-        * Creates an collection with entries inserted.
-        * @param entries The entries to insert into this Collection.
-        */
-      constructor(entries?: NewMapArguments<K, V>);
-
-      /**
-        * Creates a collection with entries inserted.
-        * @param entries The entries to insert into this Collection.
-        * @param options Any additional options to use
-        */
-      constructor(entries?: NewMapArguments<K, V>, options?: CollectionOptions<K, V>);
 
       /** Returns if this [[`Collection`]] is empty or not */
       public get empty(): boolean;
