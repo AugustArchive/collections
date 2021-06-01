@@ -175,7 +175,7 @@ declare module '@augu/collections' {
        * @returns The value found or `null` if not found
        */
       find<ThisArg = Collection<K, V>>(
-        predicate: MinimalPredicate<ThisArg, V, boolean>,
+        predicate: Predicate<ThisArg, V, number, K, boolean>,
         thisArg?: ThisArg
       ): V | null;
 

@@ -334,19 +334,13 @@ export class Collection<K, V = unknown> extends Map<K, V> {
    * @returns The value found or `null` if not found
    */
   find<ThisArg = Collection<K, V>>(
-    predicate: MinimalPredicate<ThisArg, V, boolean>,
+    predicate: Predicate<ThisArg, V, number, K, boolean>,
     thisArg?: ThisArg
   ) {
-    let func: UndetailedMinimalPredicate<V, boolean>;
-
-    if (thisArg !== undefined)
-      func = predicate.bind(thisArg);
-    else
-      func = predicate.bind(<any> this);
-
+    let idx = -1;
     let result: V | null = null;
-    for (const value of this.values()) {
-      if (func(value)) {
+    for (const [key, value] of this.entries()) {
+      if (predicate.call(thisArg !== undefined ? thisArg : this as any, value, ++idx, key)) {
         result = value;
         break;
       }
