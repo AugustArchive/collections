@@ -4,6 +4,7 @@
   "version": "1.0.12",
   "types": "index.d.ts",
   "main": "build/index.js",
+  "homepage": "https://collections.floofy.dev",
   "funding": {
     "url": "https://github.com/sponsors/auguwu"
   },
