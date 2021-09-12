@@ -34,10 +34,13 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Installs dependencies
-        run: npm i -g eslint && npm ci
+        run: npm i -g eslint && yarn
 
       - name: Lints the repository
-        run: npm run lint
+        run: yarn lint
+
+      - name: Check if project can be compiled
+        run: tsc --noEmit
 
       - name: Runs Jest for unit testing
-        run: npm test
+        run: yarn test
