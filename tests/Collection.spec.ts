@@ -26,14 +26,11 @@ describe('Collections', () => {
   const collection = new Collection<string, string>([
     ['a', 'b'],
     ['c', 'd'],
-    ['e', 'f']
+    ['e', 'f'],
   ]);
 
-  it('should return "b" as the value', () =>
-    expect(collection.find(value => value === 'b')).toStrictEqual('b')
-  );
+  it('should return "b" as the value', () => expect(collection.find((value) => value === 'b')).toStrictEqual('b'));
 
   it('should return an Array of values mapped', () =>
-    expect(collection.map(val => `${val}_uwu`)).toStrictEqual(['b_uwu', 'd_uwu', 'f_uwu'])
-  );
+    expect(collection.map((val) => `${val}_uwu`)).toStrictEqual(['b_uwu', 'd_uwu', 'f_uwu']));
 });

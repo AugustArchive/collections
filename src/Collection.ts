@@ -23,38 +23,32 @@
 /**
  * Represents a predicate function for any mutable methods
  */
-type Predicate<ThisArg, Value, Index, Key, ReturnAs>
-  = (this: ThisArg, value: Value, index: Index, key: Key) => ReturnAs;
+export type Predicate<ThisArg, Value, Index, Key, ReturnAs> = (
+  this: ThisArg,
+  value: Value,
+  index: Index,
+  key: Key
+) => ReturnAs;
 
 /**
  * Represents a predicate function for [[Collection#reduce]]
  */
-type ReducePredicate<ThisArg, Current, Acc, ReturnAs> = (this: ThisArg, acc: Acc, current: Current) => ReturnAs;
+export type ReducePredicate<ThisArg, Current, Acc, ReturnAs> = (this: ThisArg, acc: Acc, current: Current) => ReturnAs;
 
 /**
  * Same as [[Predicate]] but with no this context binded.
  */
-type UndetailedPredicate<Value, Index, Key, ReturnAs> = (value: Value, index: Index, key: Key) => ReturnAs;
-
-/**
- * Same as [[Predicate]] but with no `key` argument
- */
-type PredicateWithoutKey<ThisArg, Value, Index, ReturnAs> = (this: ThisArg, value: Value, index: Index) => ReturnAs;
+export type UndetailedPredicate<Value, Index, Key, ReturnAs> = (value: Value, index: Index, key: Key) => ReturnAs;
 
 /**
  * Same as [[Predicate]] but without `index` and `key` arguments
  */
-type MinimalPredicate<ThisArg, Value, ReturnAs> = (this: ThisArg, value: Value) => ReturnAs;
-
-/**
- * Same as [[Predicate]] but with no `index` argument
- */
-type MinimalPredicateWithKey<Value, Index, ReturnAs> = (value: Value, index: Index) => ReturnAs;
+export type MinimalPredicate<ThisArg, Value, ReturnAs> = (this: ThisArg, value: Value) => ReturnAs;
 
 /**
  * Same as [[Predicate]] but with no this context binded and without `index` or `key` arguments
  */
-type UndetailedMinimalPredicate<Value, ReturnAs> = (value: Value) => ReturnAs;
+export type UndetailedMinimalPredicate<Value, ReturnAs> = (value: Value) => ReturnAs;
 
 /**
  * Represents a class to hold key-value pairs using [[Collection]]. This is a extension
@@ -84,10 +78,8 @@ export class Collection<K, V = unknown> extends Map<K, V> {
   filter<ThisArg = Collection<K, V>>(predicate: Predicate<ThisArg, V, number, K, boolean>, thisArg?: ThisArg) {
     let func: UndetailedPredicate<V, number, K, boolean>;
 
-    if (thisArg !== undefined)
-      func = predicate.bind(thisArg);
-    else
-      func = predicate.bind(<any> this);
+    if (thisArg !== undefined) func = predicate.bind(thisArg);
+    else func = predicate.bind(<any>this);
 
     const results: V[] = [];
     let i = -1;
@@ -111,10 +103,8 @@ export class Collection<K, V = unknown> extends Map<K, V> {
   filterKeys<ThisArg = Collection<K, V>>(predicate: Predicate<ThisArg, V, number, K, boolean>, thisArg?: ThisArg) {
     let func: UndetailedPredicate<V, number, K, boolean>;
 
-    if (thisArg !== undefined)
-      func = predicate.bind(thisArg);
-    else
-      func = predicate.bind(<any> this);
+    if (thisArg !== undefined) func = predicate.bind(thisArg);
+    else func = predicate.bind(<any>this);
 
     const results: K[] = [];
     let i = -1;
@@ -132,16 +122,11 @@ export class Collection<K, V = unknown> extends Map<K, V> {
    * @param thisArg An additional `this` context if needed
    * @returns A new Array of the values from that function
    */
-  map<S, ThisArg = Collection<K, V>>(
-    predicate: Predicate<ThisArg, V, number, K, S>,
-    thisArg?: ThisArg
-  ) {
+  map<S, ThisArg = Collection<K, V>>(predicate: Predicate<ThisArg, V, number, K, S>, thisArg?: ThisArg) {
     let func: UndetailedPredicate<V, number, K, S>;
 
-    if (thisArg !== undefined)
-      func = predicate.bind(thisArg);
-    else
-      func = predicate.bind(<any> this);
+    if (thisArg !== undefined) func = predicate.bind(thisArg);
+    else func = predicate.bind(<any>this);
 
     const results: S[] = [];
     let i = -1;
@@ -169,10 +154,7 @@ export class Collection<K, V = unknown> extends Map<K, V> {
    * @param predicate The predicate function
    * @param initialValue The initial value
    */
-  reduce<S>(
-    predicate: ReducePredicate<Collection<K, V>, V, S, S>,
-    initialValue?: S
-  ) {
+  reduce<S>(predicate: ReducePredicate<Collection<K, V>, V, S, S>, initialValue?: S) {
     const iterable = this.values();
     let value!: V;
     let res: S = initialValue === undefined ? iterable.next().value : initialValue;
@@ -274,9 +256,9 @@ export class Collection<K, V = unknown> extends Map<K, V> {
    * Returns the first key in the collection or an Array of the values from the correspondant `amount`
    * @param amount The amount to fetch from
    */
-  firstKey(amount?: number): K | K[] | undefined  {
+  firstKey(amount?: number): K | K[] | undefined {
     if (typeof amount === 'undefined') {
-      return (this.keys()).next().value;
+      return this.keys().next().value;
     }
 
     if (amount < 0) return this.lastKey(amount! * -1);
@@ -333,14 +315,11 @@ export class Collection<K, V = unknown> extends Map<K, V> {
    * @param thisArg An additional `this` context if needed
    * @returns The value found or `null` if not found
    */
-  find<ThisArg = Collection<K, V>>(
-    predicate: Predicate<ThisArg, V, number, K, boolean>,
-    thisArg?: ThisArg
-  ) {
+  find<ThisArg = Collection<K, V>>(predicate: Predicate<ThisArg, V, number, K, boolean>, thisArg?: ThisArg) {
     let idx = -1;
     let result: V | null = null;
     for (const [key, value] of this.entries()) {
-      if (predicate.call(thisArg !== undefined ? thisArg : this as any, value, ++idx, key)) {
+      if (predicate.call(thisArg !== undefined ? thisArg : (this as any), value, ++idx, key)) {
         result = value;
         break;
       }
@@ -355,16 +334,11 @@ export class Collection<K, V = unknown> extends Map<K, V> {
    * @param thisArg An additional `this` context if needed
    * @returns The key found or `null` if not found
    */
-  findKey<ThisArg = Collection<K, V>>(
-    predicate: MinimalPredicate<ThisArg, V, boolean>,
-    thisArg?: ThisArg
-  ) {
+  findKey<ThisArg = Collection<K, V>>(predicate: MinimalPredicate<ThisArg, V, boolean>, thisArg?: ThisArg) {
     let func: UndetailedMinimalPredicate<V, boolean>;
 
-    if (thisArg !== undefined)
-      func = predicate.bind(thisArg);
-    else
-      func = predicate.bind(<any> this);
+    if (thisArg !== undefined) func = predicate.bind(thisArg);
+    else func = predicate.bind(<any>this);
 
     let result: K | null = null;
     for (const [key, value] of this.entries()) {
@@ -460,16 +434,13 @@ export class Collection<K, V = unknown> extends Map<K, V> {
    * @param thisArg A custom `this` context provided value for [[predicate]].
    * @returns The size from the previous size and the current size.
    */
-  sweep<ThisArg = Collection<K, V>>(
-    predicate: Predicate<ThisArg, V, number, K, boolean>,
-    thisArg?: ThisArg
-  ) {
+  sweep<ThisArg = Collection<K, V>>(predicate: Predicate<ThisArg, V, number, K, boolean>, thisArg?: ThisArg) {
     const func = thisArg !== undefined ? predicate.bind(thisArg) : predicate;
     const prevSize = this.size;
 
     let idx = -1;
     for (const [key, value] of this) {
-      if (func.call(thisArg !== undefined ? thisArg : this as any, value, ++idx, key)) {
+      if (func.call(thisArg !== undefined ? thisArg : (this as any), value, ++idx, key)) {
         this.delete(key);
       }
     }
@@ -481,8 +452,7 @@ export class Collection<K, V = unknown> extends Map<K, V> {
    * Clears every element in this [[Collection]].
    */
   clear() {
-    if (this._sweepInterval !== undefined)
-      clearInterval(this._sweepInterval);
+    if (this._sweepInterval !== undefined) clearInterval(this._sweepInterval);
 
     super.clear();
   }

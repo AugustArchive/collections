@@ -28,4 +28,3 @@ const { version: pkgVersion } = require('../package.json');
 export const version: string = pkgVersion;
 
 export * from './Collection';
-export * from './Queue';

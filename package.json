@@ -1,7 +1,7 @@
 {
   "name": "@augu/collections",
   "description": "📝 Collections library made in TypeScript",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "types": "index.d.ts",
   "main": "build/index.js",
   "homepage": "https://collections.floofy.dev",
@@ -11,21 +11,10 @@
   "license": "MIT",
   "files": [
     "build/",
-    "esm.mjs",
     "index.d.ts"
   ],
   "author": "August <cutie@floofy.dev>",
   "repository": "https://github.com/Noelware/collections",
-  "exports": {
-    ".": [
-      {
-        "require": "./build/index.js",
-        "import": "./esm.mjs"
-      },
-      "./build/index.js"
-    ],
-    "./esm": "./esm.mjs"
-  },
   "engines": {
     "node": ">=10"
   },
@@ -36,14 +25,18 @@
     "@typescript-eslint/eslint-plugin": "4.31.0",
     "@typescript-eslint/parser": "4.31.0",
     "eslint": "7.32.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-prettier": "4.0.0",
     "jest": "27.1.1",
-    "ts-jest": "27.0.4",
-    "typedoc": "0.22.2",
+    "prettier": "2.4.0",
+    "ts-jest": "27.0.5",
+    "typedoc": "0.22.3",
     "typescript": "4.4.3"
   },
   "scripts": {
     "prepare": "npm run lint && rm -fr build && tsc",
-    "docgen": "typedoc src --json ./docs/out.json",
+    "docgen": "typedoc src/index.ts --out ./docs && echo collections.floofy.dev >> docs/CNAME",
+    "format": "prettier --config ./.prettierrc.json --write .",
     "build": "npm run lint && npm test && rm -fr build && tsc",
     "lint": "eslint src --ext .ts --fix",
     "test": "jest --config jest.config.js --no-cache --i"

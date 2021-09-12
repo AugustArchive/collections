@@ -9,7 +9,7 @@ module.exports = {
   name: 'Immutable',
   globals: {
     'ts-jest': {
-      tsconfig: './tsconfig.test.json'
-    }
-  }
+      tsconfig: './tsconfig.test.json',
+    },
+  },
 };

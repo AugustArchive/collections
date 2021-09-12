@@ -6,6 +6,7 @@ labels: bug
 ---
 
 # Issue in-hand
+
 **Describe your bug report here**
 
 ```js
@@ -13,6 +14,7 @@ labels: bug
 ```
 
 # Options
+
 - Node.js Version:
 - Library Version/Branch:
 - Operating System:

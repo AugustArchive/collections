@@ -6,8 +6,12 @@ declare module '@augu/collections' {
     /**
      * Represents a predicate function for any mutable methods
      */
-    type Predicate<ThisArg, Value, Index, Key, ReturnAs>
-      = (this: ThisArg, value: Value, index: Index, key: Key) => ReturnAs;
+    type Predicate<ThisArg, Value, Index, Key, ReturnAs> = (
+      this: ThisArg,
+      value: Value,
+      index: Index,
+      key: Key
+    ) => ReturnAs;
 
     /**
      * Represents a predicate function for [[Collection#reduce]]
@@ -73,7 +77,10 @@ declare module '@augu/collections' {
        * @param thisArg An additional `this` context if needed
        * @returns A new Array of the values that returned `true` in the predicate function
        */
-      filterKeys<ThisArg = Collection<K, V>>(predicate: Predicate<ThisArg, V, number, K, boolean>, thisArg?: ThisArg): K[];
+      filterKeys<ThisArg = Collection<K, V>>(
+        predicate: Predicate<ThisArg, V, number, K, boolean>,
+        thisArg?: ThisArg
+      ): K[];
 
       /**
        * Use a predicate function to map anything into a new array
@@ -81,10 +88,7 @@ declare module '@augu/collections' {
        * @param thisArg An additional `this` context if needed
        * @returns A new Array of the values from that function
        */
-      map<S, ThisArg = Collection<K, V>>(
-        predicate: Predicate<ThisArg, V, number, K, S>,
-        thisArg?: ThisArg
-      ): S[];
+      map<S, ThisArg = Collection<K, V>>(predicate: Predicate<ThisArg, V, number, K, S>, thisArg?: ThisArg): S[];
 
       /**
        * Returns a random value from the collection
@@ -97,10 +101,7 @@ declare module '@augu/collections' {
        * @param predicate The predicate function
        * @param initialValue The initial value
        */
-      reduce<S>(
-        predicate: ReducePredicate<Collection<K, V>, V, S, S>,
-        initialValue?: S
-      ): S;
+      reduce<S>(predicate: ReducePredicate<Collection<K, V>, V, S, S>, initialValue?: S): S;
 
       /**
        * Returns the first element in the collection

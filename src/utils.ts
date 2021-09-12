@@ -26,9 +26,11 @@
  * @returns If the value is a object or not.
  */
 export function isObject(value: unknown): value is object {
-  return typeof value === 'object'
-    && !Array.isArray(value) // arrays are enumerable objects, so `typeof []` would be `object`
-    && value !== null; // null is considered object for some reason?
+  return (
+    typeof value === 'object' &&
+    !Array.isArray(value) && // arrays are enumerable objects, so `typeof []` would be `object`
+    value !== null
+  ); // null is considered object for some reason?
 }
 
 /**
@@ -45,7 +47,9 @@ export function isArray(value: unknown): value is any[] {
  * @param method The method that is deprecated
  */
 export function deprecate(method: string) {
-  console.warn(`(collections:${process.pid}) DeprecationWarning: Method "${method}" is deprecated and will be removed in a future release, refrain from creating bug reports of this method.`);
+  console.warn(
+    `(collections:${process.pid}) DeprecationWarning: Method "${method}" is deprecated and will be removed in a future release, refrain from creating bug reports of this method.`
+  );
 }
 
 /**
@@ -54,7 +58,7 @@ export function deprecate(method: string) {
  * @returns The stringified value
  */
 export function stringify(value: unknown) {
-  if (!['object'].includes(<any> value)) return typeof value;
+  if (!['object'].includes(<any>value)) return typeof value;
   if (value instanceof Error) return 'Error';
   if (value instanceof Date) return 'Date';
   if (value === undefined) return 'undefined';
@@ -62,11 +66,7 @@ export function stringify(value: unknown) {
 
   if (value instanceof Array) {
     const objects = value.map(stringify);
-    const known: string[] = [];
-
-    objects.map((value) => {
-      if (!known.includes(value)) known.push(value);
-    });
+    const known = [...new Set(objects)];
 
     return `Array<${known.join(' | ')}>`;
   }
