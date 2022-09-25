@@ -19,7 +19,7 @@
     "node": ">=10"
   },
   "devDependencies": {
-    "@augu/eslint-config": "2.2.0",
+    "@augu/eslint-config": "3.0.0",
     "@types/jest": "27.5.1",
     "@types/node": "16.11.38",
     "@typescript-eslint/eslint-plugin": "4.33.0",
